@@ -39,7 +39,7 @@ const projects = [
 const Projects: React.FC = () => {
   return (
     <Animated>
-      <section className="py-16 px-6 bg-muted">
+      <section id="projects" className="py-16 px-6 bg-muted">
         <h2 className="text-3xl font-bold text-center mb-12">
           Our Projects 💻
         </h2>

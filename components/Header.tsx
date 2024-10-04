@@ -31,11 +31,18 @@ const Header = () => {
   }, [prevScrollPos]);
 
   const navItems = [
-    { name: "Home", link: "/" },
-    { name: "About", link: "/about" },
-    { name: "Projects", link: "/projects" },
-    { name: "Contact", link: "/contact" },
+    { name: "Home", link: "#home" },
+    { name: "Projects", link: "#projects" },
+    { name: "About", link: "#about" },
+    { name: "Contact", link: "#contact" },
   ];
+
+  const handleNavItemClick = (link: string) => {
+    const section = document.querySelector(link);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <motion.header
@@ -53,17 +60,19 @@ const Header = () => {
             <span className="font-bold text-lg">Late Night Coders</span>
           </Link>
           <div className="flex items-center space-x-4 md:space-x-6">
-            <nav className="hidden md:flex space-x-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.link}
-                  className="text-sm font-medium transition-colors hover:text-primary"
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </nav>
+            {visible && (
+              <nav className="hidden md:flex space-x-4">
+                {navItems.map((item) => (
+                  <button
+                    key={item.name}
+                    onClick={() => handleNavItemClick(item.link)}
+                    className="text-sm font-medium transition-colors hover:text-primary"
+                  >
+                    {item.name}
+                  </button>
+                ))}
+              </nav>
+            )}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="rounded-full">
