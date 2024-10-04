@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { FaTwitter, FaGithub, FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   const navItems = [
@@ -39,6 +40,29 @@ const Footer = () => {
               <Input type="email" placeholder="Enter your email" />
               <Button type="submit">Subscribe</Button>
             </form>
+            <div className="flex space-x-4 mt-4">
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaTwitter className="h-6 w-6 text-blue-500 hover:text-blue-700" />
+              </a>
+              <a
+                href="https://github.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaGithub className="h-6 w-6 text-gray-800 hover:text-gray-900" />
+              </a>
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaLinkedin className="h-6 w-6 text-blue-700 hover:text-blue-900" />
+              </a>
+            </div>
           </div>
         </div>
         <div className="mt-8 text-center">
