@@ -150,7 +150,7 @@ const Footer = () => {
 
         {/* Footer Bottom */}
         <div className="mt-2 text-center border-t border-gray-700 pt-6">
-          <p>&copy; 2024 Late Night Coders. All rights reserved.</p>
+          <p>&copy; 2025 LNC . All rights reserved.</p>
         </div>
       </div>
     </footer>
