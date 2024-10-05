@@ -75,19 +75,23 @@ const Header = () => {
             )}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-full">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full outline-none"
+                >
                   <SunIcon
                     className={`h-5 w-5 transition-all ${
                       theme === "dark"
-                        ? "rotate-90 scale-0"
-                        : "rotate-0 scale-100"
+                        ? "rotate-90 outline-none"
+                        : "rotate-0 hidden"
                     }`}
                   />
                   <MoonIcon
-                    className={`absolute h-5 w-5 transition-all ${
+                    className={`h-5 w-5 transition-all ${
                       theme === "dark"
-                        ? "rotate-0 scale-100"
-                        : "-rotate-90 scale-0"
+                        ? "rotate-0 hidden"
+                        : "-rotate-90 outline-none"
                     }`}
                   />
                   <span className="sr-only">Toggle theme</span>
