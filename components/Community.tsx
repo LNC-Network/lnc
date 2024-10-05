@@ -2,6 +2,8 @@
 import { useState } from "react";
 import Modal from "react-modal";
 import { IoCloseSharp } from "react-icons/io5";
+import React from "react";
+import { Button } from "@/components/ui/button";
 import Animated from "@/components/Animation";
 
 const CommunitySection = () => {
@@ -17,71 +19,35 @@ const CommunitySection = () => {
 
   return (
     <Animated>
-      <section className="py-24 px-6 text-center bg-primary text-primary-foreground">
-        <h2 className="text-3xl font-bold mb-6">Join Our Community 🤝</h2>
-
-        <p className="text-xl mb-8">Embrace the night. Code with might.</p>
-
-        <button
-          onClick={openModal}
-          className="bg-slate-800 no-underline group cursor-pointer relative shadow-xl h-12 shadow-zinc-300 rounded-full text-xs font-semibold leading-6 text-white inline-block"
-        >
-          <span className="absolute inset-0 overflow-hidden rounded-full">
-            <span className="absolute inset-0 rounded-full bg-[radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,1)_0%,rgba(56,189,248,0.6)_50%,rgba(56,189,248,0)_100%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
-          </span>
-
-          <div className="relative flex space-x-2 items-center z-10 h-5/6 rounded-full bg-zinc-950 py-0.5 px-4 m-1 ring-1 ring-black/10 group-hover:bg-zinc-950 transition-colors duration-500">
-            <span>{`Get Started Now`}</span>
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="transition-transform duration-500 group-hover:translate-x-1"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.5"
-                d="M10.75 8.75L14.25 12L10.75 15.25"
-              ></path>
-            </svg>
-          </div>
-        </button>
-
-        <Modal
-          isOpen={isModalOpen}
-          onRequestClose={closeModal}
-          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6 bg-background rounded-lg shadow-lg"
-        >
-          <h2 className="text-3xl">Join Us</h2>
-          <IoCloseSharp
-            onClick={closeModal}
-            className="text-lg hover:cursor-pointer absolute top-5 right-5"
-          />
-          <form className="flex flex-col justify-center align-middle gap-5">
-            <input
-              type="text"
-              placeholder="Name"
-              required
-              className="h-10 bg-slate-800 w-56 p-2"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              required
-              className="h-10 bg-slate-800 w-56 p-2"
-            />
-            <button type="submit" className="w-40 h-10 bg-slate-800">
-              Submit
-            </button>
-          </form>
-        </Modal>
+      <section className="py-24 px-6 text-center bg-gradient-to-br from-purple-600 via-indigo-700 to-blue-800 text-white">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-yellow-200">
+            Join Our Nocturnal Community 🌙
+          </h2>
+          <p className="text-xl mb-10 text-gray-200">
+            Embrace the night. Code with might. Connect with fellow night owls.
+          </p>
+          <button className="group relative inline-flex items-center justify-center overflow-hidden rounded-full p-0.5 font-semibold">
+            <span className="absolute inset-0 bg-gradient-to-br from-pink-500 via-purple-500 to-blue-500 opacity-70 transition-all duration-400 group-hover:opacity-100 group-hover:blur-sm"></span>
+            <span className="relative rounded-full bg-black bg-opacity-80 px-6 py-3 transition-all duration-400 group-hover:bg-opacity-90">
+              <span className="relative text-white text-lg">Get Started Now</span>
+            </span>
+          </button>
+        </div>
+        <div className="mt-16 flex justify-center space-x-6">
+          <IconButton icon="github" />
+          <IconButton icon="discord" />
+          <IconButton icon="twitter" />
+        </div>
       </section>
     </Animated>
   );
 };
+
+const IconButton = ({ icon }: { icon: string }) => (
+  <button className="p-3 rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300">
+    <img src={`/icons/${icon}.svg`} alt={icon} className="w-6 h-6" />
+  </button>
+);
 
 export default CommunitySection;
