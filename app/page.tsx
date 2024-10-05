@@ -9,7 +9,7 @@ import Contact from "@/components/Contact";
 export default function Home() {
   return (
     <main className="pt-24">
-      <div className="relative px-6">
+      <div className="relative px-3">
         <Header />
         <HeroSection />
         <Projects />
