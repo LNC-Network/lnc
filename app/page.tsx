@@ -8,8 +8,8 @@ import Contact from "@/components/Contact";
 
 export default function Home() {
   return (
-    <main className="pt-24 flex flex-col items-center justify-center space-x-100">
-      <div>
+    <main className="pt-24">
+      <div className="relative px-6">
         <Header />
         <HeroSection />
         <Projects />
