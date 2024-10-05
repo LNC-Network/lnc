@@ -53,7 +53,7 @@ const Footer = () => {
         <div className="mt-8 grid grid-cols-4 gap-4 text-center">
           {/* Gmail */}
           <a
-            href="mailto:latenightcoders1@gmail.com"
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=latenightcoders1@gmail.com"
             target="_blank"
             rel="noopener noreferrer"
             className="transition-transform transform hover:-translate-y-2 hover:scale-105 duration-300 bg-white p-3 rounded-lg shadow-md flex items-center justify-center"
@@ -150,7 +150,7 @@ const Footer = () => {
 
         {/* Footer Bottom */}
         <div className="mt-2 text-center border-t border-gray-700 pt-6">
-          <p>&copy; 2025 LNC . All rights reserved.</p>
+          <p>&copy; 2025 LNC. All rights reserved.</p>
         </div>
       </div>
     </footer>
