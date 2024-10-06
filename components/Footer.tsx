@@ -15,8 +15,8 @@ const Footer = () => {
               Answering your Questions!<span className="font-light"></span>
             </h2>
             <p className="mb-4 text-[#d3d3d3] py-400">
-              Need some assistance? Feel free to reach out to us. We're here to
-              help and ensure a seamless, satisfying experience.
+              Need some assistance? Feel free to reach out to us. We&rsquo;re
+              here to help and ensure a seamless, satisfying experience.
             </p>
           </div>
 
