@@ -26,7 +26,10 @@ const CommunitySection = () => {
 
   return (
     <Animated>
-      <section className="py-24 px-6 text-center bg-gradient-to-br from-purple-600 via-indigo-700 to-blue-800 text-white">
+      <section
+        id="join"
+        className="py-24 px-6 text-center bg-gradient-to-br from-purple-600 via-indigo-700 to-blue-800 text-white"
+      >
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-yellow-200">
             Join Our Nocturnal Community 🌙
