@@ -8,7 +8,7 @@ import {
 } from "../ui/dropdown-menu";
 const JoinUs = () => {
   const inputField = () => {
-    return "mb-4 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500";
+    return "mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500";
   };
 
   const [selectedRole, setSelectedRole] = useState("Select Role");
@@ -18,6 +18,8 @@ const JoinUs = () => {
     { id: 1, name: "Developer" },
     { id: 2, name: "Designer" },
     { id: 3, name: "Content writer" },
+    { id: 4, name: "Marketing" },
+    { id: 5, name: "Researcher" },
   ];
   const WorkingStatus = [
     { id: 1, name: "Working" },
@@ -102,7 +104,14 @@ const JoinUs = () => {
       </div>
 
       <input type="url" className={inputField()} placeholder="Portfolio link" />
-
+      <textarea
+        className={`${inputField()} resize-none overflow-y-scroll`}
+        placeholder="Write something about yourself"
+        rows={4}
+        style={{
+          borderRadius: "8px", // Correct camelCase
+        }}
+      />
       <div className="flex justify-center">
         <button
           type="submit"
