@@ -8,11 +8,13 @@ import Image from "next/image";
 
 const CommunitySection = () => {
   const formForeground = () => {
-    return "bg-slate-600 rounded-lg p-6 w-full max-w-lg mx-auto relative bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/50";
+    return "bg-slate-800 rounded-lg p-6 w-full max-w-lg mx-auto relative shadow-lg bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/50";
   };
+
   const formBackground = () => {
-    return "fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center";
+    return "fixed inset-0 bg-slate-900 bg-opacity-80 flex items-center justify-center backdrop-blur-sm";
   };
+
   const IconButton = ({ icon }: { icon: string }) => (
     <button className="p-3 rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300">
       <Image src={`/icons/${icon}.svg`} alt={icon} width={40} height={40} />
@@ -24,7 +26,10 @@ const CommunitySection = () => {
 
   return (
     <Animated>
-      <section className="py-24 px-6 text-center bg-gradient-to-br from-purple-600 via-indigo-700 to-blue-800 text-white">
+      <section
+        id="join"
+        className="py-24 px-6 text-center bg-gradient-to-br from-purple-600 via-indigo-700 to-blue-800 text-white"
+      >
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-yellow-200">
             Join Our Nocturnal Community 🌙

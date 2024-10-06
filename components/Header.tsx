@@ -31,10 +31,10 @@ const Header = () => {
   }, [prevScrollPos]);
 
   const navItems = [
-    { name: "Home", link: "#home" },
-    { name: "Projects", link: "#projects" },
-    { name: "About", link: "#about" },
-    { name: "Contact", link: "#contact" },
+    { name: "HOME", link: "#home" },
+    { name: "PROJECTS", link: "#projects" },
+    { name: "ABOUT", link: "#about" },
+    { name: "JOIN", link: "#join" },
   ];
 
   const handleNavItemClick = (link: string) => {
