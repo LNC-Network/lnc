@@ -1,71 +1,96 @@
-import React from "react";
-import Select, {
-  StylesConfig,
-  OptionProps,
-  CSSObjectWithLabel,
-} from "react-select";
+import React, { useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "../ui/dropdown-menu";
 const JoinUs = () => {
   const inputField = () => {
-    return "mb-1 w-full rounded-full py-2 px-3 bg-grey-900 text-white focus:bg-slate-700 focus:outline-none";
+    return "mb-4 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500";
   };
 
-  const customStyles: StylesConfig = {
-    control: (provided: CSSObjectWithLabel): CSSObjectWithLabel => ({
-      ...provided,
-      marginBottom: "0.25rem", // mb-1
-      width: "100%", // w-full
-      borderRadius: "9999px", // rounded-full
-      padding: "0.5rem 0.75rem", // py-2 px-3
-      backgroundColor: "#1e1e2f", // bg-grey-900
-      color: "white",
-      "&:focus": {
-        backgroundColor: "#374151", // focus:bg-slate-700
-        outline: "none",
-      },
-    }),
-    option: (
-      provided: CSSObjectWithLabel,
-      state: OptionProps
-    ): CSSObjectWithLabel => ({
-      ...provided,
-      backgroundColor: state.isFocused ? "#bde4ff" : "transparent",
-      color: "black",
-      padding: "10px", // Optional padding
-    }),
-  };
+  const [selectedRole, setSelectedRole] = useState("Select Role");
+  const [selectedStatus, setSelectedStatus] = useState("Select Status");
+
   const Role = [
-    { value: "developer", label: "Developer" },
-    { value: "designer", label: "Designer" },
-    { value: "researcher", label: "Researcher" },
+    { id: 1, name: "Developer" },
+    { id: 2, name: "Designer" },
+    { id: 3, name: "Content writer" },
   ];
   const WorkingStatus = [
-    { value: "school", label: "School" },
-    { value: "college", label: "College" },
-    { value: "working", label: "Working" },
-    { value: "none", label: "None" },
+    { id: 1, name: "Working" },
+    { id: 2, name: "Student" },
+    { id: 3, name: "Not working" },
   ];
 
   return (
     <form className="flex flex-col gap-1">
-      <input type="text" className={inputField()} placeholder="First Name" />
-      <input type="text" className={inputField()} placeholder="Last Name" />
-      <input
-        type="email"
-        className={inputField()}
-        placeholder="example@example.com"
-      />
-      <input type="tel" className={inputField()} placeholder="Phone Number" />
-
-      <div>
-        <Select styles={customStyles} options={Role} placeholder="Role" />
+      <div className="flex gap-1">
+        <input
+          type="text"
+          className={`${inputField()}`}
+          placeholder="First Name"
+        />
+        <input
+          type="text"
+          className={`${inputField()}`}
+          placeholder="Last Name"
+        />
       </div>
 
-      <div>
-        <Select
-          styles={customStyles}
-          options={WorkingStatus}
-          placeholder="Working Status"
+      <div className="flex gap-1">
+        <input
+          type="email"
+          className={`${inputField()}`}
+          placeholder="example@example.com"
+          autoComplete="email"
         />
+        <input
+          type="tel"
+          className={`${inputField()}`}
+          placeholder="Phone Number"
+        />
+      </div>
+
+      <div className="flex gap-1">
+        {/* Dropdown for Role */}
+        <div className="w-1/2">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className={inputField()}>{selectedRole}</button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {Role.map((role) => (
+                <DropdownMenuItem
+                  key={role.id}
+                  onSelect={() => setSelectedRole(role.name)} // Update selected role
+                >
+                  {role.name}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        <div className="w-1/2">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className={inputField()}>{selectedStatus}</button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {WorkingStatus.map((status) => (
+                <DropdownMenuItem
+                  key={status.id}
+                  onSelect={() => setSelectedStatus(status.name)} // Update selected status
+                >
+                  {status.name}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
 
       <div>
