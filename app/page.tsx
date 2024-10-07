@@ -4,7 +4,6 @@ import Features from "@/components/Features";
 import Community from "@/components/Community";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-// import Contact from "@/components/Contact";
 
 export default function Home() {
   return (
@@ -15,7 +14,6 @@ export default function Home() {
         <Projects />
         <Features />
         <Community />
-        {/* <Contact /> */}
         <Footer />
       </div>
     </main>
