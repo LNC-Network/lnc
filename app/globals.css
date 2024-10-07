@@ -63,7 +63,38 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+body::-webkit-scrollbar {
+  display: none;
+
+}
+
+input:-webkit-autofill {
+  /* to prevent autofill deafult action on browser */
+  background-color: #3a3b3c !important;
+  color: white !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+textarea::-webkit-scrollbar {
+  width: 10px;
+  margin-right: 2px;
+
+}
+
+textarea::-webkit-scrollbar-thumb {
+  margin: 7px 0;
+  background-color: midnightblue;
+  border-radius: 10px;
+  position: absolute;
+  z-index: -1;
+}
+
+textarea::-webkit-scrollbar-track {
+  background: transparent;
 }
