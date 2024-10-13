@@ -18,7 +18,6 @@ export const metadata: Metadata = {
   title: "LNC Community",
   description: "For The Greater Future",
 };
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -37,3 +36,4 @@ export default function RootLayout({
     </html>
   );
 }
+
