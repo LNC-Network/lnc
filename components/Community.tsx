@@ -35,9 +35,9 @@ const CommunitySection: React.FC = () => {
             into digital reality.
           </p>
           <p className="text-lg mb-10 text-gray-400">
-            Whether you're a seasoned developer or just starting, we welcome you
-            with open arms. Participate in coding sessions, hackathons, and
-            learn from each other's experiences.
+            Whether you&apos;re a seasoned developer or just starting, we
+            welcome you with open arms. Participate in coding sessions,
+            hackathons, and learn from each other&apos;s experiences.
           </p>
           <p className="text-lg mb-10 text-gray-400">
             Share your projects, seek feedback, and connect with like-minded

@@ -4,7 +4,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
+  //DropdownMenuSeparator,
 } from "../ui/dropdown-menu";
 const JoinUs = () => {
   const inputField = () => {
