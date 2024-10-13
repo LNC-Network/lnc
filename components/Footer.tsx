@@ -1,78 +1,96 @@
 "use client";
 import Image from "next/image";
-import React from "react";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaGithub, FaLinkedin, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { Button } from "./ui/button";
-import { Textarea } from "./ui/textarea";
-import { Input } from "./ui/input";
+import { motion } from "framer-motion";
 
-const Footer = () => {
-  const IconButton = ({ icon }: { icon: string }) => (
-    <Image src={`/icons/${icon}.svg`} alt={icon} width={32} height={32} />
-  );
+const Footer: React.FC = () => {
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
+  const handleScroll = () => {
+    const scrollPosition = window.scrollY + window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+
+    // Show footer when reaching the bottom of the document
+    if (scrollPosition >= documentHeight - 100) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <footer className="bg-gray-900 text-white py-12">
+    <motion.footer
+      className={`bg-gray-900 text-white py-12 fixed bottom-0 left-0 right-0 transition-transform duration-500 ${
+        isVisible ? "translate-y-0" : "translate-y-full"
+      }`}
+      initial={{ y: "100%" }} // Start off-screen
+      animate={{ y: isVisible ? 0 : "100%" }} // Slide in/out based on visibility
+      transition={{ duration: 0.5, ease: "easeOut" }} // Smooth transition
+    >
       <div className="container mx-auto px-6">
-        {/* Grid Layout for Contact and Form */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Contact Section */}
           <div>
             <h4 className="text-lg font-semibold mb-4">Contact Us</h4>
             <h2 className="text-3xl font-bold mb-4">
-              Answering your Questions!<span className="font-light"></span>
+              Answering your Questions!
             </h2>
-            <p className="mb-4 text-[#d3d3d3] py-400">
-              Need some assistance? Feel free to reach out to us. We&rsquo;re
-              here to help and ensure a seamless, satisfying experience.
+            <p className="mb-4 text-[#d3d3d3]">
+              Need some assistance? Feel free to reach out to us. We’re here to
+              help and ensure a seamless, satisfying experience.
             </p>
           </div>
 
-          {/* Contact Form */}
           <div>
             <form className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
-                <Input
+                <input
                   type="text"
                   placeholder="Name *"
-                  className="w-full bg-transparent border border-gray-500"
+                  className="w-full bg-transparent border border-gray-500 p-2"
                 />
-                <Input
-                  type="text"
+                <input
+                  type="email"
                   id="email"
                   placeholder="Email *"
-                  className="w-full bg-transparent border border-gray-500"
+                  className="w-full bg-transparent border border-gray-500 p-2"
+                  required
                 />
               </div>
-              <Textarea
+              <textarea
                 id="message"
-                className="w-full bg-transparent border border-gray-500 p-2 h-24"
+                className="w-full bg-transparent border border-gray-500 p-2 h-16 resize-none rounded-md focus:border-blue-500 focus:outline-none"
                 placeholder="Message *"
-                rows={4}
+                rows={2}
+                required
               />
-              <Button
+              <button
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded"
               >
                 SUBMIT
-              </Button>
+              </button>
             </form>
           </div>
         </div>
 
-        {/* Social Media Section with smaller and refined icons */}
-        <div className="mt-8 grid grid-cols-4 gap-4 text-center">
-          {/* Gmail */}
+        <div className="mt-8 grid grid-cols-5 gap-4 text-center">
           <a
             href="https://mail.google.com/mail/?view=cm&fs=1&to=latenightcoders1@gmail.com"
             target="_blank"
             rel="noopener noreferrer"
             className="transition-transform transform hover:-translate-y-2 hover:scale-105 duration-300 bg-white p-3 rounded-lg shadow-md flex items-center justify-center"
           >
-            <IconButton icon="gmail" />
+            <Image src="/icons/gmail.svg" alt="Gmail" width={32} height={32} />
           </a>
-
-          {/* GitHub */}
           <a
             href="https://github.com/LNC-Network"
             target="_blank"
@@ -81,8 +99,6 @@ const Footer = () => {
           >
             <FaGithub className="h-8 w-8 text-white" />
           </a>
-
-          {/* LinkedIn */}
           <a
             href="https://www.linkedin.com/company/late-night-coders/"
             target="_blank"
@@ -91,8 +107,6 @@ const Footer = () => {
           >
             <FaLinkedin className="h-8 w-8 text-white" />
           </a>
-
-          {/* Twitter (X) */}
           <a
             href="https://x.com/Deep_Ghosh_"
             target="_blank"
@@ -101,14 +115,22 @@ const Footer = () => {
           >
             <FaXTwitter className="h-8 w-8 text-white" />
           </a>
+          <a
+            href="https://www.youtube.com/@Late-Night_Coders"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-transform transform hover:-translate-y-2 hover:scale-105 duration-300 bg-[#FF0000] p-3 rounded-lg shadow-md flex items-center justify-center"
+          >
+            <FaYoutube className="h-8 w-8 text-white" />
+          </a>
         </div>
 
-        {/* Footer Bottom */}
         <div className="mt-2 text-center border-t border-gray-700 pt-6">
           <p>© {new Date().getFullYear()} LNC. All rights reserved.</p>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 };
+
 export default Footer;
