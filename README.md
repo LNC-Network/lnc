@@ -14,7 +14,7 @@ choco install nodejs --version="22.9.0"
 after that open any directory and open terminal and paste this command
 
 ```bash
-git clone https://github.com/LNC-Network/lnc.git && cd .\lnc\ && npm i && npm run dev
+git clone https://github.com/LNC-Network/lnc.git && cd .\lnc\ && git switch dev && npm i && npm run dev
 ```
 
 only works on windows <br>
