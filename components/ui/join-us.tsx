@@ -23,20 +23,20 @@ const JoinUs = () => {
 
   // Load saved form data on component mount
   useEffect(() => {
-    const savedData = localStorage.getItem("formData");
+    const savedData = sessionStorage.getItem("formData");
     if (savedData) {
       setFormData(JSON.parse(savedData));
     }
   }, []);
 
-  // Handle input change and save to localStorage
+  // Handle input change and save to sessionStorage
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     const updatedData = { ...formData, [name]: value };
     setFormData(updatedData);
-    localStorage.setItem("formData", JSON.stringify(updatedData));
+    sessionStorage.setItem("formData", JSON.stringify(updatedData));
   };
 
   const Role = [
@@ -147,7 +147,7 @@ const JoinUs = () => {
                   onSelect={() => {
                     const updatedData = { ...formData, role: role.name };
                     setFormData(updatedData);
-                    localStorage.setItem(
+                    sessionStorage.setItem(
                       "formData",
                       JSON.stringify(updatedData)
                     );
@@ -175,7 +175,7 @@ const JoinUs = () => {
                   onSelect={() => {
                     const updatedData = { ...formData, status: status.name };
                     setFormData(updatedData);
-                    localStorage.setItem(
+                    sessionStorage.setItem(
                       "formData",
                       JSON.stringify(updatedData)
                     );
