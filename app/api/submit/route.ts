@@ -17,3 +17,17 @@ export async function POST(req: Request) {
     }
 }
 
+export async function GET() {
+    try {
+        const client = await clientPromise;
+        const db = client.db('your-db-name'); 
+        const collection = db.collection('your-collection-name');
+
+        const users = await collection.find({}).toArray(); 
+
+        return NextResponse.json(users); 
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json({ error: 'Failed to retrieve data' }, { status: 500 });
+    }
+}
