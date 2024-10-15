@@ -24,7 +24,7 @@ export default function Admin() {
     const fetchData = async () => {
       const response = await fetch("/api/submit");
       const result = await response.json();
-      setData(result);
+      setData(result.reverse());
     };
 
     fetchData();
