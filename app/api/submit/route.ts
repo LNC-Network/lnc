@@ -13,19 +13,6 @@ interface FormData {
   status: string;
   // ... other fields
 }
-
-interface FormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  institution: string;
-  portfolio: string;
-  about: string;
-  role: string;
-  status: string;
-  // ... other fields
-}
 export async function POST(req: Request) {
   try {
     const client = await clientPromise;
