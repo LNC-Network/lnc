@@ -22,20 +22,19 @@ interface FormData {
 }
 
 const JoinUs = () => {
-  const { register, handleSubmit, setValue, getValues, reset, watch } =
-    useForm<FormData>({
-      defaultValues: {
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        institution: "",
-        portfolio: "",
-        about: "",
-        role: "",
-        status: "",
-      },
-    });
+  const { register, handleSubmit, setValue, reset, watch } = useForm<FormData>({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      institution: "",
+      portfolio: "",
+      about: "",
+      role: "",
+      status: "",
+    },
+  });
 
   const router = useRouter();
   const [role, setRole] = useState<string>("");

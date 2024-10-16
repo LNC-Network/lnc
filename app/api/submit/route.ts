@@ -8,10 +8,9 @@ interface FormData {
   phone: string;
   institution: string;
   portfolio: string;
-  about: string;
   role: string;
   status: string;
-  // ... other fields
+  about: string;
 }
 export async function POST(req: Request) {
   try {
