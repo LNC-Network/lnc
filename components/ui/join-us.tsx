@@ -1,34 +1,57 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
 } from "../ui/dropdown-menu";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/navigation";
+
+interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  institution: string;
+  portfolio: string;
+  about: string;
+  role: string;
+  status: string;
+}
 
 const JoinUs = () => {
-  // Input state variables
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    institution: "",
-    portfolio: "",
-    about: "",
-    role: "",
-    status: "",
+  const { register, handleSubmit, setValue, reset, watch } = useForm<FormData>({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      institution: "",
+      portfolio: "",
+      about: "",
+      role: "",
+      status: "",
+    },
   });
+
+  const router = useRouter();
+  const [role, setRole] = useState<string>("");
+  const [status, setStatus] = useState<string>("");
 
   // Load saved form data on component mount
   useEffect(() => {
     const savedData = sessionStorage.getItem("formData");
     if (savedData) {
-      setFormData(JSON.parse(savedData));
+      const parsedData = JSON.parse(savedData);
+      reset(parsedData);
+      setRole(parsedData.role);
+      setStatus(parsedData.status);
     }
-  }, []);
+  }, [reset]);
 
+<<<<<<< HEAD
   // Handle input change and save to sessionStorage
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -38,6 +61,18 @@ const JoinUs = () => {
     setFormData(updatedData);
     sessionStorage.setItem("formData", JSON.stringify(updatedData));
   };
+=======
+  // Watch form values and save to localStorage on change
+  useEffect(() => {
+    const subscription = watch((value) => {
+      setRole(value.role!);
+      setStatus(value.status!);
+      localStorage.setItem("formData", JSON.stringify(value));
+      // console.log(localStorage.getItem("formData"));
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
+>>>>>>> 8915564d62a31446a517182d19c82b953e70fb36
 
   const Role = [
     { id: 1, name: "Developer" },
@@ -53,33 +88,20 @@ const JoinUs = () => {
   ];
 
   // Handle form submission
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
     try {
-      // Send form data to the backend API (assumed endpoint: /api/submit)
       const response = await fetch("/api/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(data),
       });
 
       const result = await response.json();
       if (result.success) {
-        // Reset form fields if successful
-        setFormData({
-          firstName: "",
-          lastName: "",
-          email: "",
-          phone: "",
-          institution: "",
-          portfolio: "",
-          about: "",
-          role: "",
-          status: "",
-        });
+        reset();
+        localStorage.removeItem("formData");
         alert("Form submitted successfully!");
       } else {
         alert("Failed to submit form.");
@@ -88,26 +110,23 @@ const JoinUs = () => {
       console.error("Error submitting form:", error);
       alert("There was an error submitting the form.");
     }
+    router.push("/");
   };
 
   return (
-    <form className="flex flex-col gap-1" onSubmit={handleSubmit}>
+    <form className="flex flex-col gap-1" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex gap-1">
         <input
           type="text"
           className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="First Name"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
+          {...register("firstName")}
         />
         <input
           type="text"
           className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Last Name"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
+          {...register("lastName")}
         />
       </div>
 
@@ -117,17 +136,13 @@ const JoinUs = () => {
           className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="example@example.com"
           autoComplete="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
+          {...register("email")}
         />
         <input
           type="tel"
           className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Phone Number"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
+          {...register("phone")}
         />
       </div>
 
@@ -137,7 +152,7 @@ const JoinUs = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                {formData.role ? formData.role : "Select Role"}
+                {role ? role : "Select Role"}
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
@@ -145,12 +160,17 @@ const JoinUs = () => {
                 <DropdownMenuItem
                   key={role.id}
                   onSelect={() => {
+<<<<<<< HEAD
                     const updatedData = { ...formData, role: role.name };
                     setFormData(updatedData);
                     sessionStorage.setItem(
                       "formData",
                       JSON.stringify(updatedData)
                     );
+=======
+                    setValue("role", role.name);
+                    setRole(role.name);
+>>>>>>> 8915564d62a31446a517182d19c82b953e70fb36
                   }}
                 >
                   {role.name}
@@ -165,7 +185,7 @@ const JoinUs = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                {formData.status ? formData.status : "Select Status"}
+                {status ? status : "Select Status"}
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
@@ -173,12 +193,17 @@ const JoinUs = () => {
                 <DropdownMenuItem
                   key={status.id}
                   onSelect={() => {
+<<<<<<< HEAD
                     const updatedData = { ...formData, status: status.name };
                     setFormData(updatedData);
                     sessionStorage.setItem(
                       "formData",
                       JSON.stringify(updatedData)
                     );
+=======
+                    setValue("status", status.name);
+                    setStatus(status.name);
+>>>>>>> 8915564d62a31446a517182d19c82b953e70fb36
                   }}
                 >
                   {status.name}
@@ -194,9 +219,7 @@ const JoinUs = () => {
           type="text"
           className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Name of institution (University/Company)"
-          name="institution"
-          value={formData.institution}
-          onChange={handleChange}
+          {...register("institution")}
         />
       </div>
 
@@ -204,17 +227,13 @@ const JoinUs = () => {
         type="url"
         className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         placeholder="Portfolio link"
-        name="portfolio"
-        value={formData.portfolio}
-        onChange={handleChange}
+        {...register("portfolio")}
       />
       <textarea
         className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none overflow-y-scroll"
         placeholder="Write something about yourself"
         rows={4}
-        name="about"
-        value={formData.about}
-        onChange={handleChange}
+        {...register("about")}
       />
       <div className="flex justify-center">
         <button
