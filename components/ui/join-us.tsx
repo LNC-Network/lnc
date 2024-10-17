@@ -230,7 +230,7 @@ const JoinUs = () => {
         {...register("portfolio")}
       />
       <textarea
-        className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none overflow-y-scroll"
+        className="mb-2 w-full rounded-3xl py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none overflow-y-scroll"
         placeholder="Write something about yourself"
         rows={4}
         {...register("about")}
