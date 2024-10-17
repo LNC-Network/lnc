@@ -51,7 +51,7 @@ const JoinUs = () => {
     }
   }, [reset]);
 
-<<<<<<< HEAD
+// <<<<<<< HEAD
   // Handle input change and save to sessionStorage
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -61,7 +61,7 @@ const JoinUs = () => {
     setFormData(updatedData);
     sessionStorage.setItem("formData", JSON.stringify(updatedData));
   };
-=======
+// =======
   // Watch form values and save to localStorage on change
   useEffect(() => {
     const subscription = watch((value) => {
@@ -72,7 +72,7 @@ const JoinUs = () => {
     });
     return () => subscription.unsubscribe();
   }, [watch]);
->>>>>>> 8915564d62a31446a517182d19c82b953e70fb36
+// >>>>>>> 8915564d62a31446a517182d19c82b953e70fb36
 
   const Role = [
     { id: 1, name: "Developer" },
