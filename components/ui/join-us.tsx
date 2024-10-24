@@ -51,6 +51,20 @@ const JoinUs = () => {
     }
   }, [reset]);
 
+<<<<<<< HEAD
+=======
+// <<<<<<< HEAD
+  // Handle input change and save to sessionStorage
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    const updatedData = { ...formData, [name]: value };
+    setFormData(updatedData);
+    sessionStorage.setItem("formData", JSON.stringify(updatedData));
+  };
+// =======
+>>>>>>> 9d9dc2fbd5831b6ee6be369bb73771d77699ff4f
   // Watch form values and save to localStorage on change
   useEffect(() => {
     const subscription = watch((value) => {
@@ -61,6 +75,10 @@ const JoinUs = () => {
     });
     return () => subscription.unsubscribe();
   }, [watch]);
+<<<<<<< HEAD
+=======
+// >>>>>>> 8915564d62a31446a517182d19c82b953e70fb36
+>>>>>>> 9d9dc2fbd5831b6ee6be369bb73771d77699ff4f
 
   const Role = [
     { id: 1, name: "Developer" },
@@ -200,7 +218,7 @@ const JoinUs = () => {
         {...register("portfolio")}
       />
       <textarea
-        className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none overflow-y-scroll"
+        className="mb-2 w-full rounded-3xl py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none overflow-y-scroll"
         placeholder="Write something about yourself"
         rows={4}
         {...register("about")}

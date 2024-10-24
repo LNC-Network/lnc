@@ -1,3 +1,6 @@
+import { keyframes } from "framer-motion";
+import { transform } from "next/dist/build/swc";
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -50,7 +53,7 @@ module.exports = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
-        },
+        },      
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -74,12 +77,18 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+        // Rocket Animation
+        'trans-right': {        
+            '0%, 100%':{transform: 'translateX(10px)'},
+            '50%': {transform: 'translateX(0)'},
+        }, 
       },
       animation: {
         shimmer: "shimmer 2s linear infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "spin-slow": 'spin 10s linear infinite',
+        'trans-right':'trans-right 1.5s ease-in-out infinite'
       },
     },
   },
