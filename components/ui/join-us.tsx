@@ -51,34 +51,14 @@ const JoinUs = () => {
     }
   }, [reset]);
 
-<<<<<<< HEAD
-=======
-// <<<<<<< HEAD
-  // Handle input change and save to sessionStorage
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    const updatedData = { ...formData, [name]: value };
-    setFormData(updatedData);
-    sessionStorage.setItem("formData", JSON.stringify(updatedData));
-  };
-// =======
->>>>>>> 9d9dc2fbd5831b6ee6be369bb73771d77699ff4f
-  // Watch form values and save to localStorage on change
   useEffect(() => {
     const subscription = watch((value) => {
       setRole(value.role!);
       setStatus(value.status!);
       localStorage.setItem("formData", JSON.stringify(value));
-      // console.log(localStorage.getItem("formData"));
     });
     return () => subscription.unsubscribe();
   }, [watch]);
-<<<<<<< HEAD
-=======
-// >>>>>>> 8915564d62a31446a517182d19c82b953e70fb36
->>>>>>> 9d9dc2fbd5831b6ee6be369bb73771d77699ff4f
 
   const Role = [
     { id: 1, name: "Developer" },
