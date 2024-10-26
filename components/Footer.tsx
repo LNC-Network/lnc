@@ -29,7 +29,7 @@ const Footer: React.FC = () => {
 
   return (
     <motion.footer
-      className={`bg-gray-900 text-white py-12 fixed bottom-0 left-0 right-0 transition-transform duration-500 ${
+      className={`bg-gray-900 text-white py-12 fixed bottom-0 left-0 right-0 ${
         isVisible ? "translate-y-0" : "translate-y-full"
       }`}
       initial={{ y: "100%" }} // Start off-screen

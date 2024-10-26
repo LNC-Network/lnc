@@ -23,13 +23,13 @@ const CommunitySection: React.FC = () => {
     <Animated>
       <section
         id="join"
-        className="py-24 px-6 text-center bg-gray-900 text-white min-h-screen"
+        className="py-24 px-6 text-center flex flex-col items-center  bg-gray-900 text-white min-h-screen"
       >
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+        <div className="max-w-4xl mx-auto space-y-12">
+          <h2 className="text-8xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
             Code by Night, Innovate by Light
           </h2>
-          <p className="text-xl mb-10 text-gray-300">
+          {/* <p className="text-xl mb-10 text-gray-300">
             Join the L N C and be part of a vibrant community where creativity
             thrives after dark. Together, we turn caffeine into code and dreams
             into digital reality.
@@ -42,7 +42,7 @@ const CommunitySection: React.FC = () => {
           <p className="text-lg mb-10 text-gray-400">
             Share your projects, seek feedback, and connect with like-minded
             individuals who are just as passionate about coding as you are.
-          </p>
+          </p> */}
           <button
             onClick={openModal}
             className="group relative inline-flex items-center justify-center overflow-hidden rounded-full p-0.5 font-bold text-lg"

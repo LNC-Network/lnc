@@ -7,7 +7,7 @@ import Header from "@/components/Header";
 
 export default function Home() {
   return (
-    <main className="pt-24">
+    <main>
       <div className="relative px-3">
         <Header />
         <HeroSection />

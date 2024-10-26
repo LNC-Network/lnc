@@ -71,7 +71,6 @@
 
 body::-webkit-scrollbar {
   display: none;
-
 }
 
 input:-webkit-autofill {
@@ -84,7 +83,6 @@ input:-webkit-autofill {
 textarea::-webkit-scrollbar {
   width: 10px;
   margin-right: 2px;
-
 }
 
 textarea::-webkit-scrollbar-thumb {
@@ -97,4 +95,8 @@ textarea::-webkit-scrollbar-thumb {
 
 textarea::-webkit-scrollbar-track {
   background: transparent;
+}
+
+.silkscreen {
+  font-family: var(--font-silkscreen, sans-serif);
 }
