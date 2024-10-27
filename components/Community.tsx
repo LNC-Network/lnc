@@ -45,10 +45,10 @@ const CommunitySection: React.FC = () => {
           </p> */}
           <button
             onClick={openModal}
-            className="group relative inline-flex items-center justify-center overflow-hidden rounded-full p-0.5 font-bold text-lg"
+            className="group relative inline-flex items-center justify-center overflow-hidden rounded-full p-0.5 font-bold text-2xl"
           >
             <span className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 opacity-70 transition-all duration-400 group-hover:opacity-100 group-hover:blur-sm"></span>
-            <span className="relative rounded-full bg-gray-900 px-8 py-3 transition-all duration-400 group-hover:bg-opacity-90">
+            <span className="relative rounded-full bg-gray-900 px-10 py-6 transition-all duration-400 group-hover:bg-opacity-90">
               Join LNC
             </span>
           </button>
