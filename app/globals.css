@@ -69,6 +69,10 @@
   }
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 input:-webkit-autofill {
   /* to prevent autofill deafult action on browser */
   background-color: #3a3b3c !important;
@@ -76,15 +80,11 @@ input:-webkit-autofill {
   transition: background-color 5000s ease-in-out 0s;
 }
 
-body::-webkit-scrollbar {
-  display: none;
-}
-
 textarea::-webkit-scrollbar {
   width: 10px;
   margin-right: 2px;
-
 }
+
 textarea::-webkit-scrollbar-thumb {
   margin: 7px 0;
   background-color: midnightblue;
@@ -92,6 +92,11 @@ textarea::-webkit-scrollbar-thumb {
   position: absolute;
   z-index: -1;
 }
+
 textarea::-webkit-scrollbar-track {
   background: transparent;
+}
+
+.silkscreen {
+  font-family: var(--font-silkscreen, sans-serif);
 }
