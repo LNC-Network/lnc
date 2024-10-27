@@ -3,7 +3,7 @@
 import React from "react";
 import Animated from "@/components/Animation"; // Import your Animated component
 import VideoEffect from "./VideoEffect"; // Import your VideoEffect component
-import homeBg from "../public/videos/testBg.mp4";
+import testBg from "../public/videos/testBg.mp4";
 
 const Hero: React.FC = () => {
   return (
@@ -11,7 +11,7 @@ const Hero: React.FC = () => {
       <Animated>
         <section id="home" className="relative text-center w-full h-screen">
           <video
-            src={homeBg}
+            src={testBg}
             autoPlay
             loop
             muted
