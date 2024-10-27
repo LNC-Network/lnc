@@ -4,15 +4,23 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
 } from "../ui/dropdown-menu";
-const JoinUs = () => {
-  const inputField = () => {
-    return "mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500";
-  };
 
-  const [selectedRole, setSelectedRole] = useState("Select Role");
-  const [selectedStatus, setSelectedStatus] = useState("Select Status");
+const JoinUs: React.FC<{ closeModal: () => void }> = ({ closeModal }) => {
+  const inputField = () =>
+    "mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500";
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    role: "Select Role",
+    status: "Select Status",
+    institution: "",
+    portfolio: "",
+    about: "",
+  });
 
   const Role = [
     { id: 1, name: "Developer" },
@@ -27,17 +35,52 @@ const JoinUs = () => {
     { id: 3, name: "Not working" },
   ];
 
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("/api/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      if (!response.ok) throw new Error("Network Problem!");
+      const result = await response.json();
+      console.log("Data saved:", result);
+      closeModal();
+    } catch (error) {
+      console.error("Failed to save data:", error);
+      alert("Failed to save data. Please try again.");
+    }
+  };
+
   return (
-    <form className="flex flex-col gap-1">
+    <form className="flex flex-col gap-1" onSubmit={handleSubmit}>
       <div className="flex gap-1">
         <input
           type="text"
-          className={`${inputField()}`}
+          name="firstName"
+          value={formData.firstName}
+          onChange={handleChange}
+          className={inputField()}
           placeholder="First Name"
         />
         <input
           type="text"
-          className={`${inputField()}`}
+          name="lastName"
+          value={formData.lastName}
+          onChange={handleChange}
+          className={inputField()}
           placeholder="Last Name"
         />
       </div>
@@ -45,29 +88,36 @@ const JoinUs = () => {
       <div className="flex gap-1">
         <input
           type="email"
-          className={`${inputField()}`}
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          className={inputField()}
           placeholder="example@example.com"
           autoComplete="email"
         />
         <input
           type="tel"
-          className={`${inputField()}`}
+          name="phone"
+          value={formData.phone}
+          onChange={handleChange}
+          className={inputField()}
           placeholder="Phone Number"
         />
       </div>
 
       <div className="flex gap-1">
-        {/* Dropdown for Role */}
         <div className="w-1/2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className={inputField()}>{selectedRole}</button>
+              <button type="button" className={inputField()}>
+                {formData.role}
+              </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               {Role.map((role) => (
                 <DropdownMenuItem
                   key={role.id}
-                  onSelect={() => setSelectedRole(role.name)} // Update selected role
+                  onClick={() => setFormData({ ...formData, role: role.name })}
                 >
                   {role.name}
                 </DropdownMenuItem>
@@ -79,13 +129,17 @@ const JoinUs = () => {
         <div className="w-1/2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className={inputField()}>{selectedStatus}</button>
+              <button type="button" className={inputField()}>
+                {formData.status}
+              </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               {WorkingStatus.map((status) => (
                 <DropdownMenuItem
                   key={status.id}
-                  onSelect={() => setSelectedStatus(status.name)} // Update selected status
+                  onClick={() =>
+                    setFormData({ ...formData, status: status.name })
+                  }
                 >
                   {status.name}
                 </DropdownMenuItem>
@@ -98,19 +152,29 @@ const JoinUs = () => {
       <div>
         <input
           type="text"
+          name="institution"
+          value={formData.institution}
+          onChange={handleChange}
           className={inputField()}
           placeholder="Name of institution (University/Company)"
         />
       </div>
 
-      <input type="url" className={inputField()} placeholder="Portfolio link" />
+      <input
+        type="url"
+        name="portfolio"
+        value={formData.portfolio}
+        onChange={handleChange}
+        className={inputField()}
+        placeholder="Portfolio link"
+      />
       <textarea
-        className={`${inputField()} resize-none overflow-y-scroll`}
+        name="about"
+        value={formData.about}
+        onChange={handleChange}
+        className="resize-none overflow-y-scroll mb-2 w-full rounded-lg py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         placeholder="Write something about yourself"
         rows={4}
-        style={{
-          borderRadius: "8px", // Correct camelCase
-        }}
       />
       <div className="flex justify-center">
         <button

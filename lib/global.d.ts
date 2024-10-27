@@ -1,5 +1,6 @@
+import { MongoClient } from "mongodb";
+//for mongodb type error handling
 declare global {
-    let mongoClientPromise: Promise<MongoClient> | undefined;
+    var mongoClientPromise: Promise<MongoClient> | undefined;
 }
-
-export { }; 
+export { };

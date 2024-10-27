@@ -72,7 +72,7 @@ const CommunitySection: React.FC = () => {
             &times;
           </button>
         </div>
-        <JoinUs />
+        <JoinUs closeModal={closeModal} />
       </Modal>
     </Animated>
   );
