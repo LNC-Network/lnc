@@ -81,8 +81,8 @@ module.exports = {
         'trans-right': {        
             '0%, 100%':{transform: 'translateX(10px)'},
             '50%': {transform: 'translateX(0)'},
-        }, 
-      },
+        },
+      }, 
       animation: {
         shimmer: "shimmer 2s linear infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
