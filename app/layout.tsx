@@ -1,8 +1,8 @@
 import { ThemeProvider } from "next-themes";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Silkscreen } from "next/font/google";
 import "./globals.css";
-
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -13,27 +13,32 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 900",
 });
+const silkscreen = Silkscreen({
+  subsets: ["latin"],
+  variable: "--font-silkscreen",
+  weight: ["400", "700"],
+});
 
 export const metadata: Metadata = {
   title: "LNC Community",
   description: "For The Greater Future",
 };
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="coffee">
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${silkscreen.variable} antialiased`}
       >
         <ThemeProvider attribute="class">{children}</ThemeProvider>
       </body>
     </html>
   );
 }
-

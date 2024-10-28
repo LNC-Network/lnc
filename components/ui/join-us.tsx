@@ -51,28 +51,14 @@ const JoinUs = () => {
     }
   }, [reset]);
 
-// <<<<<<< HEAD
-  // Handle input change and save to sessionStorage
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    const updatedData = { ...formData, [name]: value };
-    setFormData(updatedData);
-    sessionStorage.setItem("formData", JSON.stringify(updatedData));
-  };
-// =======
-  // Watch form values and save to localStorage on change
   useEffect(() => {
     const subscription = watch((value) => {
       setRole(value.role!);
       setStatus(value.status!);
       localStorage.setItem("formData", JSON.stringify(value));
-      // console.log(localStorage.getItem("formData"));
     });
     return () => subscription.unsubscribe();
   }, [watch]);
-// >>>>>>> 8915564d62a31446a517182d19c82b953e70fb36
 
   const Role = [
     { id: 1, name: "Developer" },
@@ -160,17 +146,8 @@ const JoinUs = () => {
                 <DropdownMenuItem
                   key={role.id}
                   onSelect={() => {
-<<<<<<< HEAD
-                    const updatedData = { ...formData, role: role.name };
-                    setFormData(updatedData);
-                    sessionStorage.setItem(
-                      "formData",
-                      JSON.stringify(updatedData)
-                    );
-=======
                     setValue("role", role.name);
                     setRole(role.name);
->>>>>>> 8915564d62a31446a517182d19c82b953e70fb36
                   }}
                 >
                   {role.name}
@@ -193,17 +170,8 @@ const JoinUs = () => {
                 <DropdownMenuItem
                   key={status.id}
                   onSelect={() => {
-<<<<<<< HEAD
-                    const updatedData = { ...formData, status: status.name };
-                    setFormData(updatedData);
-                    sessionStorage.setItem(
-                      "formData",
-                      JSON.stringify(updatedData)
-                    );
-=======
                     setValue("status", status.name);
                     setStatus(status.name);
->>>>>>> 8915564d62a31446a517182d19c82b953e70fb36
                   }}
                 >
                   {status.name}
