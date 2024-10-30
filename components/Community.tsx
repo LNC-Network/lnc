@@ -75,7 +75,7 @@ const CommunitySection = () => {
               Become a Night Coder
             </DialogTitle>
           </DialogHeader>
-          <JoinUs />
+          <JoinUs/>
         </DialogContent>
       </Dialog>
     </Animated>
