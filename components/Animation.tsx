@@ -6,10 +6,10 @@ import { useInView } from "react-intersection-observer";
 
 interface AnimatedProps {
   children: React.ReactNode;
-  direction?: "up" | "left" | "right";
+  // direction?: "up" | "left" | "right";
 }
 
-const Animated: React.FC<AnimatedProps> = ({ children, direction = "up" }) => {
+const Animated: React.FC<AnimatedProps> = ({ children }) => {
   const controls = useAnimation();
   const [ref, inView] = useInView({ triggerOnce: false, threshold: 0.1 });
 

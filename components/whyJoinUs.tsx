@@ -1,6 +1,5 @@
 import Features from "./ui/Features";
-import { Parallax } from "react-parallax";
-import Image from "next/image";
+// import Image from "next/image";
 
 const WhyJoinUs = () => {
   return (
