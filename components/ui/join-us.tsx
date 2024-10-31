@@ -57,7 +57,6 @@ const JoinUs = () => {
       if (!response.ok) throw new Error("Network Problem!");
       const result = await response.json();
       console.log("Data saved:", result);
-      closeModal();
     } catch (error) {
       console.error("Failed to save data:", error);
       alert("Failed to save data. Please try again.");
