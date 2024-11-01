@@ -1,64 +1,26 @@
-"use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
 } from "../ui/dropdown-menu";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useRouter } from "next/navigation";
-
-interface FormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  institution: string;
-  portfolio: string;
-  about: string;
-  role: string;
-  status: string;
-}
 
 const JoinUs = () => {
-  const { register, handleSubmit, setValue, reset, watch } = useForm<FormData>({
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      institution: "",
-      portfolio: "",
-      about: "",
-      role: "",
-      status: "",
-    },
+  const inputField = () =>
+    "mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500";
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    role: "Select Role",
+    status: "Select Status",
+    institution: "",
+    portfolio: "",
+    about: "",
   });
-
-  const router = useRouter();
-  const [role, setRole] = useState<string>("");
-  const [status, setStatus] = useState<string>("");
-
-  // Load saved form data on component mount
-  useEffect(() => {
-    const savedData = sessionStorage.getItem("formData");
-    if (savedData) {
-      const parsedData = JSON.parse(savedData);
-      reset(parsedData);
-      setRole(parsedData.role);
-      setStatus(parsedData.status);
-    }
-  }, [reset]);
-
-  useEffect(() => {
-    const subscription = watch((value) => {
-      setRole(value.role!);
-      setStatus(value.status!);
-      localStorage.setItem("formData", JSON.stringify(value));
-    });
-    return () => subscription.unsubscribe();
-  }, [watch]);
 
   const Role = [
     { id: 1, name: "Developer" },
@@ -73,82 +35,88 @@ const JoinUs = () => {
     { id: 3, name: "Not working" },
   ];
 
-  // Handle form submission
-  const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
       const response = await fetch("/api/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(formData),
       });
-
+      if (!response.ok) throw new Error("Network Problem!");
       const result = await response.json();
-      if (result.success) {
-        reset();
-        localStorage.removeItem("formData");
-        alert("Form submitted successfully!");
-      } else {
-        alert("Failed to submit form.");
-      }
+      console.log("Data saved:", result);
     } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("There was an error submitting the form.");
+      console.error("Failed to save data:", error);
+      alert("Failed to save data. Please try again.");
     }
-    router.push("/");
   };
 
   return (
-    <form className="flex flex-col gap-1" onSubmit={handleSubmit(onSubmit)}>
+    <form className="flex flex-col gap-1" onSubmit={handleSubmit}>
       <div className="flex gap-1">
         <input
           type="text"
-          className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          name="firstName"
+          value={formData.firstName}
+          onChange={handleChange}
+          className={inputField()}
           placeholder="First Name"
-          {...register("firstName")}
         />
         <input
           type="text"
-          className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          name="lastName"
+          value={formData.lastName}
+          onChange={handleChange}
+          className={inputField()}
           placeholder="Last Name"
-          {...register("lastName")}
         />
       </div>
 
       <div className="flex gap-1">
         <input
           type="email"
-          className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          className={inputField()}
           placeholder="example@example.com"
           autoComplete="email"
-          {...register("email")}
         />
         <input
           type="tel"
-          className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          name="phone"
+          value={formData.phone}
+          onChange={handleChange}
+          className={inputField()}
           placeholder="Phone Number"
-          {...register("phone")}
         />
       </div>
 
       <div className="flex gap-1">
-        {/* Dropdown for Role */}
         <div className="w-1/2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                {role ? role : "Select Role"}
+              <button type="button" className={inputField()}>
+                {formData.role}
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               {Role.map((role) => (
                 <DropdownMenuItem
                   key={role.id}
-                  onSelect={() => {
-                    setValue("role", role.name);
-                    setRole(role.name);
-                  }}
+                  onClick={() => setFormData({ ...formData, role: role.name })}
                 >
                   {role.name}
                 </DropdownMenuItem>
@@ -157,22 +125,20 @@ const JoinUs = () => {
           </DropdownMenu>
         </div>
 
-        {/* Dropdown for Status */}
         <div className="w-1/2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                {status ? status : "Select Status"}
+              <button type="button" className={inputField()}>
+                {formData.status}
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               {WorkingStatus.map((status) => (
                 <DropdownMenuItem
                   key={status.id}
-                  onSelect={() => {
-                    setValue("status", status.name);
-                    setStatus(status.name);
-                  }}
+                  onClick={() =>
+                    setFormData({ ...formData, status: status.name })
+                  }
                 >
                   {status.name}
                 </DropdownMenuItem>
@@ -185,23 +151,29 @@ const JoinUs = () => {
       <div>
         <input
           type="text"
-          className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          name="institution"
+          value={formData.institution}
+          onChange={handleChange}
+          className={inputField()}
           placeholder="Name of institution (University/Company)"
-          {...register("institution")}
         />
       </div>
 
       <input
         type="url"
-        className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        name="portfolio"
+        value={formData.portfolio}
+        onChange={handleChange}
+        className={inputField()}
         placeholder="Portfolio link"
-        {...register("portfolio")}
       />
       <textarea
-        className="mb-2 w-full rounded-3xl py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none overflow-y-scroll"
+        name="about"
+        value={formData.about}
+        onChange={handleChange}
+        className="resize-none overflow-y-scroll mb-2 w-full rounded-lg py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         placeholder="Write something about yourself"
         rows={4}
-        {...register("about")}
       />
       <div className="flex justify-center">
         <button

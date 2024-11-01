@@ -23,7 +23,7 @@ const CommunitySection = () => {
     <Animated>
       <section
         id="join"
-        className="py-24 px-6 text-center bg-gray-900 text-white min-h-screen"
+        className="py-24 px-6 text-center bg-white dark:bg-slate-800 text-white min-h-screen animate-EvervaultCard"
       >
         <div className="max-w-8xl mx-auto">
           <div className="flex">
@@ -75,7 +75,7 @@ const CommunitySection = () => {
               Become a Night Coder
             </DialogTitle>
           </DialogHeader>
-          <JoinUs />
+          <JoinUs/>
         </DialogContent>
       </Dialog>
     </Animated>

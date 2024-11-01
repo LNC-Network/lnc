@@ -1,12 +1,13 @@
-declare global {
-  // MongoDB client promise for database connections
-  let mongoClientPromise: Promise<MongoClient> | undefined;
+import { MongoClient } from "mongodb";
+//for mongodb type error handling
 
-  // Add any other global declarations here
+/* eslint no-var: "off" */
+/* eslint prefer-const: "off" */
+declare global {
+    var mongoClientPromise: Promise<MongoClient> | undefined;
+
   interface Window {
-    scrollY: number; // For VideoEffect component
+    scrollY: number; 
   }
 }
-
-// Required for TypeScript module augmentation
 export {};
