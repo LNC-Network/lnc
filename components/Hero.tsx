@@ -7,11 +7,11 @@ const Hero: React.FC = () => {
     // Function to load the canvas animation script
     const loadCanvasAnimation = () => {
       const existingScript = document.querySelector(
-        'script[src="/lib/fluidBackground.js"]'
+        'script[src="lib/fluidBackground.js"]'
       );
       if (!existingScript) {
         const script = document.createElement("script");
-        script.src = "/lib/fluidBackground.js"; // Path to your animation script
+        script.src = "lib/fluidBackground.js"; // Path to your animation script
         script.async = true; // Load the script asynchronously
         script.onload = () => {
           console.log("Fluid background script loaded successfully.");
