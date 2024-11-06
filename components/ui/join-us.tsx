@@ -60,7 +60,7 @@ const JoinUs = () => {
   }, [reset]);
 
   React.useEffect(() => {
-    const subscription = watch((value: any) => {
+    const subscription = watch((value) => {
       sessionStorage.setItem("formData", JSON.stringify(value));
     });
     return () => subscription.unsubscribe();
@@ -79,7 +79,7 @@ const JoinUs = () => {
     { id: 3, name: "Not working" },
   ];
 
-  const onSubmit: SubmitHandler<FormData> = async (data: any) => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
       const response = await fetch("/api/submit", {
         method: "POST",
