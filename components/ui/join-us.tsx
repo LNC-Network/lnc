@@ -79,7 +79,7 @@ const JoinUs = () => {
     { id: 3, name: "Not working" },
   ];
 
-  const onSubmit: SubmitHandler<FormData> = async (data: any) => {
+  const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
     try {
       const response = await fetch("/api/submit", {
         method: "POST",
@@ -133,10 +133,10 @@ const JoinUs = () => {
         />
         {errors.email && <span>{errors.email.message}</span>}
         <input
-          type="tel"
+          type="number"
           className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Phone Number"
-          {...register("phone")}
+          {...register("phone", { valueAsNumber: true })}
         />
         {errors.phone && <span>{errors.phone.message}</span>}
       </div>

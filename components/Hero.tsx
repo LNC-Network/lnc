@@ -37,6 +37,7 @@ const Hero: React.FC = () => {
       }
     };
   }, []);
+
   return (
     <>
       <Animated>
