@@ -21,4 +21,8 @@ const nextConfig = {
 const withBundleAnalyzer = NextBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true'
 });
+// to use bundle analyzer
+// ```$env:ANALYZE="true"
+// npm run build```
+
 export default withBundleAnalyzer(nextConfig);
