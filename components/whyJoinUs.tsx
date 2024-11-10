@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef, useEffect } from "react";
-import stars from "../public/videos/stars.mp4"
+import stars from "../public/videos/stars.mp4";
 import Features from "./ui/Features";
 const ScrollVideo = () => {
   const video = useRef<HTMLVideoElement>(null);
@@ -14,11 +14,10 @@ const ScrollVideo = () => {
       const scrollPercent = scrollPosition / maxScroll;
 
       if (video.current && video.current.duration) {
-        video.current.currentTime =
-          video.current.duration * scrollPercent;
+        video.current.currentTime = video.current.duration * scrollPercent;
       }
     });
-  }
+  };
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);

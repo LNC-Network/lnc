@@ -6,9 +6,9 @@ import {
   DropdownMenuItem,
 } from "../ui/dropdown-menu";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -46,7 +46,6 @@ const JoinUs = () => {
       status: "",
     },
   });
-
   const router = useRouter();
   const role = watch("role");
   const status = watch("status");
@@ -74,34 +73,34 @@ const JoinUs = () => {
     { id: 5, name: "Researcher" },
   ];
   const WorkingStatus = [
-    { id: 1, name: "Working" },
-    { id: 2, name: "Student" },
+    { id: 1, name: "Student" },
+    { id: 2, name: "Working" },
     { id: 3, name: "Not working" },
   ];
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
-      const response = await fetch("/api/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      // const response = await fetch("/api/submit", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(data),
+      // });
 
-      const result = await response.json();
+      const result = { success: true }; // await response.json();
       if (result.success) {
-        reset();
         sessionStorage.removeItem("formData");
+        reset();
         alert("Form submitted successfully!");
+        router.refresh();
       } else {
         alert("Failed to submit form.");
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("There was an error submitting the form.");
+      alert("There was an error submitting the form. " + error);
     }
-    router.push("/");
   };
 
   return (
@@ -210,9 +209,19 @@ const JoinUs = () => {
       <div className="flex justify-center">
         <button
           type="submit"
-          className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500"
+          className=" gap-40 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500"
         >
           Submit
+        </button>
+        <button
+          type="button"
+          className="mx-4 px-4 py-2 gap-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-500"
+          onClick={() => {
+            sessionStorage.removeItem("formData");
+            reset();
+          }}
+        >
+          Clear
         </button>
       </div>
     </form>
