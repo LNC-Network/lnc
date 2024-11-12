@@ -9,7 +9,8 @@ Here's a polished version of the README that adds a more welcoming tone and clea
 ---
 
 ## About
-The **LNC Community** project is designed for contributors and developers looking to get involved in building a vibrant digital community. This guide will help you set up the project locally and start contributing.
+The **LNC Community** project is designed for contributors and developers looking to get involved in building a vibrant digital community.
+This guide will help you set up the project locally and start contributing.
 
 ---
 
