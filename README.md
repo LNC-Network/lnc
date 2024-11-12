@@ -8,7 +8,7 @@ To build for new devs<br><br>
 install nodejs (only works on windows)
 
 ```bash
-choco install nodejs --version="22.9.0"
+choco install nodejs --version="22.11.0"
 ```
 
 after that open any directory and open terminal and paste this command

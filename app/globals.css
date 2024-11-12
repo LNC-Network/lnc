@@ -59,11 +59,16 @@
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+::-webkit-scrollbar {
+  display: none !important;
+}
+
+html {
+  scrollbar-width: 0px;
+}
+
+body {
+  -ms-overflow-style: none;
+  background-color: hsl(0, 0%, 0%);
+  scroll-behavior: smooth;
 }

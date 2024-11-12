@@ -1,5 +1,4 @@
-"use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -7,27 +6,39 @@ import {
   DropdownMenuItem,
 } from "../ui/dropdown-menu";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 
-interface FormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  institution: string;
-  portfolio: string;
-  about: string;
-  role: string;
-  status: string;
-}
+const formSchema = z.object({
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  email: z.string().email("Invalid email address"),
+  phone: z.number().min(10, "Phone number is required"),
+  institution: z.string().optional(),
+  portfolio: z.string().url("Invalid URL").optional(),
+  about: z.string().optional(),
+  role: z.string().min(1, "Role is required"),
+  status: z.string().min(1, "Status is required"),
+});
+
+type FormData = z.infer<typeof formSchema>;
 
 const JoinUs = () => {
-  const { register, handleSubmit, setValue, reset, watch } = useForm<FormData>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
       email: "",
-      phone: "",
+      phone: 0,
       institution: "",
       portfolio: "",
       about: "",
@@ -35,27 +46,21 @@ const JoinUs = () => {
       status: "",
     },
   });
-
   const router = useRouter();
-  const [role, setRole] = useState<string>("");
-  const [status, setStatus] = useState<string>("");
+  const role = watch("role");
+  const status = watch("status");
 
-  // Load saved form data on component mount
-  useEffect(() => {
+  React.useEffect(() => {
     const savedData = sessionStorage.getItem("formData");
     if (savedData) {
       const parsedData = JSON.parse(savedData);
       reset(parsedData);
-      setRole(parsedData.role);
-      setStatus(parsedData.status);
     }
   }, [reset]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const subscription = watch((value) => {
-      setRole(value.role!);
-      setStatus(value.status!);
-      localStorage.setItem("formData", JSON.stringify(value));
+      sessionStorage.setItem("formData", JSON.stringify(value));
     });
     return () => subscription.unsubscribe();
   }, [watch]);
@@ -68,35 +73,34 @@ const JoinUs = () => {
     { id: 5, name: "Researcher" },
   ];
   const WorkingStatus = [
-    { id: 1, name: "Working" },
-    { id: 2, name: "Student" },
+    { id: 1, name: "Student" },
+    { id: 2, name: "Working" },
     { id: 3, name: "Not working" },
   ];
 
-  // Handle form submission
-  const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
-      const response = await fetch("/api/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      // const response = await fetch("/api/submit", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(data),
+      // });
 
-      const result = await response.json();
+      const result = { success: true }; // await response.json();
       if (result.success) {
+        sessionStorage.removeItem("formData");
         reset();
-        localStorage.removeItem("formData");
         alert("Form submitted successfully!");
+        router.refresh();
       } else {
         alert("Failed to submit form.");
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("There was an error submitting the form.");
+      alert("There was an error submitting the form. " + error);
     }
-    router.push("/");
   };
 
   return (
@@ -108,12 +112,14 @@ const JoinUs = () => {
           placeholder="First Name"
           {...register("firstName")}
         />
+        {errors.firstName && <span>{errors.firstName.message}</span>}
         <input
           type="text"
           className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Last Name"
           {...register("lastName")}
         />
+        {errors.lastName && <span>{errors.lastName.message}</span>}
       </div>
 
       <div className="flex gap-1">
@@ -124,16 +130,17 @@ const JoinUs = () => {
           autoComplete="email"
           {...register("email")}
         />
+        {errors.email && <span>{errors.email.message}</span>}
         <input
-          type="tel"
+          type="number"
           className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Phone Number"
-          {...register("phone")}
+          {...register("phone", { valueAsNumber: true })}
         />
+        {errors.phone && <span>{errors.phone.message}</span>}
       </div>
 
       <div className="flex gap-1">
-        {/* Dropdown for Role */}
         <div className="w-1/2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -145,19 +152,16 @@ const JoinUs = () => {
               {Role.map((role) => (
                 <DropdownMenuItem
                   key={role.id}
-                  onSelect={() => {
-                    setValue("role", role.name);
-                    setRole(role.name);
-                  }}
+                  onSelect={() => setValue("role", role.name)}
                 >
                   {role.name}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
+          {errors.role && <span>{errors.role.message}</span>}
         </div>
 
-        {/* Dropdown for Status */}
         <div className="w-1/2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -169,16 +173,14 @@ const JoinUs = () => {
               {WorkingStatus.map((status) => (
                 <DropdownMenuItem
                   key={status.id}
-                  onSelect={() => {
-                    setValue("status", status.name);
-                    setStatus(status.name);
-                  }}
+                  onSelect={() => setValue("status", status.name)}
                 >
                   {status.name}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
+          {errors.status && <span>{errors.status.message}</span>}
         </div>
       </div>
 
@@ -197,6 +199,7 @@ const JoinUs = () => {
         placeholder="Portfolio link"
         {...register("portfolio")}
       />
+      {errors.portfolio && <span>{errors.portfolio.message}</span>}
       <textarea
         className="mb-2 w-full rounded-3xl py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none overflow-y-scroll"
         placeholder="Write something about yourself"
@@ -206,9 +209,19 @@ const JoinUs = () => {
       <div className="flex justify-center">
         <button
           type="submit"
-          className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500"
+          className=" gap-40 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500"
         >
           Submit
+        </button>
+        <button
+          type="button"
+          className="mx-4 px-4 py-2 gap-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-500"
+          onClick={() => {
+            sessionStorage.removeItem("formData");
+            reset();
+          }}
+        >
+          Clear
         </button>
       </div>
     </form>
