@@ -4,13 +4,13 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "../ui/dropdown-menu";
+} from "./dropdown-menu";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FormData, formSchema } from "@/types/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 
-function JoinUs() {
+function Form() {
   const {
     register,
     handleSubmit,
@@ -223,4 +223,4 @@ function JoinUs() {
   );
 }
 
-export default JoinUs;
+export default Form;

@@ -89,15 +89,15 @@ const Footer: React.FC = () => {
             rel="noopener noreferrer"
             className="transition-transform transform hover:-translate-y-2 hover:scale-105 duration-300 bg-white p-3 rounded-lg shadow-md flex items-center justify-center"
           >
-            <Image src="/icons/gmail.svg" alt="Gmail" width={32} height={32} />
+            <Image src="/svg/gmail.svg" alt="Gmail" width={32} height={32} />
           </a>
           <a
             href="https://github.com/LNC-Network"
             target="_blank"
             rel="noopener noreferrer"
-            className="transition-transform transform hover:-translate-y-2 hover:scale-105 duration-300 bg-gray-800 p-3 rounded-lg shadow-md flex items-center justify-center"
+            className="transition-transform transform hover:-translate-y-2 hover:scale-105 duration-300 bg-black p-3 rounded-lg shadow-md flex items-center justify-center"
           >
-            <FaGithub className="h-8 w-8 text-white" />
+            <FaGithub className="h-8 w-8 text-white" />{" "}
           </a>
           <a
             href="https://www.linkedin.com/company/late-night-coders/"
@@ -126,7 +126,7 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="mt-2 text-center border-t border-gray-700 pt-6">
-          <p>© {new Date().getFullYear()} LNC. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} LNC. All rights reserved.</p>
         </div>
       </div>
     </motion.footer>

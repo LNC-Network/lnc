@@ -1,22 +1,44 @@
 import { MongoClient } from "mongodb";
 
-const uri = process.env.MONGODB_URI || "";
-let client: MongoClient;
-let clientPromise: Promise<MongoClient>;
+const uri: string | undefined = process.env.MONGODB_URI;
 
 if (!uri) {
     throw new Error("Missing MONGODB_URI in environment variables");
 }
 
-if (process.env.NODE_ENV === "development") {
-    if (!global.mongoClientPromise) {
+let client: MongoClient;
+const clientPromise: Promise<MongoClient> = (async () => {
+    if (!global._mongoClientPromise) {
         client = new MongoClient(uri);
-        global.mongoClientPromise = client.connect();
+        global._mongoClientPromise = client.connect();
     }
-    clientPromise = global.mongoClientPromise;
-} else {
-    client = new MongoClient(uri);
-    clientPromise = client.connect();
-}
+    return global._mongoClientPromise;
+})();
+
+// Close MongoDB connection on application shutdown
+const closeMongoConnection = async () => {
+    try {
+        if (client) {
+            console.log("Closing MongoDB connection...");
+            await client.close();
+            console.log("MongoDB connection closed.");
+        }
+    } catch (error) {
+        console.error("Error while closing MongoDB connection:", error);
+    }
+};
+
+// termination of connection
+process.on("SIGINT", async () => {
+    console.log("Received SIGINT signal.");
+    await closeMongoConnection();
+    process.exit(0);
+});
+
+process.on("SIGTERM", async () => {
+    console.log("Received SIGTERM signal.");
+    await closeMongoConnection();
+    process.exit(0);
+});
 
 export default clientPromise;
