@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -6,25 +6,11 @@ import {
   DropdownMenuItem,
 } from "../ui/dropdown-menu";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { z } from "zod";
+import { FormData, formSchema } from "@/types/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 
-const formSchema = z.object({
-  firstName: z.string().min(1, "First name is required"),
-  lastName: z.string().min(1, "Last name is required"),
-  email: z.string().email("Invalid email address"),
-  phone: z.number().min(10, "Phone number is required"),
-  institution: z.string().optional(),
-  portfolio: z.string().url("Invalid URL").optional(),
-  about: z.string().optional(),
-  role: z.string().min(1, "Role is required"),
-  status: z.string().min(1, "Status is required"),
-});
-
-type FormData = z.infer<typeof formSchema>;
-
-const JoinUs = () => {
+function JoinUs() {
   const {
     register,
     handleSubmit,
@@ -35,10 +21,9 @@ const JoinUs = () => {
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      name: "",
       email: "",
-      phone: 0,
+      phone: "",
       institution: "",
       portfolio: "",
       about: "",
@@ -50,7 +35,7 @@ const JoinUs = () => {
   const role = watch("role");
   const status = watch("status");
 
-  React.useEffect(() => {
+  useEffect(() => {
     const savedData = sessionStorage.getItem("formData");
     if (savedData) {
       const parsedData = JSON.parse(savedData);
@@ -58,7 +43,7 @@ const JoinUs = () => {
     }
   }, [reset]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const subscription = watch((value) => {
       sessionStorage.setItem("formData", JSON.stringify(value));
     });
@@ -78,64 +63,62 @@ const JoinUs = () => {
     { id: 3, name: "Not working" },
   ];
 
+  // submit handeller___________________________________
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
-      // const response = await fetch("/api/submit", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(data),
-      // });
+      const response = await fetch("/api/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-      const result = { success: true }; // await response.json();
-      if (result.success) {
+      if (response.ok) {
         sessionStorage.removeItem("formData");
         reset();
         alert("Form submitted successfully!");
+        // todo add conditional rendering for form submission like button animation
         router.refresh();
       } else {
+        console.error("Server faliure", response);
         alert("Failed to submit form.");
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("There was an error submitting the form. " + error);
+      alert("There was an error submitting the form.");
     }
+  }; //____________________________________________________
+
+  const buttonCSS = () => {
+    return "mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500";
   };
 
   return (
     <form className="flex flex-col gap-1" onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex gap-1">
+      <div className="flex flex-col">
         <input
           type="text"
-          className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="First Name"
-          {...register("firstName")}
+          className={buttonCSS()}
+          placeholder="Your name"
+          {...register("name")}
         />
-        {errors.firstName && <span>{errors.firstName.message}</span>}
-        <input
-          type="text"
-          className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Last Name"
-          {...register("lastName")}
-        />
-        {errors.lastName && <span>{errors.lastName.message}</span>}
+        {errors.name && <span>{errors.name.message}</span>}
       </div>
-
-      <div className="flex gap-1">
+      <div className="flex flex-col">
         <input
           type="email"
-          className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className={buttonCSS()}
           placeholder="example@example.com"
           autoComplete="email"
           {...register("email")}
         />
         {errors.email && <span>{errors.email.message}</span>}
         <input
-          type="number"
-          className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          type="tel"
+          className={buttonCSS()}
           placeholder="Phone Number"
-          {...register("phone", { valueAsNumber: true })}
+          {...register("phone")}
         />
         {errors.phone && <span>{errors.phone.message}</span>}
       </div>
@@ -144,7 +127,7 @@ const JoinUs = () => {
         <div className="w-1/2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <button className={buttonCSS()}>
                 {role ? role : "Select Role"}
               </button>
             </DropdownMenuTrigger>
@@ -165,7 +148,7 @@ const JoinUs = () => {
         <div className="w-1/2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <button className={buttonCSS()}>
                 {status ? status : "Select Status"}
               </button>
             </DropdownMenuTrigger>
@@ -187,38 +170,50 @@ const JoinUs = () => {
       <div>
         <input
           type="text"
-          className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Name of institution (University/Company)"
+          className={buttonCSS()}
+          placeholder="name of institution (University/Company)"
           {...register("institution")}
         />
       </div>
+      <div className="flex flex-col">
+        <input
+          type="url"
+          className={buttonCSS()}
+          placeholder="Portfolio link"
+          {...register("portfolio")}
+        />
+        {errors.portfolio && <span>{errors.portfolio.message}</span>}
+      </div>
 
-      <input
-        type="url"
-        className="mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        placeholder="Portfolio link"
-        {...register("portfolio")}
-      />
-      {errors.portfolio && <span>{errors.portfolio.message}</span>}
       <textarea
-        className="mb-2 w-full rounded-3xl py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none overflow-y-scroll"
+        className="mb-2 w-full rounded-xl py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
         placeholder="Write something about yourself"
-        rows={4}
+        rows={3}
         {...register("about")}
       />
-      <div className="flex justify-center">
+      <div className="flex justify-center space-x-10">
         <button
           type="submit"
-          className=" gap-40 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500"
+          className="py-2 bg-indigo-600 text-white rounded-sm hover:bg-indigo-500 w-20"
         >
           Submit
         </button>
+
         <button
           type="button"
-          className="mx-4 px-4 py-2 gap-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-500"
+          className="py-2 bg-slate-600 text-white rounded-sm hover:bg-slate-500 w-20"
           onClick={() => {
             sessionStorage.removeItem("formData");
-            reset();
+            reset({
+              name: "",
+              email: "",
+              phone: "",
+              institution: "",
+              portfolio: "",
+              about: "",
+              role: "",
+              status: "",
+            });
           }}
         >
           Clear
@@ -226,6 +221,6 @@ const JoinUs = () => {
       </div>
     </form>
   );
-};
+}
 
 export default JoinUs;
