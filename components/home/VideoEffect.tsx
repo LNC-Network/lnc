@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 // import { Button } from "@/components/ui/button";
 import Animated from "@/components/Animation";
 // import { useInView } from "react-intersection-observer";
-import testBg from "../public/videos/testBg.mp4";
+import testBg from "../../public/videos/testBg.mp4";
 
 const VideoEffect: React.FC = () => {
   const [scrollPos, setScrollPos] = React.useState(0);

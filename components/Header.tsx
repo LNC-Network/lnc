@@ -13,7 +13,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const Header = () => {
+const Header = (props) => {
+  const { NavType } = props;
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const { theme, setTheme } = useTheme();
@@ -30,23 +31,35 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [prevScrollPos]);
 
-  const navItems = [
+  const HomeNavItems = [
     { name: "HOME", link: "#home" },
     { name: "PROJECTS", link: "#projects" },
-    { name: "ABOUT", link: "#about" },
+    { name: "ABOUT", link: "#why-join-us" },
     { name: "JOIN", link: "#join" },
+    { name: "EVENTS", link: "/events" },
+  ];
+  const EventsNavItems = [
+    { name: "HOME", link: "#home" },
+    { name: "ABOUT", link: "#about" },
+    { name: "PRIZE", link: "#prize" },
+    { name: "SPONSER", link: "#sponser" },
+    { name: "PARTNERS", link: "#community-partners" },
+    { name: "FAQ", link: "#faq" },
   ];
 
   const handleNavItemClick = (link: string) => {
     const section = document.querySelector(link);
     if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
+  const navItems = NavType === "home" ? HomeNavItems : EventsNavItems;
 
   return (
     <motion.header
-      className={`fixed top-4 left-4 right-4 z-50 transition-all duration-300 ease-in-out ${
+      className={`${
+        NavType === "home" ? "fixed" : "sticky"
+      } top-4 left-4 right-4 z-50 transition-all duration-300 ease-in-out ${
         visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full"
       }`}
       initial={{ y: -100 }}
@@ -62,15 +75,25 @@ const Header = () => {
           <div className="flex items-center space-x-4 md:space-x-6">
             {visible && (
               <nav className="hidden md:flex space-x-4">
-                {navItems.map((item) => (
-                  <button
-                    key={item.name}
-                    onClick={() => handleNavItemClick(item.link)}
-                    className="text-sm font-medium transition-colors hover:text-primary"
-                  >
-                    {item.name}
-                  </button>
-                ))}
+                {navItems.map((item) =>
+                  item.link.startsWith("#") ? (
+                    <button
+                      key={item.name}
+                      onClick={() => handleNavItemClick(item.link)}
+                      className="text-sm font-medium transition-colors hover:text-primary"
+                    >
+                      {item.name}
+                    </button>
+                  ) : (
+                    <Link
+                      key={item.name}
+                      href={item.link}
+                      className="text-sm font-medium transition-colors hover:text-primary"
+                    >
+                      {item.name}
+                    </Link>
+                  )
+                )}
               </nav>
             )}
             <DropdownMenu>

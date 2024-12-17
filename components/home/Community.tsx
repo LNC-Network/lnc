@@ -8,8 +8,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import Form from "./ui/form";
-import Rocket from "../public/Animation/Animation - 1729532616541.json";
+import Form from "../ui/form";
+import Rocket from "../../public/Animation/Animation - 1729532616541.json";
 
 // Dynamically import Lottie to ensure it only runs on the client
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });

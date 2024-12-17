@@ -1,20 +1,18 @@
-import Home from "@/components/Home";
-import Projects from "@/components/Projects";
-import WhyJoinUs from "@/components/whyJoinUs";
-import Community from "@/components/Community";
-import Footer from "@/components/Footer";
+import Home from "@/components/home/Home";
+import Projects from "@/components/home/Projects";
+import WhyJoinUs from "@/components/home/whyJoinUs";
+import Community from "@/components/home/Community";
 import Header from "@/components/Header";
 
 export default function HomePage() {
   return (
     <main>
       <div className="relative">
-        <Header />
+        <Header NavType="home" />
         <Home />
         <Projects />
         <WhyJoinUs />
         <Community />
-        <Footer />
       </div>
     </main>
   );

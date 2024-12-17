@@ -8,7 +8,7 @@ function ScrollVideo() {
 
   useEffect(() => {
     function calculateScrollPercentage() {
-      const element = document.getElementById("1");
+      const element = document.getElementById("why-join-us");
       if (!element) return;
 
       const rect = element.getBoundingClientRect();
@@ -37,7 +37,10 @@ function ScrollVideo() {
   }, [percentage]);
 
   return (
-    <div id="1" className={`flex flex-col space-y-96 px-10 py-96 ${bgColor}`}>
+    <div
+      id="why-join-us"
+      className={`flex flex-col space-y-96 px-10 py-96 ${bgColor}`}
+    >
       {whyJoinUs.whyJoinUs.map((item, index) => (
         <div
           key={index}
