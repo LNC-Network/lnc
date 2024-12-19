@@ -11,7 +11,7 @@ const Hero = () => {
             till then explore...
           </h1>
           <div className="flex items-center justify-center gap-8">
-            <Button className="text-lg h-10 px-8 py-4">Register</Button>
+            {/* <Button className="text-lg h-10 px-8 py-4">Register</Button> */}
             <a href="https://discord.gg/late-night-coders" target="_blank">
               <Button variant="outline" className="text-lg h-10 px-8 py-4">
                 Join Community

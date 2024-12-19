@@ -1,18 +1,8 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 import { MongoServerError } from "mongodb";
+import { FormData } from "@/types/form";
 
-interface FormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  institution: string;
-  portfolio: string;
-  role: string;
-  status: string;
-  about: string;
-}
 export async function POST(req: Request) {
   try {
     const client = await clientPromise;
@@ -25,7 +15,8 @@ export async function POST(req: Request) {
     const result = await collection.insertOne(data);
 
     return NextResponse.json({ success: true, result });
-  } catch (error) {
+  }
+  catch (error) {
     console.error(error);
     if (error instanceof MongoServerError) {
       return NextResponse.json(
