@@ -1,5 +1,5 @@
 import Home from "@/components/home/Home";
-import Projects from "@/components/home/Projects";
+// import Projects from "@/components/home/Projects";
 import WhyJoinUs from "@/components/home/whyJoinUs";
 import Community from "@/components/home/Community";
 import Header from "@/components/Header";
@@ -10,7 +10,7 @@ export default function HomePage() {
       <div className="relative">
         <Header NavType="home" />
         <Home />
-        <Projects />
+        {/* <Projects /> */}
         <WhyJoinUs />
         <Community />
       </div>

@@ -59,8 +59,7 @@ const CommunitySection = () => {
 
               <button
                 onClick={() => setIsOpen(true)}
-                className="group relative inline-flex items-center justify-center overflow-hidden rounded-full p-0.5 font-bold text-md"
-              >
+                className="group relative inline-flex items-center justify-center overflow-hidden rounded-full p-0.5 font-bold text-md">
                 <span className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 opacity-70 transition-all duration-400 group-hover:opacity-100 group-hover:blur-sm"></span>
                 <span className="relative rounded-full bg-gray-900 px-8 py-4 transition-all duration-400 group-hover:bg-opacity-90">
                   Join LNC
@@ -70,7 +69,7 @@ const CommunitySection = () => {
           </div>
         </div>
       </section>
-      <div className="h-64 bg-gray-900"></div>
+      <div className="h-40 bg-gray-900"></div>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="bg-gray-900 border border-blue-500">

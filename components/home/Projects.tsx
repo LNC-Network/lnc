@@ -63,7 +63,7 @@ const Projects: React.FC = () => {
                 </CardContent>
               </Card>
             </Animated>
-          ))}
+          ))} 
         </div>
       </section>
     </Animated>
