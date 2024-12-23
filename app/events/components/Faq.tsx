@@ -6,25 +6,49 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const faqs = [
   {
-    question: "What is {VOID}?",
+    question: "What is Hackathon",
     answer:
-      "{VOID} is a 48-hour hackathon where participants come together to innovate, collaborate, and create cutting-edge solutions to real-world problems.",
+      "A hackathon is social coding event where programmers, designers, and developers collaborate to solve a problem and compete for cash prizes. It's one part party, one part work-hard overnight battle against the clock and the competition.",
   },
   {
-    question: "Who can participate?",
+    question: "Who can participate in Hackathon",
     answer:
-      "Anyone with a passion for technology and innovation can participate. Whether you're a student, professional, or hobbyist, you're welcome to join!",
+      "Students currently enrolled in any course in High School or College can participate in Hack4Bengal. Along with that current year passouts can participate too.",
   },
   {
-    question: "Do I need to have a team?",
+    question: "How much much does it cost to participate",
     answer:
-      "You can participate solo or in a team of up to 4 members. Don't worry if you don't have a team - we'll have team formation activities at the start of the event!",
+      "Nothing, participation in Hack4Bengal 3.0 is absolutely FREE!!🎉 We'll have meals, snacks, and beverages onsite at the hackathon, in addition to swags, prizes, fun mini-events and more.",
   },
   {
-    question: "What should I bring?",
+    question: "Team Size",
     answer:
-      "Bring your laptop, charger, and any other devices you might need. We'll provide food, drinks, and a comfortable hacking environment.",
+      "We encourage you to make a team of minimum 2 and maximum 4 members. If you are a Solo Hacker and do not have a team, you can still register and we will help you find a team on our Discord Server.",
   },
+  {
+    question: "What is the duration of the Hackathon",
+    answer: "The duration of the Hackathon is 24 hours.",
+  },
+  {
+    question:"What will be provided for participants at the venue", 
+    answer: 
+      "Coming soom...."
+  },
+  {
+    question:"Will hardware toolkits be avilable on-dite?", 
+    answer: 
+      "Coming soom...."
+  },
+  {
+    question:"What are the guidlines for the teans participating in the Hardware track?", 
+    answer: 
+      "Coming soom...."
+  },
+  {
+    question:"I have more question, where and how can I reach out?", 
+    answer: 
+      "Reach out on our WhatsApp group (https://chat.whatsapp.com/KtylUkytoAYDgbzAS2EQfR) or Discord server (https://discord.gg/z7W9dHGy). We will be happy to answer any questions you have."
+  }
 ];
 
 const FaqItem = ({ question, answer }) => {
