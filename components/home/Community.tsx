@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import Form from "../ui/form";
 import Rocket from "../../public/Animation/Animation - 1729532616541.json";
+import { AnimatedBackground } from "@/app/events/components/AnimatedBackground";
 
 // Dynamically import Lottie to ensure it only runs on the client
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
@@ -18,6 +19,11 @@ const CommunitySection = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
+    <AnimatedBackground
+    elementType="star"
+      color="rgba(255, 255, 255, 0.7)"
+      count={200}
+      >
     <Animated>
       <section
         id="join"
@@ -82,6 +88,7 @@ const CommunitySection = () => {
         </DialogContent>
       </Dialog>
     </Animated>
+    </AnimatedBackground>
   );
 };
 

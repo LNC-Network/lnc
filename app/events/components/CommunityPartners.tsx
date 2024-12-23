@@ -104,7 +104,7 @@ const CommunityPartners = () => {
         >
           <p className="text-lg text-gray-300">
             Our community partners play a crucial role in fostering innovation
-            and collaboration. Together, we're building a stronger tech
+            and collaboration. Together, we are building a stronger tech
             ecosystem and empowering the next generation of developers.
           </p>
         </motion.div>

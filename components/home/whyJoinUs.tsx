@@ -1,8 +1,14 @@
 "use client";
 import whyJoinUs from "@/public/data/whyJoinUs.json";
+import { AnimatedBackground } from "@/app/events/components/AnimatedBackground";
 
 function WhyJoinUs() {
   return (
+    <AnimatedBackground
+    elementType="star"
+      color="rgba(255, 255, 255, 0.7)"
+      count={200}
+      >
     <div className="relative w-full h-[450vh]">
       <video
         autoPlay
@@ -39,6 +45,7 @@ function WhyJoinUs() {
         </div>
       </div>
     </div>
+    </AnimatedBackground>
   );
 }
 
