@@ -3,6 +3,7 @@ import Projects from "@/components/home/Projects";
 import WhyJoinUs from "@/components/home/whyJoinUs";
 import Community from "@/components/home/Community";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export default function HomePage() {
   return (
@@ -13,6 +14,7 @@ export default function HomePage() {
         <Projects />
         <WhyJoinUs />
         <Community />
+        <Footer />
       </div>
     </main>
   );
