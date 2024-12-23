@@ -7,7 +7,7 @@ interface Event {
         third: number | undefined;
     };
     currency: "rupee" | "dollar" | undefined;
-    sponcer: string | undefined;
+    sponsor: string | undefined;
 }
 
 export type { Event };
