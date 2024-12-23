@@ -6,17 +6,17 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const faqs = [
   {
-    question: "What is Hackathon",
+    question: "What is Hackathon?",
     answer:
       "A hackathon is social coding event where programmers, designers, and developers collaborate to solve a problem and compete for cash prizes. It's one part party, one part work-hard overnight battle against the clock and the competition.",
   },
   {
-    question: "Who can participate in Hackathon",
+    question: "Who can participate in Hackathon?",
     answer:
       "Students currently enrolled in any course in High School or College can participate in LNC 1.0. Along with that current year passouts can participate too.",
   },
   {
-    question: "How much much does it cost to participate",
+    question: "How much much does it cost to participate?",
     answer:
       "Nothing, participation in LNC 1.0 is absolutely FREE!!🎉 We'll have meals, snacks, and beverages onsite at the hackathon, in addition to swags, prizes, fun mini-events and more.",
   },
@@ -47,7 +47,7 @@ const faqs = [
   {
     question:"I have more question, where and how can I reach out?", 
     answer: 
-      "Reach out on our WhatsApp group (https://chat.whatsapp.com/KtylUkytoAYDgbzAS2EQfR) or Discord server (https://discord.gg/z7W9dHGy). We will be happy to answer any questions you have."
+      "Reach out on our WhatsApp group ({<a> herf = https://chat.whatsapp.com/KtylUkytoAYDgbzAS2EQfR </a>}) or Discord server (https://discord.gg/z7W9dHGy). We will be happy to answer any questions you have."
   }
 ];
 
