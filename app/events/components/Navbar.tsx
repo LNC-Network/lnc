@@ -21,7 +21,7 @@ const navItems = [
   { name: "FAQ", href: "#faq", icon: FaQuestion },
 ];
 
-const Navbar = ({ NavType }: { NavType: string }) => {
+const Navbar = ({ }: { NavType: string }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
