@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import Form from "../ui/form";
 import Rocket from "../../public/Animation/Animation - 1729532616541.json";
-import { AnimatedBackground } from "@/app/events/components/AnimatedBackground";
+import { AnimatedBackground } from "./BackGround";
 
 // Dynamically import Lottie to ensure it only runs on the client
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
@@ -22,12 +22,12 @@ const CommunitySection = () => {
     <AnimatedBackground
     elementType="star"
       color="rgba(255, 255, 255, 0.7)"
-      count={200}
+      count={250}
       >
     <Animated>
       <section
         id="join"
-        className="py-24 px-6 text-center bg-white dark:bg-slate-800 text-white min-h-screen animate-EvervaultCard"
+        className="py-24 px-6 text-center text-white min-h-screen animate-EvervaultCard"
       >
         <div className="max-w-8xl mx-auto">
           <div className="flex ">
@@ -75,10 +75,10 @@ const CommunitySection = () => {
           </div>
         </div>
       </section>
-      <div className="h-40 bg-gray-900"></div>
+      {/* <div className="h-40 bg-black"></div> */}
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="bg-gray-900 border border-blue-500">
+        <DialogContent className="bg-black border border-blue-500">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-blue-400">
               Become a Night Coder

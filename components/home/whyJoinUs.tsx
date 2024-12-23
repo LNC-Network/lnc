@@ -1,6 +1,6 @@
 "use client";
 import whyJoinUs from "@/public/data/whyJoinUs.json";
-import { AnimatedBackground } from "@/app/events/components/AnimatedBackground";
+import { AnimatedBackground } from "./BackGround";
 
 function WhyJoinUs() {
   return (

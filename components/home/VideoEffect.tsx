@@ -5,6 +5,8 @@ import React, { useEffect } from "react";
 import Animated from "@/components/Animation";
 // import { useInView } from "react-intersection-observer";
 import testBg from "../../public/videos/testBg.mp4";
+//import { AnimatedBackground } from "@/app/events/components/AnimatedBackground";
+
 
 const VideoEffect: React.FC = () => {
   const [scrollPos, setScrollPos] = React.useState(0);
@@ -26,6 +28,11 @@ const VideoEffect: React.FC = () => {
   const videoHeight = Math.max(200, 400 + scrollPos / 3); // Adjust height based on scroll
 
   return (
+    // <AnimatedBackground
+    //         elementType="star"
+    //         color="rgba(255, 255, 255, 0.7)"
+    //         count={200}
+    //       >
     <Animated>
       <section className="py-16 px-6 min-h-screen flex flex-col items-center justify-center">
         {/* <h2 className="text-3xl font-bold text-center mb-12">HERO 💻</h2> */}
@@ -52,6 +59,7 @@ const VideoEffect: React.FC = () => {
         </div>
       </section>
     </Animated>
+    /* </AnimatedBackground> */
   );
 };
 
