@@ -13,12 +13,12 @@ const faqs = [
   {
     question: "Who can participate in Hackathon",
     answer:
-      "Students currently enrolled in any course in High School or College can participate in Hack4Bengal. Along with that current year passouts can participate too.",
+      "Students currently enrolled in any course in High School or College can participate in LNC 1.0. Along with that current year passouts can participate too.",
   },
   {
     question: "How much much does it cost to participate",
     answer:
-      "Nothing, participation in Hack4Bengal 3.0 is absolutely FREE!!🎉 We'll have meals, snacks, and beverages onsite at the hackathon, in addition to swags, prizes, fun mini-events and more.",
+      "Nothing, participation in LNC 1.0 is absolutely FREE!!🎉 We'll have meals, snacks, and beverages onsite at the hackathon, in addition to swags, prizes, fun mini-events and more.",
   },
   {
     question: "Team Size",
@@ -32,17 +32,17 @@ const faqs = [
   {
     question:"What will be provided for participants at the venue", 
     answer: 
-      "Coming soom...."
+      "Coming soon...."
   },
   {
     question:"Will hardware toolkits be avilable on-dite?", 
     answer: 
-      "Coming soom...."
+      "Coming soon...."
   },
   {
     question:"What are the guidlines for the teans participating in the Hardware track?", 
     answer: 
-      "Coming soom...."
+      "Coming soon...."
   },
   {
     question:"I have more question, where and how can I reach out?", 

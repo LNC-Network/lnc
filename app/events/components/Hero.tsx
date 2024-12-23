@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, /*useSpring*/ } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { FaDiscord, FaRocket, FaStar } from "react-icons/fa";
 import { AnimatedBackground } from "./AnimatedBackground";
