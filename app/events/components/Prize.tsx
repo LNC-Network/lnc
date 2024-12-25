@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Event } from "@/types/event";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { FaTrophy, FaMedal, FaAward } from "react-icons/fa";
-import { AnimatedBackground } from "./AnimatedBackground";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 const PrizeCard = ({ place, amount, icon: Icon, delay }) => {
   const { scrollYProgress } = useScroll();

@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { FaLightbulb, FaUsers, FaRocket } from "react-icons/fa";
-import { AnimatedBackground } from "./AnimatedBackground";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 const features = [
   {

@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useMemo } from "react";
-import { AnimatedBackground } from "./AnimatedBackground";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 const partners = [
   { name: "CodeCommunity", logo: "/placeholder.svg" },
