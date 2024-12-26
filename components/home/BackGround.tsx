@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 
 interface AnimatedBackgroundProps {
   children: ReactNode;
-  elementType?: "star" | "circle" | "square" | "triangle";
+  elementType?: "star" | "circle" |"star"|  "square" | "square" | "triangle";
   color?: string;
   count?: number;
 }
@@ -25,7 +25,7 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
   children,
   elementType = "star",
   color = "rgba(255, 255, 255, 0.5)",
-  count = 100,
+  count = 10000,
 }) => {
   return (
     <div className="relative min-h-screen overflow-hidden bg-black">
@@ -43,7 +43,7 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
             animate={{
               y: [0, -30, 0],
               opacity: [0.2, 1, 0.2],
-              scale: [1, 1.5, 1],
+              scale: [3, 1.5, 1],
             }}
             transition={{
               duration: Math.random() * 3 + 2,
@@ -57,12 +57,12 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
               <motion.svg
                 viewBox="0 0 24 24"
                 fill={color}
-                //xmlns="http://www.w3.org/2000/svg"
+                xmlns="https://img.freepik.com/free-vector/sticker-template-with-rocket-ship-isolated_1308-62159.jpg?semt=ais_hybrid"
               >
                 <path d="M12 0L14.91 8.09L23 9.18L17.5 15.31L18.82 23L12 19.77L5.18 23L6.5 15.31L1 9.18L9.09 8.09L12 0Z" />
               </motion.svg>
             ) : (
-              <motion.svg viewBox="0 0 1 1" xmlns="http://www.w3.org/2000/svg">
+              <motion.svg viewBox="0 0 1 1" xmlns="https://img.freepik.com/free-vector/sticker-template-with-rocket-ship-isolated_1308-62159.jpg?semt=ais_hybrid">
                 <path d={getElementPath(elementType)} fill={color} />
               </motion.svg>
             )}

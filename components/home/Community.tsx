@@ -21,8 +21,9 @@ const CommunitySection = () => {
   return (
     <AnimatedBackground
     elementType="star"
-      color="rgba(255, 255, 255, 0.7)"
+      color="rgba(255, 255, 255, 0.8)"
       count={250}
+       density="high"
       >
     <Animated>
       <section
