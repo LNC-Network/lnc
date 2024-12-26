@@ -11,6 +11,7 @@ import {
 import Form from "../ui/form";
 import Rocket from "../../public/Animation/Animation - 1729532616541.json";
 import communityData from "@/public/data/community.json";
+import { AnimatedBackground } from "../AnimatedBackground";
 const { title, paragraphs } = communityData;
 
 // Dynamically import Lottie to ensure it only runs on the client
@@ -21,10 +22,10 @@ const CommunitySection = () => {
 
   return (
     <AnimatedBackground
-    elementType="star"
+      elementType="star"
       color="rgba(255, 255, 255, 0.7)"
       count={250}
-      >
+    >
     <Animated>
       <section
         id="join"
@@ -77,6 +78,7 @@ const CommunitySection = () => {
         </DialogContent>
       </Dialog>
     </Animated>
+    </AnimatedBackground>
   );
 };
 
