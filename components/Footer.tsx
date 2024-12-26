@@ -11,9 +11,10 @@ const Footer: React.FC = () => {
   const handleScroll = () => {
     const scrollPosition = window.scrollY + window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
+    const threshold = 1;
 
-    // Show footer when reaching the bottom of the document
-    if (scrollPosition >= documentHeight - 100) {
+    // Show footer when reaching the bottom of the document (within the threshold)
+    if (scrollPosition >= documentHeight - threshold) {
       setIsVisible(true);
     } else {
       setIsVisible(false);
@@ -44,8 +45,8 @@ const Footer: React.FC = () => {
               Answering your Questions!
             </h2>
             <p className="mb-4 text-[#d3d3d3]">
-              Need some assistance? Feel free to reach out to us. We’re here to
-              help and ensure a seamless, satisfying experience.
+              Need some assistance? Feel free to reach out to us. We&apos;re
+              here to help and ensure a seamless, satisfying experience.
             </p>
           </div>
 
@@ -76,7 +77,7 @@ const Footer: React.FC = () => {
                 type="submit"
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded"
               >
-                SUBMIT
+                Submit
               </button>
             </form>
           </div>

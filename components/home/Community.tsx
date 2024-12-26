@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/dialog";
 import Form from "../ui/form";
 import Rocket from "../../public/Animation/Animation - 1729532616541.json";
+import communityData from "@/public/data/community.json";
+const { title, paragraphs } = communityData;
 
 // Dynamically import Lottie to ensure it only runs on the client
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
@@ -39,27 +41,15 @@ const CommunitySection = () => {
             </div>
             <div className="w-1/2">
               <h2 className="text-4xl py-2 font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
-                Code by Night, Innovate by Light
+                {title}
+                {/* title from data/community.json */}
               </h2>
 
               <div className="dark:text-slate-400 text-slate-600 text-xl mb-8 text-justify space-y-4">
-                <p>
-                  Join LNC and be part of a vibrant community where creativity
-                  thrives after dark. Together, we turn caffeine into code and
-                  dreams into digital reality.
-                </p>
-
-                <p>
-                  Whether you&apos;re a seasoned developer or just starting, we
-                  welcome you with open arms. Participate in coding sessions,
-                  hackathons, and learn from each other&apos;s experiences.
-                </p>
-
-                <p>
-                  Share your projects, seek feedback, and connect with
-                  like-minded individuals who are just as passionate about
-                  coding as you are.
-                </p>
+                {/* paragraph from from data/community.json */}
+                {paragraphs.map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
               </div>
 
               <button
@@ -77,9 +67,9 @@ const CommunitySection = () => {
       </section>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="border border-blue-500">
+        <DialogContent className="bg-slate-900 border-none">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-blue-400">
+            <DialogTitle className="text-2xl font-bold text-blue-400 text-center">
               Become a Night Coder
             </DialogTitle>
           </DialogHeader>
