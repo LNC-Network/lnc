@@ -20,6 +20,11 @@ const CommunitySection = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
+    <AnimatedBackground
+    elementType="star"
+      color="rgba(255, 255, 255, 0.7)"
+      count={250}
+      >
     <Animated>
       <section
         id="join"
