@@ -11,9 +11,10 @@ const Footer: React.FC = () => {
   const handleScroll = () => {
     const scrollPosition = window.scrollY + window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
+    const threshold = 1; // Trigger visibility when 50px from the bottom
 
-    // Show footer when reaching the bottom of the document
-    if (scrollPosition >= documentHeight - 100) {
+    // Show footer when reaching the bottom of the document (within the threshold)
+    if (scrollPosition >= documentHeight - threshold) {
       setIsVisible(true);
     } else {
       setIsVisible(false);
@@ -32,7 +33,7 @@ const Footer: React.FC = () => {
       className={`bg-gray-900 text-white py-12 fixed bottom-0 left-0 right-0 ${
         isVisible ? "translate-y-0" : "translate-y-full"
       }`}
-      initial={{ y: "100%" }} // Start off-screen
+      initial={{ y: "10%" }} // Start off-screen
       animate={{ y: isVisible ? 0 : "100%" }} // Slide in/out based on visibility
       transition={{ duration: 0.5, ease: "easeOut" }} // Smooth transition
     >
@@ -44,8 +45,8 @@ const Footer: React.FC = () => {
               Answering your Questions!
             </h2>
             <p className="mb-4 text-[#d3d3d3]">
-              Need some assistance? Feel free to reach out to us. We’re here to
-              help and ensure a seamless, satisfying experience.
+              Need some assistance? Feel free to reach out to us. We&apos;re
+              here to help and ensure a seamless, satisfying experience.
             </p>
           </div>
 
@@ -76,7 +77,7 @@ const Footer: React.FC = () => {
                 type="submit"
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded"
               >
-                SUBMIT
+                Submit
               </button>
             </form>
           </div>

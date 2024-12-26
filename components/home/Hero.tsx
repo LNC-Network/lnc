@@ -1,43 +1,9 @@
 "use client";
-
-import React, { useEffect } from "react";
+import React from "react";
 import Animated from "@/components/Animation"; // Import your Animated component
+import useFluidAnimation from "@/hooks/useFluidAnimation";
 const Hero: React.FC = () => {
-  useEffect(() => {
-    // Function to load the canvas animation script
-    const loadCanvasAnimation = () => {
-      const existingScript = document.querySelector(
-        'script[src="lib/fluidBackground.js"]'
-      );
-      if (!existingScript) {
-        const script = document.createElement("script");
-        script.src = "lib/fluidBackground.js"; // Path to your animation script
-        script.async = true; // Load the script asynchronously
-        script.onload = () => {
-          console.log("Fluid background script loaded successfully.");
-        };
-        script.onerror = () => {
-          console.error("Failed to load the animation script");
-        };
-        document.body.appendChild(script); // Append the script to the body
-      } else {
-        console.log("Fluid background script is already loaded.");
-      }
-    };
-
-    loadCanvasAnimation(); // Load the script on component mount
-
-    return () => {
-      // Cleanup function to remove the script if needed
-      const existingScript = document.querySelector(
-        'script[src="/lib/fluidBackground.js"]'
-      );
-      if (existingScript) {
-        existingScript.remove();
-      }
-    };
-  }, []);
-
+  useFluidAnimation();
   return (
     <>
       <Animated>

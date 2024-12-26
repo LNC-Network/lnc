@@ -1,7 +1,6 @@
 "use client";
 
-// import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, useMemo } from "react";
 
 interface AnimatedBackgroundProps {
   children: ReactNode;
@@ -26,38 +25,38 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
   children,
   className = "",
   elementType = "star",
-  color = "rgba(255, 255, 255, 1)",
+  color = "rgba(230, 230, 240, 1)",
   count = 100,
 }) => {
+  const elements = useMemo(() => {
+    return [...Array(count)].map((_, i) => ({
+      id: i,
+      top: `${Math.random() * 100}%`,
+      left: `${Math.random() * 100}%`,
+      width: `${Math.random() * 3 + 1}px`,
+      height: `${Math.random() * 3 + 1}px`,
+      delay: `${Math.random() * 5}s`,
+      duration: `${Math.random() * 4 + 2}s`,
+    }));
+  }, [count]);
+
   return (
     <div className={`relative min-h-screen overflow-hidden ${className}`}>
       <div className="absolute inset-0">
-        {[...Array(count)].map((_, i) => (
+        {elements.map(({ id, top, left, width, height, delay, duration }) => (
           <div
-            key={i}
+            key={id}
             className="absolute star-animation shadow-2xl shadow-white"
             style={
               {
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                width: `${Math.random() * 3 + 1}px`,
-                height: `${Math.random() * 3 + 1}px`,
-                "--random-delay": `${Math.random() * 5}s`,
-                "--random-duration": `${Math.random() * 4 + 2}s`,
+                top,
+                left,
+                width,
+                height,
+                "--random-delay": delay,
+                "--random-duration": duration,
               } as React.CSSProperties
             }
-            // animate={{
-            //   y: [0, -30, 0],
-            //   opacity: [0.2, 1, 0.2],
-            //   scale: [1, 1.5, 1],
-            // }}
-            // transition={{
-            //   duration: Math.random() * 3 + 2,
-            //   repeat: Infinity,
-            //   repeatType: "loop",
-            //   ease: "easeInOut",
-            //   delay: Math.random() * 2,
-            // }}
           >
             {elementType === "star" ? (
               <svg

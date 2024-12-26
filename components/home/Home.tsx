@@ -1,10 +1,7 @@
-"use client";
-
-import React from "react";
 import Hero from "../home/Hero";
 import VideoEffect from "./VideoEffect";
 
-const Home: React.FC = () => {
+const Home = () => {
   return (
     <>
       <section id="home">
