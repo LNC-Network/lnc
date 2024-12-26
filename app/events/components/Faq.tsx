@@ -3,53 +3,30 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import faqs from "@/public/data/faqs.json";
 
-const faqs = [
-  {
-    question: "What is Hackathon?",
-    answer:
-      "A hackathon is social coding event where programmers, designers, and developers collaborate to solve a problem and compete for cash prizes. It's one part party, one part work-hard overnight battle against the clock and the competition.",
-  },
-  {
-    question: "Who can participate in Hackathon?",
-    answer:
-      "Students currently enrolled in any course in High School or College can participate in LNC 1.0. Along with that current year passouts can participate too.",
-  },
-  {
-    question: "How much much does it cost to participate?",
-    answer:
-      "Nothing, participation in LNC 1.0 is absolutely FREE!!🎉 We'll have meals, snacks, and beverages onsite at the hackathon, in addition to swags, prizes, fun mini-events and more.",
-  },
-  {
-    question: "Team Size",
-    answer:
-      "We encourage you to make a team of minimum 2 and maximum 4 members. If you are a Solo Hacker and do not have a team, you can still register and we will help you find a team on our Discord Server.",
-  },
-  {
-    question: "What is the duration of the Hackathon",
-    answer: "The duration of the Hackathon is 24 hours.",
-  },
-  {
-    question:"What will be provided for participants at the venue", 
-    answer: 
-      "Coming soon...."
-  },
-  {
-    question:"Will hardware toolkits be avilable on-dite?", 
-    answer: 
-      "Coming soon...."
-  },
-  {
-    question:"What are the guidlines for the teans participating in the Hardware track?", 
-    answer: 
-      "Coming soon...."
-  },
-  {
-    question:"I have more question, where and how can I reach out?", 
-    answer: 
-      "Reach out on our WhatsApp group ({<a> herf = https://chat.whatsapp.com/KtylUkytoAYDgbzAS2EQfR </a>}) or Discord server (https://discord.gg/z7W9dHGy). We will be happy to answer any questions you have."
-  }
-];
+// Function to render the answer with clickable links
+const renderWithLinks = (text: string) => {
+  const linkRegex = /(https?:\/\/[^\s]+)/g; // Regex to detect URLs
+  const parts = text.split(linkRegex); // Split the text by URLs
+
+  return parts.map((part, index) => {
+    if (linkRegex.test(part)) {
+      return (
+        <a
+          key={index}
+          href={part}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-500 underline"
+        >
+          {part}
+        </a>
+      );
+    }
+    return part;
+  });
+};
 
 const FaqItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -82,7 +59,7 @@ const FaqItem = ({ question, answer }) => {
         transition={{ duration: 0.3 }}
         className="overflow-hidden"
       >
-        <p className="mt-2 text-gray-400">{answer}</p>
+        <p className="mt-2 text-gray-400">{renderWithLinks(answer)}</p>
       </motion.div>
     </motion.div>
   );

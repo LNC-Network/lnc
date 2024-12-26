@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform, /*useSpring*/ } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { FaDiscord, FaRocket, FaStar } from "react-icons/fa";
-import { AnimatedBackground } from "./AnimatedBackground";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 const Hero = () => {
   const { scrollY } = useScroll();
@@ -79,8 +79,8 @@ const Hero = () => {
               />
               <motion.span
                 className="relative z-10 flex items-center"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                // animate={{ rotate: 360 }}
+                // transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
               >
                 <FaRocket className="mr-2" />
                 Register Now

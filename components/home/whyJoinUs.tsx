@@ -1,22 +1,9 @@
 "use client";
 import whyJoinUs from "@/public/data/whyJoinUs.json";
-import { AnimatedBackground } from "./BackGround";
 
 function WhyJoinUs() {
   return (
-    <AnimatedBackground
-    elementType="star"
-      color="rgba(255, 255, 255, 0.7)"
-      count={200}
-      >
-    <div className="relative w-full h-[450vh]">
-      <video
-        autoPlay
-        muted
-        loop
-        className="sticky top-0 w-screen h-screen object-cover z-[-1]"
-        src="/videos/stars.mp4"
-      ></video>
+    <div className="relative w-full h-full">
       <div className="z-10 -top-20">
         <div id="why-join-us" className="flex flex-col space-y-96 px-10 py-96">
           {whyJoinUs.whyJoinUs?.map((item, index) => (
@@ -45,7 +32,6 @@ function WhyJoinUs() {
         </div>
       </div>
     </div>
-    </AnimatedBackground>
   );
 }
 

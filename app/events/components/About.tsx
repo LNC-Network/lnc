@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { FaLightbulb, FaUsers, FaRocket } from "react-icons/fa";
-import { AnimatedBackground } from "./AnimatedBackground";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 const features = [
   {
@@ -54,9 +54,9 @@ const About = () => {
           viewport={{ once: true }}
         >
           <p className="text-xl text-gray-300">
-            {"{VOID}"} is not just a hackathon; it's a journey into the unknown.
-            Join us for 48 hours of coding, creativity, and collaboration as we
-            push the boundaries of what's possible.
+            {"{VOID}"} is not just a hackathon; it&apos;s a journey into the
+            unknown. Join us for 48 hours of coding, creativity, and
+            collaboration as we push the boundaries of what&apos;s possible.
           </p>
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
