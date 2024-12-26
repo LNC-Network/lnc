@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
   const handleScroll = () => {
     const scrollPosition = window.scrollY + window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
-    const threshold = 1; // Trigger visibility when 50px from the bottom
+    const threshold = 1;
 
     // Show footer when reaching the bottom of the document (within the threshold)
     if (scrollPosition >= documentHeight - threshold) {
@@ -33,7 +33,7 @@ const Footer: React.FC = () => {
       className={`bg-gray-900 text-white py-12 fixed bottom-0 left-0 right-0 ${
         isVisible ? "translate-y-0" : "translate-y-full"
       }`}
-      initial={{ y: "10%" }} // Start off-screen
+      initial={{ y: "100%" }} // Start off-screen
       animate={{ y: isVisible ? 0 : "100%" }} // Slide in/out based on visibility
       transition={{ duration: 0.5, ease: "easeOut" }} // Smooth transition
     >

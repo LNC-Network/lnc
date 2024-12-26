@@ -36,7 +36,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${silkscreen.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${silkscreen.variable} antialiased dark`}
       >
         <ThemeProvider attribute="class">
           {children}

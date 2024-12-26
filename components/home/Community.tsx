@@ -62,9 +62,9 @@ const CommunitySection = () => {
       </section>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="border border-blue-500">
+        <DialogContent className="bg-slate-900 border-none">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-blue-400">
+            <DialogTitle className="text-2xl font-bold text-blue-400 text-center">
               Become a Night Coder
             </DialogTitle>
           </DialogHeader>
