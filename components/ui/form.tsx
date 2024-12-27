@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -31,6 +31,7 @@ function Form() {
       status: "",
     },
   });
+
   const router = useRouter();
   const role = watch("role");
   const status = watch("status");
@@ -64,6 +65,9 @@ function Form() {
   ];
 
   // submit handeller___________________________________
+  const [submitStatus, setSubmitStatus] = useState<
+    "default" | "clicked" | "done" | "failed"
+  >("default");
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
       const response = await fetch("/api/submit", {
@@ -77,16 +81,15 @@ function Form() {
       if (response.ok) {
         sessionStorage.removeItem("formData");
         reset();
-        alert("Form submitted successfully!");
-        // todo add conditional rendering for form submission like button animation
+        setSubmitStatus("done");
         router.refresh();
       } else {
         console.error("Server faliure", response);
-        alert("Failed to submit form.");
+        setSubmitStatus("failed");
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("There was an error submitting the form.");
+      setSubmitStatus("failed");
     }
   }; //____________________________________________________
 
@@ -192,12 +195,33 @@ function Form() {
         {...register("about")}
       />
       <div className="flex justify-center space-x-10">
-        <button
-          type="submit"
-          className="py-2 bg-indigo-600 text-white rounded-sm hover:bg-indigo-500 w-20"
-        >
-          Submit
-        </button>
+        {submitStatus === "default" && (
+          <button
+            type="submit"
+            className="py-2 bg-indigo-600 text-white rounded-sm hover:bg-indigo-500 w-20"
+          >
+            Submit
+          </button>
+        )}
+        {submitStatus === "clicked" && (
+          <button
+            type="button"
+            className="py-2 bg-gray-600 text-white rounded-sm w-20"
+            disabled
+          >
+            Submitting
+          </button>
+        )}
+        {submitStatus === "done" && (
+          <button
+            type="button"
+            className="py-2 bg-green-600 text-white rounded-sm w-20"
+            disabled
+          >
+            Done
+          </button>
+        )}
+        {submitStatus === "failed" && <p>Failed to submit </p>}
 
         <button
           type="button"
