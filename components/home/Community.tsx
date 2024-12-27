@@ -1,6 +1,5 @@
 "use client";
-import { useState } from "react";
-import Animated from "@/components/Animation";
+import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import {
   Dialog,
@@ -8,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 import Form from "../ui/form";
 import Rocket from "../../public/Animation/Animation - 1729532616541.json";
 import communityData from "@/public/data/community.json";
@@ -21,11 +21,10 @@ const CommunitySection = () => {
 
   return (
     <AnimatedBackground
-    elementType="star"
+      elementType="star"
       color="rgba(255, 255, 255, 0.7)"
       count={250}
-      >
-    <Animated>
+    >
       <section
         id="join"
         className="py-24 px-6 text-center text-white min-h-screen animate-EvervaultCard"
@@ -65,7 +64,6 @@ const CommunitySection = () => {
           </div>
         </div>
       </section>
-
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="bg-slate-900 border-none">
           <DialogHeader>
@@ -76,7 +74,7 @@ const CommunitySection = () => {
           <Form />
         </DialogContent>
       </Dialog>
-    </Animated>
+    </AnimatedBackground>
   );
 };
 
