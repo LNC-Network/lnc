@@ -109,7 +109,7 @@ const Footer: React.FC = () => {
             <FaLinkedin className="h-8 w-8 text-white" />
           </a>
           <a
-            href="https://x.com/Deep_Ghosh_"
+            href="https://x.com/LNC_Community"
             target="_blank"
             rel="noopener noreferrer"
             className="transition-transform transform hover:-translate-y-2 hover:scale-105 duration-300 bg-black p-3 rounded-lg shadow-md flex items-center justify-center"
