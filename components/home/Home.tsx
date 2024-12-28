@@ -1,12 +1,12 @@
 import Hero from "../home/Hero";
-import VideoEffect from "./VideoEffect";
+import Banner from "./banner";
 
 const Home = () => {
   return (
     <>
       <section id="home">
         <Hero />
-        <VideoEffect />
+        <Banner />
       </section>
     </>
   );
