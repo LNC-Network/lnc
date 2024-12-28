@@ -1,22 +1,28 @@
-import HeroSection from "@/components/Hero";
-import Projects from "@/components/Projects";
-import Features from "@/components/Features";
-import Community from "@/components/Community";
+import Home from "@/components/home/Home";
+import WhyJoinUs from "@/components/home/whyJoinUs";
+import Community from "@/components/home/Community";
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main>
-      <div className="relative px-3">
-        <Header />
-        <HeroSection />
-        <Projects />
-        <Features />
-        <Community />
+    <main className="relative overflow-hidden">
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        src="/videos/stars.mp4"
+        className="absolute top-0 left-0 w-screen h-screen object-cover -z-10"
+      ></video>
+      <div className="relative">
+        <Home />
+        <AnimatedBackground elementType="star" count={400}>
+          <WhyJoinUs />
+          <Community />
+        </AnimatedBackground>
         <Footer />
       </div>
     </main>
   );
 }
-

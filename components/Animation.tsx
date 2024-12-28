@@ -6,10 +6,10 @@ import { useInView } from "react-intersection-observer";
 
 interface AnimatedProps {
   children: React.ReactNode;
-  direction?: "up" | "left" | "right";
+  // direction?: "up" | "left" | "right";
 }
 
-const Animated: React.FC<AnimatedProps> = ({ children, direction = "up" }) => {
+const Animated: React.FC<AnimatedProps> = ({ children }) => {
   const controls = useAnimation();
   const [ref, inView] = useInView({ triggerOnce: false, threshold: 0.1 });
 
@@ -24,13 +24,13 @@ const Animated: React.FC<AnimatedProps> = ({ children, direction = "up" }) => {
   const variants = {
     hidden: {
       opacity: 0,
-      x: direction === "left" ? -50 : direction === "right" ? 50 : 0,
-      y: direction === "up" ? 50 : 0,
+      // x: direction === "left" ? -50 : direction === "right" ? 50 : 0,
+      // y: direction === "up" ? 50 : 0,
     },
     visible: {
       opacity: 1,
-      x: 0,
-      y: 0,
+      // x: 0,
+      // y: 0,
       transition: { duration: 0.5, ease: "easeOut" },
     },
   };

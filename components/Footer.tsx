@@ -11,9 +11,10 @@ const Footer: React.FC = () => {
   const handleScroll = () => {
     const scrollPosition = window.scrollY + window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
+    const threshold = 1;
 
-    // Show footer when reaching the bottom of the document
-    if (scrollPosition >= documentHeight - 100) {
+    // Show footer when reaching the bottom of the document (within the threshold)
+    if (scrollPosition >= documentHeight - threshold) {
       setIsVisible(true);
     } else {
       setIsVisible(false);
@@ -44,8 +45,8 @@ const Footer: React.FC = () => {
               Answering your Questions!
             </h2>
             <p className="mb-4 text-[#d3d3d3]">
-              Need some assistance? Feel free to reach out to us. We’re here to
-              help and ensure a seamless, satisfying experience.
+              Need some assistance? Feel free to reach out to us. We&apos;re
+              here to help and ensure a seamless, satisfying experience.
             </p>
           </div>
 
@@ -76,7 +77,7 @@ const Footer: React.FC = () => {
                 type="submit"
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded"
               >
-                SUBMIT
+                Submit
               </button>
             </form>
           </div>
@@ -89,15 +90,15 @@ const Footer: React.FC = () => {
             rel="noopener noreferrer"
             className="transition-transform transform hover:-translate-y-2 hover:scale-105 duration-300 bg-white p-3 rounded-lg shadow-md flex items-center justify-center"
           >
-            <Image src="/icons/gmail.svg" alt="Gmail" width={32} height={32} />
+            <Image src="/svg/gmail.svg" alt="Gmail" width={32} height={32} />
           </a>
           <a
             href="https://github.com/LNC-Network"
             target="_blank"
             rel="noopener noreferrer"
-            className="transition-transform transform hover:-translate-y-2 hover:scale-105 duration-300 bg-gray-800 p-3 rounded-lg shadow-md flex items-center justify-center"
+            className="transition-transform transform hover:-translate-y-2 hover:scale-105 duration-300 bg-black p-3 rounded-lg shadow-md flex items-center justify-center"
           >
-            <FaGithub className="h-8 w-8 text-white" />
+            <FaGithub className="h-8 w-8 text-white" />{" "}
           </a>
           <a
             href="https://www.linkedin.com/company/late-night-coders/"
@@ -108,7 +109,7 @@ const Footer: React.FC = () => {
             <FaLinkedin className="h-8 w-8 text-white" />
           </a>
           <a
-            href="https://x.com/Deep_Ghosh_"
+            href="https://x.com/LNC_Community"
             target="_blank"
             rel="noopener noreferrer"
             className="transition-transform transform hover:-translate-y-2 hover:scale-105 duration-300 bg-black p-3 rounded-lg shadow-md flex items-center justify-center"
@@ -126,7 +127,7 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="mt-2 text-center border-t border-gray-700 pt-6">
-          <p>© {new Date().getFullYear()} LNC. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} LNC. All rights reserved.</p>
         </div>
       </div>
     </motion.footer>
