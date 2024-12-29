@@ -111,7 +111,7 @@ const CoolNavbar = () => {
                 }}
               >
                 <div className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-white font-bold">
-                  DJ
+                  X
                 </div>
               </motion.div>
 
