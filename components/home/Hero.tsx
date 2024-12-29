@@ -2,6 +2,7 @@
 import React from "react";
 import Animated from "@/components/Animation"; // Import your Animated component
 import useFluidAnimation from "@/hooks/useFluidAnimation";
+import ModelView from "./Model";
 const Hero: React.FC = () => {
   useFluidAnimation();
   return (
@@ -12,6 +13,7 @@ const Hero: React.FC = () => {
             className="h-full w-full absolute"
             id="liquid-canvas"
           ></canvas>
+          <ModelView />
         </section>
       </Animated>
     </>
