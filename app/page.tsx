@@ -10,14 +10,14 @@ import CoolNavbar from "@/components/CoolNavbar";
 export default function HomePage() {
   return (
     <main className="relative overflow-hidden">
-      <video
+      {/* <video
         autoPlay
         loop
         muted
         playsInline
         src="/videos/stars.mp4"
         className="absolute top-0 left-0 w-screen h-screen object-cover -z-10"
-      ></video>
+      ></video> */}
       <div className="relative">
         <CoolNavbar />
         <Home />

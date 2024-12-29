@@ -22,7 +22,7 @@ function Model({ scale, rotation, position }: ModelProps) {
 }
 
 function ModelView() {
-  const [mouseXPos, mouseYPos] = useMousePos("ModelCanvas");
+  const [mouseXPos, _mouseYPos] = useMousePos("ModelCanvas");
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
   const baseRotationX = -1.6;
   const [dynamicRotationX, setDynamicRotationX] = useState(0);
@@ -42,7 +42,7 @@ function ModelView() {
 
   useEffect(() => {
     if (canvasSize.width && canvasSize.height) {
-      const rotationChangeX = (mouseXPos - canvasSize.width / 2) / 2000;
+      const rotationChangeX = (mouseXPos - canvasSize.width / 2) / 4000;
       setDynamicRotationX(rotationChangeX);
     }
   }, [mouseXPos, canvasSize]);
