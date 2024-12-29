@@ -29,7 +29,7 @@ import { FaXTwitter } from "react-icons/fa6";
   // }, []);
 
   return (
-    <div
+    <div id ="footer"   
       className='relative h-[800px]'
       style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
     >

@@ -1,8 +1,11 @@
+"use client"
+
 import Home from "@/components/home/Home";
 import WhyJoinUs from "@/components/home/whyJoinUs";
 import Community from "@/components/home/Community";
 import Footer from "@/components/Footer";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
+import CoolNavbar from "@/components/CoolNavbar";
 
 export default function HomePage() {
   return (
@@ -16,6 +19,7 @@ export default function HomePage() {
         className="absolute top-0 left-0 w-screen h-screen object-cover -z-10"
       ></video>
       <div className="relative">
+        <CoolNavbar />
         <Home />
         <AnimatedBackground elementType="star" count={400}>
           <WhyJoinUs />
@@ -26,3 +30,4 @@ export default function HomePage() {
     </main>
   );
 }
+

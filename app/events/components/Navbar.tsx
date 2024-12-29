@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, useAnimation } from "framer-motion";
+import {GiStarSwirl  } from "react-icons/gi";
 import {
   FaRocket,
   FaLightbulb,
@@ -12,7 +13,9 @@ import {
   FaQuestion,
 } from "react-icons/fa";
 
+
 const navItems = [
+  { name: "LNC", href: "/", icon: GiStarSwirl  },
   { name: "Home", href: "#home", icon: FaRocket },
   { name: "About", href: "#about", icon: FaLightbulb },
   { name: "Prizes", href: "#prize", icon: FaTrophy },
@@ -137,7 +140,7 @@ const Navbar = ({ }: { NavType: string }) => {
         transition={{ duration: 0.3 }}
       >
         <motion.ul
-          className="bg-gray-900 bg-opacity-95 backdrop-blur-sm rounded-2xl p-4 shadow-xl"
+          className="bg-gray-900/20 bg-opacity-40 backdrop-blur-sm rounded-2xl p-4 shadow-xl"
           style={{ pointerEvents: isOpen ? "auto" : "none" }}
         >
           {navItems.map((item, index) => (
