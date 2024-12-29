@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 const menuItems = [
   { name: 'Home', href: '#home' },
   { name: 'Events', href: 'events' },
-  { name: 'Join', href: '#join' },
   { name: 'About', href: '#why-join-us' },
+  { name: 'Join', href: '#join' },
   { name: 'Contact', href: '#footer' },
 ]
 
@@ -116,7 +116,7 @@ const CoolNavbar = () => {
               </motion.div>
 
               <motion.ul
-                className="absolute top-14 left-1/2 -translate-x-1/2 bg-gray-800/20  bg-opacity-40  rounded-lg p-6 space-y-4 min-w-48 shadow-lg backdrop-blur"
+                className="absolute top-14 left-1/2 -translate-x-1/2 bg-gray-800  bg-opacity-40  rounded-lg p-6 space-y-4 min-w-48 shadow-lg backdrop-blur"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
