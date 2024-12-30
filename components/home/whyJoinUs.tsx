@@ -76,7 +76,7 @@ function WhyJoinUs() {
 
             {/* Video Section */}
             <div
-              className={`video h-4/5 w-fit bg-yellow-300 absolute  ${
+              className={`video h-4/5 w-fit absolute  ${
                 index % 2 === 0 ? "order-2 right-0" : "order-1 left-0"
               }`}
             >
