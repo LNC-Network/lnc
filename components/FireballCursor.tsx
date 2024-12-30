@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { motion, useAnimation, AnimatePresence, useSpring } from 'framer-motion';
+import React, { useEffect, useState } from "react";
+import { motion, AnimatePresence, useSpring } from "framer-motion";
 
 const FireballCursor = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
+  const [isHovering] = useState(false);
   // const cursorAnimation = useAnimation();
   // const glowAnimation = useAnimation();
 
@@ -17,10 +16,10 @@ const FireballCursor = () => {
       mouseY.set(e.clientY);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, [mouseX, mouseY]);
 
@@ -35,7 +34,6 @@ const FireballCursor = () => {
     //     mass: 0.1
     //   }
     // });
-
     // glowAnimation.start({
     //   x: mousePosition.x - 24,
     //   y: mousePosition.y - 24,
@@ -46,7 +44,7 @@ const FireballCursor = () => {
     //     mass: 0.2
     //   }
     // });
-  }, [mousePosition,mouseX, mouseY]); // Removed cursorAnimation, glowAnimation
+  }, [mouseX, mouseY]); // Removed cursorAnimation, glowAnimation
 
   return (
     <>
@@ -58,7 +56,7 @@ const FireballCursor = () => {
         }}
       >
         {/* Core of the fireball */}
-        <motion.div 
+        <motion.div
           className="absolute w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-yellow-500"
           animate={{
             scale: [1, 1.1, 1],
@@ -68,13 +66,13 @@ const FireballCursor = () => {
           transition={{
             duration: 1.5,
             repeat: Infinity,
-            ease: "linear"
+            ease: "linear",
           }}
         />
-        
+
         {/* Particle effects */}
         <AnimatePresence>
-          {!isHovering && (
+          {!isHovering &&
             [...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
@@ -91,16 +89,15 @@ const FireballCursor = () => {
                   duration: 0.4,
                   repeat: Infinity,
                   delay: i * 0.1,
-                  ease: "easeOut"
+                  ease: "easeOut",
                 }}
               />
-            ))
-          )}
+            ))}
         </AnimatePresence>
       </motion.div>
 
       {/* Outer glow */}
-      <motion.div 
+      <motion.div
         className="pointer-events-none fixed top-0 left-0 z-40 w-16 h-16 rounded-full bg-orange-400 opacity-50 blur-xl"
         style={{
           x: mouseX,
@@ -110,7 +107,7 @@ const FireballCursor = () => {
 
       {/* Playful trail effect */}
       <AnimatePresence>
-        {!isHovering && (
+        {!isHovering &&
           [...Array(2)].map((_, i) => (
             <motion.div
               key={`trail-${i}`}
@@ -125,15 +122,13 @@ const FireballCursor = () => {
               transition={{
                 duration: 0.3,
                 delay: i * 0.1,
-                ease: "easeOut"
+                ease: "easeOut",
               }}
             />
-          ))
-        )}
+          ))}
       </AnimatePresence>
     </>
   );
 };
 
 export default FireballCursor;
-

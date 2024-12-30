@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Home from "@/components/home/Home";
 import WhyJoinUs from "@/components/home/whyJoinUs";
@@ -32,4 +32,3 @@ export default function HomePage() {
     </main>
   );
 }
-
