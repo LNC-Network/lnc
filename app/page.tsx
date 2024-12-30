@@ -6,6 +6,7 @@ import Community from "@/components/home/Community";
 import Footer from "@/components/Footer";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import CoolNavbar from "@/components/CoolNavbar";
+import FireballCursor from "@/components/FireballCursor";
 
 export default function HomePage() {
   return (
@@ -19,6 +20,7 @@ export default function HomePage() {
         className="absolute top-0 left-0 w-screen h-screen object-cover -z-10"
       ></video> */}
       <div className="relative">
+        <FireballCursor />
         <CoolNavbar />
         <Home />
         <AnimatedBackground elementType="star" count={400}>
