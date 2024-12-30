@@ -3,48 +3,61 @@ import Image from "next/image";
 import React from "react";
 import { FaGithub, FaLinkedin, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-//import { motion } from "framer-motion";
+import { motion } from "framer-motion";
 
- const Footer: React.FC = () => {
-//   const [isVisible, setIsVisible] = useState<boolean>(false);
-
-//   const handleScroll = () => {
-//     const scrollPosition = window.scrollY + window.innerHeight;
-//     const documentHeight = document.documentElement.scrollHeight;
-//     const threshold = 1;
-
-//     // Show footer when reaching the bottom of the document (within the threshold)
-//     if (scrollPosition >= documentHeight - threshold) {
-//       setIsVisible(true);
-//     } else {
-//       setIsVisible(false);
-//     }
-//   };
-
-  // useEffect(() => {
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
-
+const Footer: React.FC = () => {
   return (
-    <div id ="footer"   
+    <div id="footer"   
       className='relative h-[800px]'
       style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
     >
       <div className='fixed bottom-0 w-full'>
-        {/* <motion.footer
-    //   className={`bg-gray-900 text-white py-12 fixed bottom-0 left-0 right-0 ${
-    //     isVisible ? "translate-y-0" : "translate-y-full"
-    //   }`}
-    //   initial={{ y: "100%" }} // Start off-screen
-    //   animate={{ y: isVisible ? 0 : "100%" }} // Slide in/out based on visibility
-    //   transition={{ duration: 0.5, ease: "easeOut" }} // Smooth transition
-    // > */}
-        <p className="md:mb-20 text-7xl md:text-[14rem]  font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
-          LNC
-        </p>
+        <div className="relative">
+          {/* Spotlight effect */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-radial from-blue-300 to-transparent opacity-50 rounded-full blur-2xl"
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 0.5 }}
+            transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse" }}
+          />
+          
+          <motion.p 
+            className="md:mb-20 text-7xl md:text-[14rem] font-bold text-center relative z-10"
+            style={{
+              textShadow: "2px 2px 4px rgba(0,0,0,0.1)",
+            }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            whileHover={{ scale: 1.05, rotate: [0, -1, 1, -1, 0], transition: { duration: 0.5 } }}
+          >
+            <motion.span
+              className="inline-block animate-color-shift"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
+              L
+            </motion.span>
+            <motion.span
+              className="inline-block animate-color-shift"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+            >
+              N
+            </motion.span>
+            <motion.span
+              className="inline-block animate-color-shift"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+            >
+              C
+            </motion.span>
+          </motion.p>
+        </div>
+        
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -138,10 +151,10 @@ import { FaXTwitter } from "react-icons/fa6";
             <p>&copy; {new Date().getFullYear()} LNC. All rights reserved.</p>
           </div>
         </div>
-        {/* </motion.footer> */}
       </div>
     </div>
   );
 };
 
 export default Footer;
+
