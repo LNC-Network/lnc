@@ -7,10 +7,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { AnimatedBackground } from "@/components/AnimatedBackground";
 import Form from "../ui/form";
 import Rocket from "../../public/Animation/Animation - 1729532616541.json";
 import communityData from "@/public/data/community.json";
+import Animated from "../Animation";
 const { title, paragraphs } = communityData;
 
 // Dynamically import Lottie to ensure it only runs on the client
@@ -20,11 +20,7 @@ const CommunitySection = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <AnimatedBackground
-      elementType="star"
-      color="rgba(255, 255, 255, 0.7)"
-      count={250}
-    >
+    <Animated>
       <section
         id="join"
         className="py-24 px-6 text-center text-white min-h-screen animate-EvervaultCard"
@@ -74,7 +70,7 @@ const CommunitySection = () => {
           <Form />
         </DialogContent>
       </Dialog>
-    </AnimatedBackground>
+    </Animated>
   );
 };
 
