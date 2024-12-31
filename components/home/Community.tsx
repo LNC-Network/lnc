@@ -30,6 +30,7 @@ const CommunitySection = () => {
                   alt="Rocket animation"
                   fill
                   className="object-contain animate-trans-right"
+                  unoptimized
                   priority
                 />
               </div>
