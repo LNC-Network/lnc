@@ -67,6 +67,11 @@ function ModelView() {
         Math.max(event.deltaY * 0.026, -MAX_SPEED),
         MAX_SPEED
       );
+
+      // Update position immediately
+      setDynamicPositionZ((prev) =>
+        Math.max(prev + scrollVelocity.current / 10, 0)
+      );
     };
 
     window.addEventListener("wheel", handleScroll);
@@ -92,6 +97,35 @@ function ModelView() {
     applyInertia();
 
     return () => cancelAnimationFrame(animationFrame);
+  }, []);
+
+  useEffect(() => {
+    const lerp = (start: number, end: number, t: number) =>
+      start + (end - start) * t;
+
+    const handleScrollPosition = () => {
+      if (window.scrollY === 0) {
+        let animationFrame: number;
+
+        const gradualReset = () => {
+          setDynamicPositionZ((prev) => {
+            const newValue = lerp(prev, 0, 0.03); // Adjust `0.1` for smoother/slower transition
+            if (Math.abs(newValue) < 0.01) {
+              cancelAnimationFrame(animationFrame); // Stop when close to 0
+              return 0;
+            }
+            return newValue;
+          });
+
+          animationFrame = requestAnimationFrame(gradualReset);
+        };
+
+        gradualReset();
+      }
+    };
+
+    window.addEventListener("scroll", handleScrollPosition);
+    return () => window.removeEventListener("scroll", handleScrollPosition);
   }, []);
 
   return (
