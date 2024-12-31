@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Silkscreen } from "next/font/google";
 import "./globals.css";
-import "@/fonts/GeistVF.woff";
+
 // import CoolNavbar from "@/components/CoolNavbar";
 // import Footer from "@/components/Footer";
 
