@@ -27,6 +27,7 @@ const Banner = ({
   const scrollDirection = useRef<"up" | "down">("down");
 
   // Adjusted section heights for better control
+  // const SECTION_HEIGHT = viewportHeight;
   const MODEL_SECTION_HEIGHT = viewportHeight * 1.5; // Reduced from 2 to 1.5
   const BANNER_SECTION_HEIGHT = viewportHeight;
   const TOTAL_HEIGHT = MODEL_SECTION_HEIGHT + BANNER_SECTION_HEIGHT;

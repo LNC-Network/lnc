@@ -3,7 +3,7 @@ import { useGLTF } from "@react-three/drei";
 import useCanvasResize from "@/hooks/useCanvasResize";
 import useRotation from "@/hooks/useRotation";
 import useScroll from "@/hooks/useScroll";
-import useWindowInnerWidth from "@/hooks/useWindowInnerWidth";
+// import useWindowInnerWidth from "@/hooks/useWindowInnerWidth";
 import { useEffect, useMemo, useState } from "react";
 
 interface ModelProps {
@@ -33,7 +33,8 @@ function ModelView() {
   const canvasSize = useCanvasResize();
   const dynamicRotationX = useRotation(canvasSize.width, RotationFactor);
   const dynamicPositionZ = useScroll(deceleration, maxSpeed, Lerp_speed);
-  const windowInnerWidth = useWindowInnerWidth();
+  const windowInnerWidth =
+    typeof window !== "undefined" ? window.innerWidth : 1024;
 
   const baseRotationX = -1.58;
   const baseRotationY = 0.35;
