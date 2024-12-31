@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import dynamic from "next/dynamic";
 import {
   Dialog,
   DialogContent,
@@ -12,9 +11,6 @@ import Form from "../ui/form";
 import communityData from "@/public/data/community.json";
 import Animated from "../Animation";
 const { title, paragraphs } = communityData;
-
-// Dynamically import Lottie to ensure it only runs on the client
-const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 const CommunitySection = () => {
   const [isOpen, setIsOpen] = useState(false);
