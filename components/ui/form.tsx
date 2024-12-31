@@ -98,7 +98,10 @@ function Form() {
   };
 
   return (
-    <form className="flex flex-col gap-1" onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className="flex flex-col gap-1 font-sans"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className="flex flex-col">
         <input
           type="text"
@@ -139,6 +142,7 @@ function Form() {
                 <DropdownMenuItem
                   key={role.id}
                   onSelect={() => setValue("role", role.name)}
+                  className="font-sans"
                 >
                   {role.name}
                 </DropdownMenuItem>
@@ -160,6 +164,7 @@ function Form() {
                 <DropdownMenuItem
                   key={status.id}
                   onSelect={() => setValue("status", status.name)}
+                  className="font-sans"
                 >
                   {status.name}
                 </DropdownMenuItem>

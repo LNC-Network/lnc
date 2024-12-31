@@ -11,7 +11,7 @@ const Hero: React.FC = () => {
       <Animated>
         <section className="relative text-center w-full h-screen">
           <canvas
-            className="h-full w-full absolute z-10"
+            className="h-[200vh] w-full absolute z-10"
             id="liquid-canvas"
           ></canvas>
           <div className="absolute z-30">
@@ -23,6 +23,7 @@ const Hero: React.FC = () => {
               alt="Fullscreen GIF"
               layout="fill" // Ensure the image fills the parent container
               objectFit="cover" // Ensure the image covers the screen
+              unoptimized
               priority // Load the image immediately
             />
           </div>
@@ -33,6 +34,7 @@ const Hero: React.FC = () => {
               layout="fill" // Ensure the image fills the parent container
               objectFit="cover" // Ensure the image covers the screen
               priority // Load the image immediately
+              unoptimized
               style={{
                 transform: "scaleY(-1)", // Flip the image vertically
               }}
