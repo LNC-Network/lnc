@@ -1,20 +1,22 @@
-{
-  "whyJoinUs": [
-    {
-      "heading": "Collaborative Coding",
-      "paragraph": "Join forces with fellow night owls to tackle complex problems and create innovative solutions"
-    },
-    {
-      "heading": "Collaborative Coding",
-      "paragraph": "Join forces with fellow night owls to tackle complex problems and create innovative solutions"
-    },
-    {
-      "heading": "Collaborative Coding",
-      "paragraph": "Join forces with fellow night owls to tackle complex problems and create innovative solutions"
-    },
-    {
-      "heading": "Collaborative Coding",
-      "paragraph": "Join forces with fellow night owls to tackle complex problems and create innovative solutions"
-    }
-  ]
-}
+[
+  {
+    "heading": "Collaborative Coding",
+    "paragraph": "Join forces with fellow night owls to tackle complex problems and create innovative solutions",
+    "video": "/videos/p1.mp4"
+  },
+  {
+    "heading": "Innovative Solutions",
+    "paragraph": "Work on real-world projects and build solutions that make a difference",
+    "video": "/videos/p2.mp4"
+  },
+  {
+    "heading": "Expert Mentorship",
+    "paragraph": "Learn from seasoned professionals and accelerate your growth",
+    "video": "/videos/p3.mp4"
+  },
+  {
+    "heading": "Global Community",
+    "paragraph": "Connect with like-minded individuals from around the world",
+    "video": "/videos/p2.mp4"
+  }
+]

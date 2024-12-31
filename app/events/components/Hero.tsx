@@ -87,7 +87,7 @@ const Hero = () => {
               </motion.span>
             </Button>
             <a
-              href="https://discord.gg/late-night-coders"
+              href="https://discord.gg/yNTU8x4y"
               target="_blank"
               rel="noopener noreferrer"
             >

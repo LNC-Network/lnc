@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, useAnimation } from "framer-motion";
+import { GiStarSwirl } from "react-icons/gi";
 import {
   FaRocket,
   FaLightbulb,
@@ -13,12 +14,13 @@ import {
 } from "react-icons/fa";
 
 const navItems = [
-  { name: "Home", href: "#home", icon: FaRocket },
-  { name: "About", href: "#about", icon: FaLightbulb },
-  { name: "Prizes", href: "#prize", icon: FaTrophy },
-  { name: "Sponsors", href: "#sponsor", icon: FaHandshake },
-  { name: "Community", href: "#community-partners", icon: FaUsers },
-  { name: "FAQ", href: "#faq", icon: FaQuestion },
+  { name: "LNC", href: "/", icon: GiStarSwirl, isDirectNav: true },
+  { name: "Home", href: "#home", icon: FaRocket, isDirectNav: false },
+  { name: "About", href: "#about", icon: FaLightbulb, isDirectNav: false },
+  { name: "Prizes", href: "#prize", icon: FaTrophy, isDirectNav: false },
+  { name: "Sponsors", href: "#sponsor", icon: FaHandshake, isDirectNav: false },
+  { name: "Community", href: "#community-partners", icon: FaUsers, isDirectNav: false },
+  { name: "FAQ", href: "#faq", icon: FaQuestion, isDirectNav: false },
 ];
 
 const Navbar = ({ }: { NavType: string }) => {
@@ -28,6 +30,35 @@ const Navbar = ({ }: { NavType: string }) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const menuControls = useAnimation();
   const lastInteractionTime = useRef(Date.now());
+
+  const smoothScroll = (targetElement: HTMLElement) => {
+    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    const duration = 1500; // Increased duration for slower scroll
+    let startTime: number | null = null;
+
+    const easeInOutCubic = (t: number) => {
+      return t < 0.5
+        ? 4 * t * t * t
+        : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    };
+
+    const animation = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const progress = Math.min(timeElapsed / duration, 1);
+      const easedProgress = easeInOutCubic(progress);
+      
+      window.scrollTo(0, startPosition + distance * easedProgress);
+
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animation);
+      }
+    };
+
+    requestAnimationFrame(animation);
+  };
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -84,6 +115,21 @@ const Navbar = ({ }: { NavType: string }) => {
     setIsOpen(!isOpen);
   };
 
+  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, href: string, isDirectNav: boolean) => {
+    if (isDirectNav) {
+      setIsOpen(false);
+      return true;
+    }
+
+    e.preventDefault();
+    setIsOpen(false);
+
+    const targetElement = document.querySelector(href);
+    if (targetElement) {
+      smoothScroll(targetElement as HTMLElement);
+    }
+  };
+
   const menuVariants = {
     closed: { scale: 1, rotate: 0 },
     open: { scale: 1.1, rotate: 180 },
@@ -137,7 +183,7 @@ const Navbar = ({ }: { NavType: string }) => {
         transition={{ duration: 0.3 }}
       >
         <motion.ul
-          className="bg-gray-900 bg-opacity-95 backdrop-blur-sm rounded-2xl p-4 shadow-xl"
+          className="bg-gray-900/20 bg-opacity-40 backdrop-blur-sm rounded-2xl p-4 shadow-xl"
           style={{ pointerEvents: isOpen ? "auto" : "none" }}
         >
           {navItems.map((item, index) => (
@@ -152,7 +198,7 @@ const Navbar = ({ }: { NavType: string }) => {
               <Link
                 href={item.href}
                 className="flex items-center p-2 rounded-lg hover:bg-purple-600 transition-colors duration-200"
-                onClick={() => setIsOpen(false)}
+                onClick={(e) => handleNavigation(e, item.href, item.isDirectNav)}
               >
                 <item.icon className="text-xl mr-3 text-white" />
                 <span className="text-lg font-medium text-white">

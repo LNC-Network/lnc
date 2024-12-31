@@ -28,8 +28,8 @@ const startCanvas = () => {
   resizeCanvas();
 
   var config = {
-    DYE_RESOLUTION: 256,
-    SIM_RESOLUTION: 32,
+    DYE_RESOLUTION: 512,
+    SIM_RESOLUTION: 128,
     CAPTURE_RESOLUTION: 256,
     DENSITY_DISSIPATION: 1.5,
     VELOCITY_DISSIPATION: 0.5,

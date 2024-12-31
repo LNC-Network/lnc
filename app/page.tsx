@@ -1,21 +1,27 @@
+"use client";
+
 import Home from "@/components/home/Home";
 import WhyJoinUs from "@/components/home/whyJoinUs";
 import Community from "@/components/home/Community";
 import Footer from "@/components/Footer";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
+import CoolNavbar from "@/components/CoolNavbar";
+import FireballCursor from "@/components/FireballCursor";
 
 export default function HomePage() {
   return (
     <main className="relative overflow-hidden">
-      <video
+      {/* <video
         autoPlay
         loop
         muted
         playsInline
         src="/videos/stars.mp4"
         className="absolute top-0 left-0 w-screen h-screen object-cover -z-10"
-      ></video>
+      ></video> */}
       <div className="relative">
+        <FireballCursor />
+        <CoolNavbar />
         <Home />
         <AnimatedBackground elementType="star" count={400}>
           <WhyJoinUs />
