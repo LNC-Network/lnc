@@ -71,8 +71,8 @@ const CommunityPartners = () => {
         </motion.h2>
         <div className="relative w-full overflow-hidden">
           <div className="flex animate-scroll">
-            {[...shuffledPartners, ...shuffledPartners].map(
-              (partner, index) => (
+            {[...shuffledPartners, ...shuffledPartners].map((partner, index) =>
+              partner.logo && partner.logo !== "/placeholder.svg" ? (
                 <motion.div
                   key={`${partner.name}-${index}`}
                   className="flex-shrink-0 w-48 h-48 mx-4 bg-gray-800 p-6 rounded-lg flex items-center justify-center relative overflow-hidden"
@@ -91,6 +91,14 @@ const CommunityPartners = () => {
                     className="max-w-full h-auto filter hover:brightness-110 transition-all duration-300 relative z-10"
                   />
                 </motion.div>
+              ) : (
+                <div
+                  key={`${partner.name}-${index}`}
+                  className="flex-shrink-0 w-48 h-48 mx-4 bg-gray-800 p-6 rounded-lg flex items-center justify-center text-white text-xl font-bold relative overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-gray-500 to-gray-700 opacity-10" />
+                  Coming Soon
+                </div>
               )
             )}
           </div>

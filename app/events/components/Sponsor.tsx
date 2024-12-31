@@ -76,7 +76,7 @@ const SponsorSlideshow = ({ tier, sponsors }) => {
       <AnimatePresence mode="wait">
         <motion.div
           key={currentIndex}
-          className={`absolute inset-0 bg-gray-800 p-6 rounded-lg flex items-center justify-between overflow-hidden`}
+          className={`absolute inset-0 bg-gray-800 p-2 md:p-6 rounded-lg flex items-center justify-between overflow-hidden gap-2`}
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
@@ -85,16 +85,33 @@ const SponsorSlideshow = ({ tier, sponsors }) => {
           <motion.div
             className={`absolute inset-0 bg-gradient-to-br ${tierColors[tier]} opacity-0.1`}
           />
-          {[currentIndex, (currentIndex + 1) % sponsors.length].map((index) => (
-            <Image
-              key={shuffledSponsors[index].name}
-              src={shuffledSponsors[index].logo}
-              alt={shuffledSponsors[index].name}
-              width={200}
-              height={120}
-              className="max-w-[45%] h-auto filter brightness-110 transition-all duration-300 relative z-10"
-            />
-          ))}
+          {[currentIndex, (currentIndex + 1) % sponsors.length].map((index) =>
+            shuffledSponsors[index].logo &&
+            shuffledSponsors[index].logo !== "/placeholder.svg" ? (
+              <>
+                <div className="flex flex-col gap-2 relative h-fit items-center justify-between ">
+                  <Image
+                    key={shuffledSponsors[index].name}
+                    src={shuffledSponsors[index].logo}
+                    alt={shuffledSponsors[index].name}
+                    width={200}
+                    height={120}
+                    className=" h-full filter brightness-110 transition-all duration-300 relative z-10"
+                  />
+                  <div className="relative text-center font-mono">
+                    {shuffledSponsors[index].name}
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div
+                key={shuffledSponsors[index].name}
+                className="h-[200px] w-[200px] text-white text-xl font-bold bg-gray-700/30 flex items-center justify-center backdrop-blur rounded z-10"
+              >
+                Coming Soon
+              </div>
+            )
+          )}
         </motion.div>
       </AnimatePresence>
     </div>
@@ -107,29 +124,39 @@ const GoldSponsors = ({ sponsors }) => {
   return (
     <div className="relative w-full overflow-hidden">
       <div className="flex animate-scroll">
-        {[...shuffledSponsors, ...shuffledSponsors].map((sponsor, index) => (
-          <motion.div
-            key={`${sponsor.name}-${index}`}
-            className="flex-shrink-0 w-64 h-64 mx-4 bg-gray-800 p-6 rounded-lg flex items-center justify-center relative overflow-hidden"
-            whileHover={{
-              scale: 1.05,
-              boxShadow: "0 0 20px rgba(123, 31, 162, 0.5)",
-            }}
-          >
+        {[...shuffledSponsors, ...shuffledSponsors].map((sponsor, index) =>
+          sponsor?.logo && sponsor.logo !== "/placeholder.svg" ? (
             <motion.div
-              className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-yellow-200 opacity-0"
-              whileHover={{ opacity: 0.2 }}
-              transition={{ duration: 0.3 }}
-            />
-            <Image
-              src={sponsor.logo}
-              alt={sponsor.name}
-              width={150}
-              height={150}
-              className="max-w-full h-auto filter hover:brightness-110 transition-all duration-300 relative z-10"
-            />
-          </motion.div>
-        ))}
+              key={`${sponsor.name}-${index}`}
+              className="flex-shrink-0 w-64 h-64 mx-4 bg-gray-800 p-6 rounded-lg flex items-center justify-center relative overflow-hidden"
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0 0 20px rgba(123, 31, 162, 0.5)",
+              }}
+            >
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-yellow-200 opacity-0"
+                whileHover={{ opacity: 0.2 }}
+                transition={{ duration: 0.3 }}
+              />
+              <Image
+                src={sponsor.logo}
+                alt={sponsor.name}
+                width={150}
+                height={150}
+                className="max-w-full h-auto filter hover:brightness-110 transition-all duration-300 relative z-10"
+              />
+            </motion.div>
+          ) : (
+            <div
+              key={`${sponsor.name}-${index}`}
+              className="flex-shrink-0 w-64 h-64 mx-4 bg-gray-800 p-6 rounded-lg flex items-center justify-center text-white text-xl font-bold relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-500 to-gray-700 opacity-10" />
+              Coming Soon
+            </div>
+          )
+        )}
       </div>
     </div>
   );
