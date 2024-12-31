@@ -1,13 +1,13 @@
 "use client";
 
 import { motion, useScroll, useSpring } from "framer-motion";
-import Navbar from "../../components/Navbar";
-import Hero from "../../components/Hero";
-import About from "../../components/About";
-import Prize from "../../components/Prize";
-import Sponsor from "../../components/Sponsor";
-import CommunityPartners from "../../components/CommunityPartners";
-import Faq from "../../components/Faq";
+import Navbar from "@/components/events/Navbar";
+import Hero from "@/components/events/Hero";
+import About from "@/components/events/About";
+import Prize from "@/components/events/Prize";
+import Sponsor from "@/components/events/Sponsor";
+import CommunityPartners from "@/components/events/CommunityPartners";
+import Faq from "@/components/events/Faq";
 
 export default function Events() {
   const { scrollYProgress } = useScroll();
