@@ -46,6 +46,7 @@ const CommunitySection = () => {
               <button
                 onClick={() => setIsOpen(true)}
                 className="group relative inline-flex items-center justify-center overflow-hidden rounded-full p-0.5 font-bold text-md"
+                style={{ wordSpacing: "0.6em" }}
               >
                 <span className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 opacity-70 transition-all duration-400 group-hover:opacity-100 group-hover:blur-sm"></span>
                 <span className="relative rounded-full bg-gray-900 px-8 py-4 transition-all duration-400 group-hover:bg-opacity-90">
@@ -59,7 +60,10 @@ const CommunitySection = () => {
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="bg-slate-900 border-none">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-blue-400 text-center">
+            <DialogTitle
+              style={{ wordSpacing: "0.5em" }}
+              className="text-2xl font-bold text-blue-400 text-center"
+            >
               Become a Night Coder
             </DialogTitle>
           </DialogHeader>

@@ -22,6 +22,7 @@
     "clsx": "^2.1.1",
     "framer-motion": "^11.11.11",
     "gsap": "^3.12.5",
+    "lodash": "^4.17.21",
     "lottie-react": "^2.4.0",
     "mongodb": "^6.12.0",
     "next": "^14.2.21",
@@ -38,6 +39,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.13",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",

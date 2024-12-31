@@ -1,8 +1,10 @@
-"use client";
 import { Canvas } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
-import { useEffect, useRef, useState } from "react";
-import useMousePos from "@/hooks/useMousePos";
+import useCanvasResize from "@/hooks/useCanvasResize";
+import useRotation from "@/hooks/useRotation";
+import useScroll from "@/hooks/useScroll";
+// import useWindowInnerWidth from "@/hooks/useWindowInnerWidth";
+import { useEffect, useMemo, useState } from "react";
 
 interface ModelProps {
   scale: [number, number, number];
@@ -23,110 +25,56 @@ function Model({ scale, rotation, position }: ModelProps) {
 }
 
 function ModelView() {
-  const [mouseXPos] = useMousePos("ModelCanvas");
-  const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
-  const [basePositionZ, setBasePositionZ] = useState(0);
+  const deceleration = 0.88;
+  const maxSpeed = 3;
+  const RotationFactor = 3000;
+  const Lerp_speed = 0.05;
+
+  const canvasSize = useCanvasResize();
+  const dynamicRotationX = useRotation(canvasSize.width, RotationFactor);
+  const dynamicPositionZ = useScroll(deceleration, maxSpeed, Lerp_speed);
+  const windowInnerWidth =
+    typeof window !== "undefined" ? window.innerWidth : 1024;
+
   const baseRotationX = -1.58;
-  const [dynamicRotationX, setDynamicRotationX] = useState(0);
-  const [dynamicPositionZ, setDynamicPositionZ] = useState(0);
+  const baseRotationY = 0.35;
+  const baseRotationZ = 0;
 
-  const scrollVelocity = useRef(0);
-  const isScrolling = useRef(false);
+  const basePositionX = 0;
+  const basePositionY = windowInnerWidth <= 768 ? 1.5 : 0.9;
+  const basePositionZ = windowInnerWidth <= 768 ? -1.3 : 0;
 
-  const DECELERATION = 0.88;
-  const MAX_SPEED = 3;
+  const [rotation, setRotation] = useState<[number, number, number]>([
+    baseRotationY,
+    baseRotationX,
+    baseRotationZ,
+  ]);
+  const [position, setPosition] = useState<[number, number, number]>([
+    basePositionX,
+    basePositionY,
+    basePositionZ,
+  ]);
 
-  // Set initial values dependent on `window`
-  useEffect(() => {
-    const initialZ = window.innerWidth <= 768 ? -1.3 : 0;
-    setBasePositionZ(initialZ);
-
-    const handleResize = () => {
-      setCanvasSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const scale = useMemo<[number, number, number]>(() => [0.5, 0.5, 0.5], []);
 
   useEffect(() => {
-    if (canvasSize.width) {
-      const rotationChangeX = (mouseXPos - canvasSize.width / 2) / 4000;
-      setDynamicRotationX(rotationChangeX);
-    }
-  }, [mouseXPos, canvasSize.width]);
-
-  useEffect(() => {
-    const handleScroll = (event: WheelEvent) => {
-      isScrolling.current = true;
-      scrollVelocity.current = Math.min(
-        Math.max(event.deltaY * 0.026, -MAX_SPEED),
-        MAX_SPEED
-      );
-
-      // Update position immediately
-      setDynamicPositionZ((prev) =>
-        Math.max(prev + scrollVelocity.current / 10, 0)
-      );
-    };
-
-    window.addEventListener("wheel", handleScroll);
-    return () => window.removeEventListener("wheel", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    let animationFrame: number;
-
-    const applyInertia = () => {
-      if (!isScrolling.current && Math.abs(scrollVelocity.current) > 0.01) {
-        setDynamicPositionZ((prev) =>
-          Math.max(prev + scrollVelocity.current / 10, 0)
-        );
-        scrollVelocity.current *= DECELERATION;
-      } else if (isScrolling.current) {
-        isScrolling.current = false;
-      }
-
-      animationFrame = requestAnimationFrame(applyInertia);
-    };
-
-    applyInertia();
-
-    return () => cancelAnimationFrame(animationFrame);
-  }, []);
-
-  useEffect(() => {
-    const lerp = (start: number, end: number, t: number) =>
-      start + (end - start) * t;
-
-    const handleScrollPosition = () => {
-      if (window.scrollY === 0) {
-        let animationFrame: number;
-
-        const gradualReset = () => {
-          setDynamicPositionZ((prev) => {
-            const newValue = lerp(prev, 0, 0.03); // Adjust `0.1` for smoother/slower transition
-            if (Math.abs(newValue) < 0.01) {
-              cancelAnimationFrame(animationFrame); // Stop when close to 0
-              return 0;
-            }
-            return newValue;
-          });
-
-          animationFrame = requestAnimationFrame(gradualReset);
-        };
-
-        gradualReset();
-      }
-    };
-
-    window.addEventListener("scroll", handleScrollPosition);
-    return () => window.removeEventListener("scroll", handleScrollPosition);
-  }, []);
+    setRotation([
+      baseRotationY,
+      baseRotationX + dynamicRotationX,
+      baseRotationZ,
+    ]);
+    setPosition([
+      basePositionX + (dynamicPositionZ + 2) / 20,
+      basePositionY - dynamicPositionZ / 2.5,
+      basePositionZ + dynamicPositionZ,
+    ]);
+  }, [
+    dynamicRotationX,
+    basePositionY,
+    dynamicPositionZ,
+    baseRotationX,
+    basePositionZ,
+  ]);
 
   return (
     <Canvas
@@ -136,19 +84,10 @@ function ModelView() {
       }}
       id="ModelCanvas"
     >
-      <ambientLight intensity={0.8} />
-      <directionalLight position={[2, 0, 2]} color="white" />
-      <directionalLight position={[-2, 0, 2]} color="white" />
-      <directionalLight position={[0, 3, 3]} color="white" />
-      <Model
-        scale={[0.5, 0.5, 0.5]}
-        rotation={[0.35, baseRotationX - dynamicRotationX, 0]}
-        position={[
-          0 + (dynamicPositionZ + 1.6) / 20,
-          0.9 - dynamicPositionZ / 2.25,
-          basePositionZ + dynamicPositionZ,
-        ]}
-      />
+      <ambientLight intensity={0} />
+      <directionalLight position={[1, 0, 1]} color="white" />
+      <directionalLight position={[-1, 0, 1]} color="white" />
+      <Model scale={scale} rotation={rotation} position={position} />
     </Canvas>
   );
 }

@@ -1,13 +1,13 @@
 "use client";
 
 import { motion, useScroll, useSpring } from "framer-motion";
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import About from "./components/About";
-import Prize from "./components/Prize";
-import Sponsor from "./components/Sponsor";
-import CommunityPartners from "./components/CommunityPartners";
-import Faq from "./components/Faq";
+import Navbar from "@/components/events/Navbar";
+import Hero from "@/components/events/Hero";
+import About from "@/components/events/About";
+import Prize from "@/components/events/Prize";
+import Sponsor from "@/components/events/Sponsor";
+import CommunityPartners from "@/components/events/CommunityPartners";
+import Faq from "@/components/events/Faq";
 
 export default function Events() {
   const { scrollYProgress } = useScroll();
@@ -18,7 +18,10 @@ export default function Events() {
   });
 
   return (
-    <main className="bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900 text-white min-h-screen">
+    <main
+      style={{ wordSpacing: "0.5em", letterSpacing: "0.1em" }}
+      className="bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900 text-white min-h-screen"
+    >
       <motion.div
         className="fixed top-0 left-0 right-0 h-2 bg-purple-500 origin-left z-50"
         style={{ scaleX }}
@@ -33,9 +36,9 @@ export default function Events() {
         <About />
         <Prize
           Prize={{
-            first: 50000,
-            second: 30000,
-            third: 10000,
+            first: "Coming Soon",
+            second: "Coming Soon",
+            third: "Coming Soon",
           }}
         />
         <Sponsor />
