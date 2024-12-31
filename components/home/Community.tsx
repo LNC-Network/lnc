@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import Form from "../ui/form";
-import Rocket from "../../public/Animation/Animation - 1729532616541.json";
+// import Rocket from "../../public/Animation/Animation - 1729532616541.json";
 import communityData from "@/public/data/community.json";
 import Animated from "../Animation";
 const { title, paragraphs } = communityData;
@@ -28,11 +28,11 @@ const CommunitySection = () => {
         <div className="max-w-8xl mx-auto">
           <div className="flex ">
             <div className="w-1/2 h-60 ">
-              <Lottie
+              {/* <Lottie
                 className="h-96 animate-trans-right"
                 animationData={Rocket}
                 loop={true}
-              />
+              /> */}
             </div>
             <div className="w-1/2">
               <h2 className="text-4xl py-2 font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
