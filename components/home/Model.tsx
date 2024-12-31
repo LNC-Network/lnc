@@ -70,10 +70,10 @@ function ModelView() {
     ]);
   }, [
     dynamicRotationX,
+    basePositionY,
     dynamicPositionZ,
     baseRotationX,
     basePositionZ,
-    basePositionY,
   ]);
 
   return (
