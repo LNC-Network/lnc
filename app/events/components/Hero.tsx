@@ -46,7 +46,7 @@ const Hero = () => {
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
             >
-              VOID
+              NOVUS
             </motion.span>
             <motion.span
               className="inline-block"
@@ -87,7 +87,7 @@ const Hero = () => {
               </motion.span>
             </Button>
             <a
-              href="https://discord.gg/yNTU8x4y"
+              href="https://discord.gg/4RDvhG89"
               target="_blank"
               rel="noopener noreferrer"
             >

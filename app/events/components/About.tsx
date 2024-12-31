@@ -44,7 +44,7 @@ const About = () => {
           className="text-5xl font-bold mb-12 tracking-wider text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600"
           style={{ scale }}
         >
-          About {"{VOID}"}
+          About {"{NOVUS 2025}"}
         </motion.h2>
         <motion.div
           className="max-w-4xl text-center mb-16"
@@ -54,9 +54,7 @@ const About = () => {
           viewport={{ once: true }}
         >
           <p className="text-xl text-gray-300">
-            {"{VOID}"} is not just a hackathon; it&apos;s a journey into the
-            unknown. Join us for 48 hours of coding, creativity, and
-            collaboration as we push the boundaries of what&apos;s possible.
+             Welcome to {"{NOVUS 2025}"} , the largest national-level hackathon in Eastern India, where innovation meets collaboration to solve real-world problems. This one-of-a-kind event brings together students, developers, tech enthusiasts, and industry experts to create a thriving ecosystem for groundbreaking ideas and cutting-edge solutions.
           </p>
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
