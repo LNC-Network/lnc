@@ -70,7 +70,7 @@ const Hero = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.6 }}
           >
-            <Button className="text-lg h-12 px-8 py-2 bg-purple-600 hover:bg-purple-700 transition-colors duration-300 group relative overflow-hidden">
+            <Button className="text-lg h-16 px-8 py-2 bg-purple-600 hover:bg-purple-700 transition-colors duration-300 group relative overflow-hidden">
               <motion.span
                 className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-600"
                 initial={{ x: "100%" }}
@@ -82,8 +82,10 @@ const Hero = () => {
                 // animate={{ rotate: 360 }}
                 // transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
               >
-                <FaRocket className="mr-2" />
+                <FaRocket className="mr-4 h-8 w-8" />
                 Register Now
+                <br/>
+               [Coming Soon]
               </motion.span>
             </Button>
             <a
@@ -93,7 +95,7 @@ const Hero = () => {
             >
               <Button
                 variant="outline"
-                className="text-lg h-12 px-8 py-2 border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white transition-colors duration-300 group relative overflow-hidden"
+                className="text-lg h-16 px-8 py-2 border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white transition-colors duration-300 group relative overflow-hidden"
               >
                 <motion.span
                   className="absolute inset-0 bg-purple-500"
@@ -109,7 +111,7 @@ const Hero = () => {
                     animate={{ y: [0, -5, 0] }}
                     transition={{ duration: 1, repeat: Infinity }}
                   >
-                    <FaDiscord className="w-6 h-6" />
+                    <FaDiscord className="w-8 h-8" />
                   </motion.span>
                 </motion.span>
               </Button>
