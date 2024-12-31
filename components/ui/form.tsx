@@ -91,7 +91,7 @@ function Form() {
       console.error("Error submitting form:", error);
       setSubmitStatus("failed");
     }
-  }; //____________________________________________________
+  };
 
   const buttonCSS = () => {
     return "mb-2 w-full rounded-full py-2 px-4 bg-slate-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500";
