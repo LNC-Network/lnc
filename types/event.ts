@@ -1,13 +1,13 @@
 interface Event {
-    ID: string | undefined;
-    Name: string | undefined;
-    Prize: {
-        first: number | undefined;
-        second: number | undefined;
-        third: number | undefined;
-    };
-    currency: "rupee" | "dollar" | undefined;
-    sponsor: string | undefined;
+  ID: string | undefined;
+  Name: string | undefined;
+  Prize: {
+    first: number | "Coming Soon";
+    second: number | "Coming Soon";
+    third: number | "Coming Soon";
+  };
+  currency: "rupee" | "dollar" | undefined;
+  sponsor: string | undefined;
 }
 
 export type { Event };
