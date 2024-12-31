@@ -49,7 +49,7 @@ const FireballCursor = () => {
   return (
     <>
       <motion.div
-        className="pointer-events-none fixed top-0 left-0 z-50 mix-blend-screen"
+        className="pointer-events-none fixed top-0 left-0 z-20 mix-blend-screen"
         style={{
           x: mouseX,
           y: mouseY,
@@ -98,7 +98,7 @@ const FireballCursor = () => {
 
       {/* Outer glow */}
       <motion.div
-        className="pointer-events-none fixed top-0 left-0 z-40 w-16 h-16 rounded-full bg-orange-400 opacity-50 blur-xl"
+        className="pointer-events-none fixed top-0 left-0 z-20 w-16 h-16 rounded-full bg-orange-400 opacity-50 blur-xl"
         style={{
           x: mouseX,
           y: mouseY,

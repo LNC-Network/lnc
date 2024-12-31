@@ -62,14 +62,19 @@ function WhyJoinUs() {
             {/* Text Section */}
             <div
               className={`text z-10 px-10 md:px-20 absolute ${
-                index % 2 === 0 ? "order-1 text-left left-0" : "order-2 text-right right-0"
+                index % 2 === 0
+                  ? "order-1 text-left left-0 w-3/4"
+                  : "order-2 text-right right-0 w-3/4"
               }`}
               // style={{ maxWidth: "50%" }}
             >
               <h2 className="text-3xl md:text-5xl lg:text-7xl font-semibold text-gray-100 mb-4">
                 {item.heading}
               </h2>
-              <p className="text-xl md:text-2xl lg:text-4xl text-gray-200">
+              <p
+                className="text-xl md:text-2xl lg:text-4xl text-gray-200"
+                style={{ wordSpacing: "0.3em" }}
+              >
                 {item.paragraph}
               </p>
             </div>

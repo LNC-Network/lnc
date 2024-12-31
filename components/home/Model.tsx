@@ -27,11 +27,12 @@ function Model({ scale, rotation, position }: ModelProps) {
 function ModelView() {
   const deceleration = 0.88;
   const maxSpeed = 3;
-  const RotationFactor = 4000;
+  const RotationFactor = 3000;
+  const Lerp_speed = 0.05;
 
   const canvasSize = useCanvasResize();
   const dynamicRotationX = useRotation(canvasSize.width, RotationFactor);
-  const dynamicPositionZ = useScroll(deceleration, maxSpeed);
+  const dynamicPositionZ = useScroll(deceleration, maxSpeed, Lerp_speed);
   const windowInnerWidth = useWindowInnerWidth();
 
   const baseRotationX = -1.58;
@@ -39,7 +40,7 @@ function ModelView() {
   const baseRotationZ = 0;
 
   const basePositionX = 0;
-  const basePositionY = 0.9;
+  const basePositionY = windowInnerWidth <= 768 ? 1.5 : 0.9;
   const basePositionZ = windowInnerWidth <= 768 ? -1.3 : 0;
 
   const [rotation, setRotation] = useState<[number, number, number]>([
@@ -58,7 +59,7 @@ function ModelView() {
   useEffect(() => {
     setRotation([
       baseRotationY,
-      baseRotationX - dynamicRotationX,
+      baseRotationX + dynamicRotationX,
       baseRotationZ,
     ]);
     setPosition([
@@ -76,10 +77,9 @@ function ModelView() {
       }}
       id="ModelCanvas"
     >
-      <ambientLight intensity={1} />
-      <directionalLight position={[2, 0, 2]} color="white" />
-      <directionalLight position={[-2, 0, 2]} color="white" />
-      <directionalLight position={[0, 3, 3]} color="white" />
+      <ambientLight intensity={0} />
+      <directionalLight position={[1, 0, 1]} color="white" />
+      <directionalLight position={[-1, 0, 1]} color="white" />
       <Model scale={scale} rotation={rotation} position={position} />
     </Canvas>
   );

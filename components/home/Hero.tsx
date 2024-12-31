@@ -14,7 +14,7 @@ const Hero: React.FC = () => {
             className="h-full w-full absolute z-10"
             id="liquid-canvas"
           ></canvas>
-          <div className="absolute z-20">
+          <div className="absolute z-30">
             <ModelView />
           </div>
           {/* <div className="relative h-screen w-screen z-0">

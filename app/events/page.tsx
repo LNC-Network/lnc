@@ -18,7 +18,10 @@ export default function Events() {
   });
 
   return (
-    <main className="bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900 text-white min-h-screen">
+    <main
+      style={{ wordSpacing: "0.5em", letterSpacing: "0.1em" }}
+      className="bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900 text-white min-h-screen"
+    >
       <motion.div
         className="fixed top-0 left-0 right-0 h-2 bg-purple-500 origin-left z-50"
         style={{ scaleX }}

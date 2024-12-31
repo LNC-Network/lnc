@@ -76,15 +76,23 @@ const Faq = () => {
       viewport={{ once: true }}
     >
       <motion.h2
-        className="text-5xl font-bold mb-12 tracking-wider text-center"
+        className="text-5xl font-bold mb-12 tracking-wider text-center "
         initial={{ y: -50, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
+        style={{ wordSpacing: "0.2em" }}
       >
         Frequently Asked Questions
       </motion.h2>
-      <div className="max-w-3xl w-full">
+      <div
+        className="max-w-3xl w-full text-xl"
+        style={{
+          wordSpacing: "0em",
+          letterSpacing: "0em",
+          fontFamily: "monospace",
+        }}
+      >
         {faqs.map((faq, index) => (
           <FaqItem key={index} question={faq.question} answer={faq.answer} />
         ))}

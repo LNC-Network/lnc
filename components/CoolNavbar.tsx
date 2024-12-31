@@ -1,44 +1,48 @@
-"use client"
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+"use client";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const menuItems = [
-  { name: 'Home', href: '#home', isDirectNav: false },
-  { name: 'Events', href: '/events', isDirectNav: true },
-  { name: 'About', href: '#why-join-us', isDirectNav: false },
-  { name: 'Join', href: '#join', isDirectNav: false },
-  { name: 'Contact', href: '#footer', isDirectNav: false },
-]
+  { name: "Home", href: "#home", isDirectNav: false },
+  { name: "Events", href: "/events", isDirectNav: true },
+  { name: "About", href: "#why-join-us", isDirectNav: false },
+  { name: "Join", href: "#join", isDirectNav: false },
+  { name: "Contact", href: "#footer", isDirectNav: false },
+];
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleMenuClose = () => {
-    setIsMenuOpen(false)
-  }
+    setIsMenuOpen(false);
+  };
 
-  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, href: string, isDirectNav: boolean) => {
+  const handleNavigation = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+    isDirectNav: boolean
+  ) => {
     if (isDirectNav) {
       // Allow direct navigation for Events page
-      handleMenuClose()
-      return true
+      handleMenuClose();
+      return true;
     }
 
     // For other menu items, perform smooth scroll
-    e.preventDefault()
-    handleMenuClose()
+    e.preventDefault();
+    handleMenuClose();
 
-    const targetElement = document.querySelector(href)
+    const targetElement = document.querySelector(href);
     if (targetElement) {
       targetElement.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      })
+        behavior: "smooth",
+        block: "start",
+      });
     }
-  }
+  };
 
   return (
-    <div className="fixed top-4 left-4 z-50">
+    <div className="fixed top-4 left-4 z-40">
       {/* Toggle Button */}
       {!isMenuOpen && (
         <motion.button
@@ -64,17 +68,15 @@ const Navbar = () => {
             onClick={handleMenuClose}
           >
             {/* Menu Container */}
-            <motion.div
-              className="absolute top-4 left-4"
-            >
+            <motion.div className="absolute top-4 left-4">
               {/* Close Button */}
               <motion.button
                 className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-400 to-purple-600 flex items-center justify-center cursor-pointer"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={(e) => {
-                  e.stopPropagation()
-                  handleMenuClose()
+                  e.stopPropagation();
+                  handleMenuClose();
                 }}
               >
                 <div className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-white font-bold">
@@ -91,15 +93,17 @@ const Navbar = () => {
                 onClick={(e) => e.stopPropagation()}
               >
                 {menuItems.map((item) => (
-                  <motion.li 
+                  <motion.li
                     key={item.name}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <a 
+                    <a
                       href={item.href}
                       className="text-white text-lg hover:text-blue-400 transition-colors block"
-                      onClick={(e) => handleNavigation(e, item.href, item.isDirectNav)}
+                      onClick={(e) =>
+                        handleNavigation(e, item.href, item.isDirectNav)
+                      }
                     >
                       {item.name}
                     </a>
@@ -111,7 +115,7 @@ const Navbar = () => {
         )}
       </AnimatePresence>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
