@@ -106,9 +106,9 @@ const SponsorSlideshow = ({ tier, sponsors }) => {
             ) : (
               <div
                 key={shuffledSponsors[index].name}
-                className="h-[200px] w-[200px] text-white text-xl font-bold bg-gray-700/30 flex items-center justify-center backdrop-blur rounded z-10"
+                className="h-[200px] w-[200px] text-white text-xl font-bold bg-gray-900/30 flex items-center justify-center backdrop-blur rounded z-10"
               >
-                Coming Soon
+                Coming_Soon
               </div>
             )
           )}
@@ -153,7 +153,7 @@ const GoldSponsors = ({ sponsors }) => {
               className="flex-shrink-0 w-64 h-64 mx-4 bg-gray-800 p-6 rounded-lg flex items-center justify-center text-white text-xl font-bold relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-gray-500 to-gray-700 opacity-10" />
-              Coming Soon
+              Coming_Soon
             </div>
           )
         )}
