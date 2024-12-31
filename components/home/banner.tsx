@@ -13,7 +13,7 @@ interface BannerProps {
 const Banner = ({
   images = ["/images/1.jpg", "/images/2.jpg"],
   autoScrollInterval = 3000,
-  dimensions = { width: 600, height: 350 },
+  dimensions = { width: 900, height: 550 },
   // Adjusted offset for higher back position
   modelOffset = { x: 0, y: -200, z: -2200 },
 }: BannerProps) => {
@@ -27,7 +27,6 @@ const Banner = ({
   const scrollDirection = useRef<"up" | "down">("down");
 
   // Adjusted section heights for better control
-  const SECTION_HEIGHT = viewportHeight;
   const MODEL_SECTION_HEIGHT = viewportHeight * 1.5; // Reduced from 2 to 1.5
   const BANNER_SECTION_HEIGHT = viewportHeight;
   const TOTAL_HEIGHT = MODEL_SECTION_HEIGHT + BANNER_SECTION_HEIGHT;
@@ -103,14 +102,14 @@ const Banner = ({
   const isPastBannerSection = scrollPos >= TOTAL_HEIGHT;
 
   // Scale and transform calculations
-  const INITIAL_SCALE = 0.08; // Smaller initial scale
+  const INITIAL_SCALE = 0.03; // Smaller initial scale
   const FINAL_SCALE = 1;
   const scale = INITIAL_SCALE + (FINAL_SCALE - INITIAL_SCALE) * progress;
 
   // Enhanced 3D transform calculations
   const translateX = modelOffset.x * (1 - progress);
-  const translateY =
-    modelOffset.y + (viewportHeight * 0.2 - modelOffset.y) * progress;
+  // const translateY =
+  //   modelOffset.y + (viewportHeight * 0.2 - modelOffset.y) * progress;
   const translateZ = modelOffset.z * (1 - easeOutExpo(progress));
   const rotateX = 15 * (1 - progress); // Add some rotation for enhanced 3D effect
 
@@ -167,7 +166,7 @@ const Banner = ({
           style={{
             width: `${dimensions.width * scale}px`,
             height: `${dimensions.height * scale}px`,
-            transform: `translate3d(${translateX}px, ${translateY}px, ${translateZ}px)
+            transform: `translate3d(${translateX}px, ${0}px, ${translateZ}px)
                        rotateX(${rotateX}deg)
                        ${
                          scrollDirection.current === "up" ? "rotateX(2deg)" : ""

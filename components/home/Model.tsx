@@ -67,7 +67,13 @@ function ModelView() {
       basePositionY - dynamicPositionZ / 2.5,
       basePositionZ + dynamicPositionZ,
     ]);
-  }, [dynamicRotationX, dynamicPositionZ, baseRotationX, basePositionZ]);
+  }, [
+    dynamicRotationX,
+    basePositionY,
+    dynamicPositionZ,
+    baseRotationX,
+    basePositionZ,
+  ]);
 
   return (
     <Canvas
