@@ -3,7 +3,7 @@ import { MongoClient } from "mongodb";
 const uri: string | undefined = process.env.MONGODB_URI;
 
 if (!uri) {
-  // throw new Error("Missing MONGODB_URI in environment variables");
+  throw new Error("Missing MONGODB_URI in environment variables");
 }
 
 let client: MongoClient;
