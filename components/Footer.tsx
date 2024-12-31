@@ -1,27 +1,77 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { FaGithub, FaLinkedin, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { motion } from "framer-motion";
+import type { Footer } from "@/types/footer";
 
 const Footer: React.FC = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  console.log(status);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("idle");
+
+    try {
+      sessionStorage.setItem("formData", JSON.stringify(formData));
+
+      // Send the form data to the API
+      const response = await fetch("/api/footer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setStatus("success");
+      } else {
+        setStatus("error");
+        console.error("Server failure:", response.statusText);
+      }
+    } catch (error) {
+      setStatus("error");
+      console.error("Error submitting form:", error);
+    }
+  };
+
   return (
-    <div id="footer"   
-      className='relative h-[800px]'
+    <div
+      id="footer"
+      className="relative h-[800px]"
       style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
     >
-      <div className='fixed bottom-0 w-full'>
+      <div className="fixed bottom-0 w-full">
         <div className="relative">
           {/* Spotlight effect */}
           <motion.div
             className="absolute inset-0 bg-gradient-radial from-blue-300 to-transparent opacity-50 rounded-full blur-2xl"
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 0.5 }}
-            transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse" }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
           />
-          
-          <motion.p 
+
+          <motion.p
             className="md:mb-20 text-7xl md:text-[14rem] font-bold text-center relative z-10"
             style={{
               textShadow: "2px 2px 4px rgba(0,0,0,0.1)",
@@ -29,7 +79,11 @@ const Footer: React.FC = () => {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            whileHover={{ scale: 1.05, rotate: [0, -1, 1, -1, 0], transition: { duration: 0.5 } }}
+            whileHover={{
+              scale: 1.05,
+              rotate: [0, -1, 1, -1, 0],
+              transition: { duration: 0.5 },
+            }}
           >
             <motion.span
               className="inline-block animate-color-shift"
@@ -57,7 +111,7 @@ const Footer: React.FC = () => {
             </motion.span>
           </motion.p>
         </div>
-        
+
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -75,11 +129,17 @@ const Footer: React.FC = () => {
               <form className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <input
+                    onChange={handleChange}
+                    value={formData.name}
+                    name="name"
                     type="text"
                     placeholder="Name *"
                     className="w-full bg-transparent border border-gray-500 p-2"
                   />
                   <input
+                    onChange={handleChange}
+                    value={formData.email}
+                    name="email"
                     type="email"
                     id="email"
                     placeholder="Email *"
@@ -88,6 +148,9 @@ const Footer: React.FC = () => {
                   />
                 </div>
                 <textarea
+                  onChange={handleChange}
+                  value={formData.message}
+                  name="message"
                   id="message"
                   className="w-full bg-transparent border border-gray-500 p-2 h-16 resize-none rounded-md focus:border-blue-500 focus:outline-none"
                   placeholder="Message *"
@@ -95,10 +158,15 @@ const Footer: React.FC = () => {
                   required
                 />
                 <button
+                  onClick={handleSubmit}
                   type="submit"
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded"
                 >
-                  Submit
+                  {status === "success"
+                    ? "Submitted!"
+                    : status === "error"
+                    ? "Error!"
+                    : "Submit"}
                 </button>
               </form>
             </div>
@@ -157,4 +225,3 @@ const Footer: React.FC = () => {
 };
 
 export default Footer;
-
