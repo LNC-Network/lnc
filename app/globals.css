@@ -59,44 +59,108 @@
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-  }
+/* width */
+::-webkit-scrollbar {
+  width: 0px;
 }
 
-body::-webkit-scrollbar {
-  display: none;
-}
-
-input:-webkit-autofill {
-  /* to prevent autofill deafult action on browser */
-  background-color: #3a3b3c !important;
-  color: white !important;
-  transition: background-color 5000s ease-in-out 0s;
-}
-
-textarea::-webkit-scrollbar {
-  width: 10px;
-  margin-right: 2px;
-}
-
-textarea::-webkit-scrollbar-thumb {
-  margin: 7px 0;
-  background-color: midnightblue;
+/* Track */
+/* ::-webkit-scrollbar-track {
+  background: #201c1c;
   border-radius: 10px;
-  position: absolute;
-  z-index: -1;
+} */
+
+/* Handle */
+/* ::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+} */
+
+/* Handle on hover */
+/* ::-webkit-scrollbar-thumb:hover {
+  background: #555;
+} */
+
+html {
+  scrollbar-width: 0px;
 }
 
-textarea::-webkit-scrollbar-track {
-  background: transparent;
+body {
+  -ms-overflow-style: none;
+  background-color: hsl(0, 0%, 0%);
+  scroll-behavior: smooth;
 }
 
-.silkscreen {
-  font-family: var(--font-silkscreen, sans-serif);
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(0.2);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: translateY(-30px) rotate(360deg) scale(2.5);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(0) rotate(0deg) scale(0.2);
+    opacity: 0.5;
+  }
+}
+
+.star-animation {
+  animation: float var(--random-duration) ease-in-out infinite;
+  animation-delay: var(--random-delay);
+}
+
+@keyframes color-shift {
+  0% {
+    color: #4facfe;
+  }
+  25% {
+    color: #00f2fe;
+  }
+  50% {
+    color: #a6c1ee;
+  }
+  75% {
+    color: #f68084;
+  }
+  100% {
+    color: #4facfe;
+  }
+}
+
+.animate-color-shift {
+  animation: color-shift 8s infinite;
+}
+
+@keyframes spotlight {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+.bg-gradient-radial {
+  background-image: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
+@font-face {
+  font-family: "Monoton";
+  src: url("/fonts/Monoton-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  font-family: "Monoton", sans-serif;
+}
+.SpaceFont {
+  letter-spacing: 0.1em;
+  word-spacing: 0.3em;
 }
