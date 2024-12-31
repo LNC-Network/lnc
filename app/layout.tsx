@@ -1,6 +1,6 @@
 import { ThemeProvider } from "next-themes";
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+// import localFont from "next/font/local";
 import { Silkscreen } from "next/font/google";
 import "./globals.css";
 // import CoolNavbar from "@/components/CoolNavbar";
