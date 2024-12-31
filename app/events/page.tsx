@@ -36,9 +36,9 @@ export default function Events() {
         <About />
         <Prize
           Prize={{
-            first: 50000,
-            second: 30000,
-            third: 10000,
+            first: "Coming Soon",
+            second: "Coming Soon",
+            third: "Coming Soon",
           }}
         />
         <Sponsor />
