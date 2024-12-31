@@ -22,8 +22,8 @@ const CommunitySection = () => {
         className="py-24 px-6 text-center text-white min-h-screen animate-EvervaultCard"
       >
         <div className="max-w-8xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="w-full md:w-1/2 flex justify-center items-center">
+          <div className="flex items-center justify-between">
+            <div className="w-1/2 flex justify-center items-center">
               <div className="relative w-96 h-96">
                 <Image
                   src="/images/rocket.gif"
