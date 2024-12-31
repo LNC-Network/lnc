@@ -3,11 +3,12 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Silkscreen } from "next/font/google";
 import "./globals.css";
+import "@/fonts/GeistVF.woff";
 // import CoolNavbar from "@/components/CoolNavbar";
 // import Footer from "@/components/Footer";
 
 const geistSans = localFont({
-  src: "../fonts/GeistVF.woff",
+  src: GeistVF,
   variable: "--font-geist-sans",
   weight: "100 900",
 });
