@@ -1,44 +1,44 @@
 import { MongoClient } from "mongodb";
 
-const uri: string | undefined = process.env.MONGODB_URI;
+// MongoClient Singleton class to ensure a single connection across invocations
+class MongoClientSingleton {
+	private static client: MongoClient | null = null;
 
-if (!uri) {
-  throw new Error("Missing MONGODB_URI in environment variables");
+	private constructor() { }
+
+	public static async getClient(): Promise<MongoClient> {
+		if (!process.env.MONGODB_URI) {
+			throw new Error("Missing MONGODB_URI in environment variables");
+		}
+
+		// For serverless environments like Vercel, we want to reuse the connection
+		if (!MongoClientSingleton.client) {
+			MongoClientSingleton.client = new MongoClient(process.env.MONGODB_URI, {
+				maxPoolSize: 50
+			});
+			await MongoClientSingleton.client.connect();
+		}
+
+		return MongoClientSingleton.client;
+	}
+
+	public static async closeConnection() {
+		try {
+			if (MongoClientSingleton.client) {
+				console.log("Closing MongoDB connection...");
+				await MongoClientSingleton.client.close();
+				console.log("MongoDB connection closed.");
+			}
+		} catch (error) {
+			console.error("Error while closing MongoDB connection:", error);
+		} finally {
+			process.exit(0);
+		}
+	}
 }
 
-let client: MongoClient;
-const clientPromise: Promise<MongoClient> = (async () => {
-  if (!global._mongoClientPromise) {
-    client = new MongoClient(uri || "");
-    global._mongoClientPromise = client.connect();
-  }
-  return global._mongoClientPromise;
-})();
+// Graceful shutdown on SIGINT or SIGTERM
+process.on("SIGINT", () => MongoClientSingleton.closeConnection());
+process.on("SIGTERM", () => MongoClientSingleton.closeConnection());
 
-// Close MongoDB connection on application shutdown
-const closeMongoConnection = async () => {
-  try {
-    if (client) {
-      console.log("Closing MongoDB connection...");
-      await client.close();
-      console.log("MongoDB connection closed.");
-    }
-  } catch (error) {
-    console.error("Error while closing MongoDB connection:", error);
-  }
-};
-
-// termination of connection
-process.on("SIGINT", async () => {
-  console.log("Received SIGINT signal.");
-  await closeMongoConnection();
-  process.exit(0);
-});
-
-process.on("SIGTERM", async () => {
-  console.log("Received SIGTERM signal.");
-  await closeMongoConnection();
-  process.exit(0);
-});
-
-export default clientPromise;
+export { MongoClientSingleton };

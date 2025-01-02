@@ -8,7 +8,6 @@ import {
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FormData, formSchema } from "@/types/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 
 function Form() {
   const {
@@ -32,7 +31,6 @@ function Form() {
     },
   });
 
-  const router = useRouter();
   const role = watch("role");
   const status = watch("status");
 
@@ -69,8 +67,9 @@ function Form() {
     "default" | "clicked" | "done" | "failed"
   >("default");
   const onSubmit: SubmitHandler<FormData> = async (data) => {
+    setSubmitStatus("clicked");
     try {
-      const response = await fetch("/api/submit", {
+      const response = await fetch("/api/form", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -82,13 +81,12 @@ function Form() {
         sessionStorage.removeItem("formData");
         reset();
         setSubmitStatus("done");
-        router.refresh();
       } else {
-        console.error("Server faliure", response);
+        console.error(response);
         setSubmitStatus("failed");
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error(error);
       setSubmitStatus("failed");
     }
   };

@@ -1,22 +1,40 @@
-import { NextResponse } from "next/server";
-import clientPromise from "@/lib/mongodb";
+import { MongoClientSingleton } from "@/lib/mongodb";
+import { MongoError } from "mongodb";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: Request) {
-    try {
-        const client = await clientPromise;
-        const db = client.db(process.env.MONGODB_DB_NAME as string);
-        const footerCollection = db.collection(
-            process.env.FOOTER_COLLECTION_NAME as string
-        );
+export async function POST(req: NextRequest) {
+    const dbName = process.env.MONGODB_DB_NAME;
+    const collectionName = process.env.FOOTER_COLLECTION_NAME;
 
-        const data = await req.json();
-        const result = await footerCollection.insertOne(data);
-
-        return NextResponse.json({ success: true, result });
-    } catch (error) {
-        console.error(error);
+    if (!dbName || !collectionName) {
         return NextResponse.json(
-            { success: false, error: "Internal server error" },
+            { error: "Missing database or collection name" },
+            { status: 400 }
+        );
+    }
+
+    const client = await MongoClientSingleton.getClient();
+    const collection = client.db(dbName).collection(collectionName);
+
+    try {
+        const data = await req.json();
+        const result = await collection.insertOne(data);
+
+        return NextResponse.json({
+            message: "Document inserted successfully",
+            insertedId: result.insertedId,
+        });
+    } catch (err) {
+        if (err instanceof MongoError) {
+            console.error("MongoDB error:", err);
+            return NextResponse.json(
+                { error: "Database error", details: err.message },
+                { status: 500 }
+            );
+        }
+        console.error("Internal server error:", err);
+        return NextResponse.json(
+            { error: "Internal server error" },
             { status: 500 }
         );
     }
