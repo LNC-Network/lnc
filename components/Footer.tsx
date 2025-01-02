@@ -14,7 +14,6 @@ const Footer: React.FC = () => {
   });
 
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
-  console.log(status);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -43,11 +42,11 @@ const Footer: React.FC = () => {
         setStatus("success");
       } else {
         setStatus("error");
-        console.error("Server failure:", response.statusText);
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
       setStatus("error");
-      console.error("Error submitting form:", error);
     }
   };
 

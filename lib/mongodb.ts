@@ -23,6 +23,7 @@ class MongoClientSingleton {
 	}
 
 	public static async closeConnection() {
+		/* eslint-disable no-console */
 		try {
 			if (MongoClientSingleton.client) {
 				console.log("Closing MongoDB connection...");
@@ -30,10 +31,11 @@ class MongoClientSingleton {
 				console.log("MongoDB connection closed.");
 			}
 		} catch (error) {
-			console.error("Error while closing MongoDB connection:", error);
+			console.error(error);
 		} finally {
 			process.exit(0);
 		}
+		/* eslint-enable no-console */
 	}
 }
 

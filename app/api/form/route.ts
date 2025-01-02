@@ -26,13 +26,11 @@ export async function POST(req: NextRequest) {
 		});
 	} catch (err) {
 		if (err instanceof MongoError) {
-			console.error("MongoDB error:", err);
 			return NextResponse.json(
 				{ error: "Database error", details: err.message },
 				{ status: 500 }
 			);
 		}
-		console.error("Internal server error:", err);
 		return NextResponse.json(
 			{ error: "Internal server error" },
 			{ status: 500 }

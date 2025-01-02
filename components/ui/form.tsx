@@ -82,10 +82,10 @@ function Form() {
         reset();
         setSubmitStatus("done");
       } else {
-        console.error(response);
         setSubmitStatus("failed");
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
       setSubmitStatus("failed");
     }

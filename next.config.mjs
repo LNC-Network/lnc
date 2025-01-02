@@ -1,9 +1,8 @@
 /** @type {import('next').NextConfig} */
-import NextBundleAnalyzer from "@next/bundle-analyzer";
 const nextConfig = {
   webpack(config) {
     config.module.rules.push({
-      test: /\.(mp4|webm|ogg|swf|ogv)$/, // video file extensions
+      test: /\.(mp4|webm|ogg|swf|ogv)$/, 
       use: {
         loader: "file-loader",
         options: {
@@ -18,11 +17,4 @@ const nextConfig = {
   },
 };
 
-const withBundleAnalyzer = NextBundleAnalyzer({
-  enabled: process.env.ANALYZE === "true",
-});
-// to use bundle analyzer
-// ```$env:ANALYZE="true"
-// npm run build```
-
-export default withBundleAnalyzer(nextConfig);
+export default nextConfig;
