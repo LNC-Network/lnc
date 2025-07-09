@@ -57,7 +57,7 @@ const Footer: React.FC = () => {
               onChange={(e) => setEmail(e.target.value)}
               className="
                                 w-full h-12
-                                pl-6 pr-[190px]
++                               pl-6 pr-6 sm:pr-[190px]
                                 text-lg text-white
                                 border-2 border-[#8e5bb5]
                                 bg-gradient-to-r from-[#5F1D95] to-[#561189]
