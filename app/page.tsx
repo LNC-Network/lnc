@@ -1,6 +1,7 @@
 'use client';
 
 import About from '@/components/about/about'; // Keep the About import
+import Projects from '@/components/projects/projects';
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       {/* Only render the About component */}
       <div id="about">
         <About />
+        <Projects />
       </div>
 
     </div>
