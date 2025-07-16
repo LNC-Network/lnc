@@ -60,16 +60,15 @@ const About = () => {
         </p>
       </div>
 
-      
-      <div className="w-full flex items-center justify-center drop-shadow-[0_30px_60px_#7E27C2] mb-16 mt-[-100px]">
-      <div className="relative w-[350px] h-[350px] sm:w-[500px] sm:h-[500px] md:w-[700px] md:h-[700px] lg:w-[900px] lg:h-[900px]">
-    <Spline scene="/scene.splinecode" className="absolute inset-0 w-full h-full" />
-    <div className="absolute inset-0 z-10 cursor-default"></div>
-  </div>
+      {/* Spline Globe Component */}
+<div className="relative w-[90vw] max-w-[900px] aspect-[1/1] overflow-hidden rounded-full drop-shadow-[0_30px_60px_#7E27C2] animate-pulse-slow">
+  <Spline scene="/scene.splinecode" className="absolute inset-0 w-full h-full" />
+  <div className="absolute inset-0 z-10 cursor-default"></div>
 </div>
 
+
       
-      <div className="w-full max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-x-4 md:gap-x-12 gap-y-12 md:gap-y-0 text-center">
+<div className="w-full max-w-7xl mx-auto grid grid-cols-1 min-[400px]:grid-cols-2 min-[900px]:grid-cols-4 gap-x-4 md:gap-x-12 gap-y-8 sm:gap-y-12 text-center px-4 mt-8">
   {[
     { label: 'Events', count: 5, color: 'rgba(238, 185, 255, 1)' },
     { label: 'Workshops', count: 3, color: 'rgba(227, 128, 255, 0.3)' },
@@ -78,13 +77,13 @@ const About = () => {
   ].map((item, index) => (
     <div key={index} className="flex flex-col items-center justify-center">
       <p
-        className="text-[24px] sm:text-[30px] md:text-[36px] font-semibold whitespace-nowrap"
+        className="text-[20px] sm:text-[24px] md:text-[28px] font-semibold whitespace-nowrap"
         style={{ textShadow: `0 0 30px ${item.color}` }}
       >
         {item.label}
       </p>
       <p
-        className="mt-2 text-[24px] sm:text-[30px] md:text-[36px] font-medium"
+        className="mt-2 text-[20px] sm:text-[24px] md:text-[28px] font-medium"
         style={{ textShadow: `0 0 20px ${item.color}` }}
       >
         <Counter end={item.count} />
@@ -92,6 +91,7 @@ const About = () => {
     </div>
   ))}
 </div>
+
     </div>
   );
 };
