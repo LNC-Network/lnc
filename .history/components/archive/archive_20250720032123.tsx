@@ -6,7 +6,7 @@ import Image from 'next/image';
 interface BlogItem {
   id: number;
   title: string;
-  excerpt: string;
+  excerpt: string;s
   image: string;
   author: string;
   date: string;

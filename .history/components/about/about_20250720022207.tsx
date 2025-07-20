@@ -37,7 +37,7 @@ const Counter: React.FC<CounterProps> = ({ end, duration = 1200, shouldStart }) 
         setIsShuffling(false);
         
         const startTime = Date.now();
-        const countingDuration = duration * 0.7; // 70% for actual counting
+        const countingDuration = duration * 0.75; // 75% for actual counting
         const startValue = -100;
         const totalRange = end - startValue; // Total distance to cover
         
@@ -162,15 +162,15 @@ const About = () => {
         className="w-full max-w-7xl mx-auto grid grid-cols-1 min-[400px]:grid-cols-2 min-[900px]:grid-cols-4 gap-x-4 md:gap-x-12 gap-y-8 sm:gap-y-12 text-center px-4 mt-8"
       >
         {[
-          { label: "Events", count: 5, color: "rgba(238, 185, 255, 1)", duration: 1400 },
-          { label: "Workshops", count: 3, color: "rgba(227, 128, 255, 0.3)", duration: 1200 },
+          { label: "Events", count: 5, color: "rgba(238, 185, 255, 1)", duration: 1000 },
+          { label: "Workshops", count: 3, color: "rgba(227, 128, 255, 0.3)", duration: 800 },
           {
             label: "Core Team Members",
             count: 25,
             color: "rgba(194, 116, 255, 1)",
-            duration: 1600,
+            duration: 1200,
           },
-          { label: "Members", count: 1000, color: "rgba(255, 255, 255, 0.9)", duration: 2000 },
+          { label: "Members", count: 1000, color: "rgba(255, 255, 255, 0.9)", duration: 1500 },
         ].map((item, index) => (
           <div
             key={index}

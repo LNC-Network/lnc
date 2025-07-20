@@ -136,28 +136,28 @@ const Archive = () => {
             <div className="flex flex-col gap-4">
               <button
                 onClick={() => handleTabChange('blogs')}
-                className={`flex items-center justify-between p-4 rounded-lg border transition-all duration-500 ease-out group ${
+                className={`flex items-center justify-between p-4 rounded-lg border transition-all duration-300 group ${
                   activeTab === 'blogs'
                     ? 'bg-purple-600/20 border-purple-500 text-white shadow-[0_0_15px_rgba(147,51,234,0.4)]'
-                    : 'bg-gray-900/50 border-gray-700 text-gray-400 hover:text-white hover:border-purple-500 hover:bg-purple-600/20 hover:shadow-[0_0_30px_rgba(147,51,234,0.7)] hover:scale-105'
+                    : 'bg-gray-900/50 border-gray-700 text-gray-400 hover:text-white hover:border-purple-500 hover:bg-purple-600/20 hover:shadow-[0_0_20px_rgba(147,51,234,0.6)]'
                 }`}
               >
-                <span className="text-lg font-medium transition-colors duration-500">BLOGS</span>
-                <svg className="w-5 h-5 transition-all duration-500 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span className="text-lg font-medium">BLOGS</span>
+                <svg className="w-5 h-5 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </button>
               
               <button
                 onClick={() => handleTabChange('gallery')}
-                className={`flex items-center justify-between p-4 rounded-lg border transition-all duration-500 ease-out group ${
+                className={`flex items-center justify-between p-4 rounded-lg border transition-all duration-300 group ${
                   activeTab === 'gallery'
                     ? 'bg-purple-600/20 border-purple-500 text-white shadow-[0_0_15px_rgba(147,51,234,0.4)]'
-                    : 'bg-gray-900/50 border-gray-700 text-gray-400 hover:text-white hover:border-purple-500 hover:bg-purple-600/20 hover:shadow-[0_0_30px_rgba(147,51,234,0.7)] hover:scale-105'
+                    : 'bg-gray-900/50 border-gray-700 text-gray-400 hover:text-white hover:border-purple-500 hover:bg-purple-600/20 hover:shadow-[0_0_20px_rgba(147,51,234,0.6)]'
                 }`}
               >
-                <span className="text-lg font-medium transition-colors duration-500">GALLERY</span>
-                <svg className="w-5 h-5 transition-all duration-500 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span className="text-lg font-medium">GALLERY</span>
+                <svg className="w-5 h-5 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </button>
@@ -168,50 +168,45 @@ const Archive = () => {
           <div className="flex-1">
             {/* Content Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {displayItems.map((item) => (
+          {displayItems.map((item, index) => (
             <div
               key={item.id}
-              className="bg-gray-900/50 rounded-lg overflow-hidden border border-gray-700 hover:border-purple-500 hover:shadow-[0_0_40px_rgba(147,51,234,0.8)] transition-all duration-700 ease-out group cursor-pointer hover:scale-105 hover:bg-gray-800/60"
+              className="bg-gray-900/50 rounded-lg overflow-hidden border border-gray-700 hover:border-purple-500 hover:shadow-[0_0_25px_rgba(147,51,234,0.6)] transition-all duration-300 group cursor-pointer"
             >
               {/* Image */}
               <div className="relative h-48 bg-gray-800 overflow-hidden">
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  fill
-                  className="object-cover transition-all duration-700 ease-out group-hover:scale-110 group-hover:brightness-110"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-all duration-700 ease-out" />
-                <div className="absolute inset-0 bg-gradient-to-t from-purple-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700 ease-out" />
+                <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center">
+                  <span className="text-gray-400 text-sm">Image Placeholder</span>
+                </div>
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all duration-300" />
               </div>
               
               {/* Content */}
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-purple-300 transition-all duration-500 ease-out group-hover:transform group-hover:-translate-y-1">
+                <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-purple-400 transition-colors duration-300">
                   {item.title}
                 </h3>
                 
                 {activeTab === 'blogs' ? (
                   <>
-                    <p className="text-gray-400 text-sm mb-4 line-clamp-3 group-hover:text-gray-300 transition-colors duration-500">
+                    <p className="text-gray-400 text-sm mb-4 line-clamp-3">
                       {(item as BlogItem).excerpt}
                     </p>
-                    <div className="flex justify-between items-center text-xs text-gray-500 group-hover:text-gray-400 transition-colors duration-500">
+                    <div className="flex justify-between items-center text-xs text-gray-500">
                       <span>{(item as BlogItem).author}</span>
                       <span>{(item as BlogItem).readTime}</span>
                     </div>
-                    <div className="mt-2 text-xs text-purple-400 group-hover:text-purple-300 transition-colors duration-500">
+                    <div className="mt-2 text-xs text-purple-400">
                       {(item as BlogItem).category}
                     </div>
                   </>
                 ) : (
                   <>
-                    <p className="text-gray-400 text-sm mb-4 group-hover:text-gray-300 transition-colors duration-500">
+                    <p className="text-gray-400 text-sm mb-4">
                       {(item as GalleryItem).description}
                     </p>
                     <div className="mb-3">
-                      <span className="text-xs text-purple-400 font-medium group-hover:text-purple-300 transition-colors duration-500">
+                      <span className="text-xs text-purple-400 font-medium">
                         {(item as GalleryItem).category}
                       </span>
                     </div>
@@ -219,7 +214,7 @@ const Archive = () => {
                       {(item as GalleryItem).technologies.map((tech, techIndex) => (
                         <span
                           key={techIndex}
-                          className="px-2 py-1 bg-purple-600/20 text-purple-300 text-xs rounded-full border border-purple-500/30 group-hover:bg-purple-500/30 group-hover:border-purple-400/50 group-hover:text-purple-200 group-hover:scale-105 transition-all duration-500 ease-out"
+                          className="px-2 py-1 bg-purple-600/20 text-purple-300 text-xs rounded-full"
                         >
                           {tech}
                         </span>
@@ -239,10 +234,10 @@ const Archive = () => {
                   <button
                     key={index}
                     onClick={() => setCurrentPage(index)}
-                    className={`w-3 h-3 rounded-full transition-all duration-500 ease-out hover:scale-125 ${
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
                       index === currentPage
-                        ? 'bg-purple-500 shadow-[0_0_15px_rgba(147,51,234,0.8)] scale-125'
-                        : 'bg-gray-600 hover:bg-purple-400 hover:shadow-[0_0_12px_rgba(147,51,234,0.6)]'
+                        ? 'bg-purple-500 shadow-[0_0_10px_rgba(147,51,234,0.6)]'
+                        : 'bg-gray-600 hover:bg-purple-400 hover:shadow-[0_0_8px_rgba(147,51,234,0.4)]'
                     }`}
                   />
                 ))}

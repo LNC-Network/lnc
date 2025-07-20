@@ -188,30 +188,30 @@ const Archive = () => {
               
               {/* Content */}
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-purple-300 transition-all duration-500 ease-out group-hover:transform group-hover:-translate-y-1">
+                <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-purple-400 transition-colors duration-300">
                   {item.title}
                 </h3>
                 
                 {activeTab === 'blogs' ? (
                   <>
-                    <p className="text-gray-400 text-sm mb-4 line-clamp-3 group-hover:text-gray-300 transition-colors duration-500">
+                    <p className="text-gray-400 text-sm mb-4 line-clamp-3">
                       {(item as BlogItem).excerpt}
                     </p>
-                    <div className="flex justify-between items-center text-xs text-gray-500 group-hover:text-gray-400 transition-colors duration-500">
+                    <div className="flex justify-between items-center text-xs text-gray-500">
                       <span>{(item as BlogItem).author}</span>
                       <span>{(item as BlogItem).readTime}</span>
                     </div>
-                    <div className="mt-2 text-xs text-purple-400 group-hover:text-purple-300 transition-colors duration-500">
+                    <div className="mt-2 text-xs text-purple-400">
                       {(item as BlogItem).category}
                     </div>
                   </>
                 ) : (
                   <>
-                    <p className="text-gray-400 text-sm mb-4 group-hover:text-gray-300 transition-colors duration-500">
+                    <p className="text-gray-400 text-sm mb-4">
                       {(item as GalleryItem).description}
                     </p>
                     <div className="mb-3">
-                      <span className="text-xs text-purple-400 font-medium group-hover:text-purple-300 transition-colors duration-500">
+                      <span className="text-xs text-purple-400 font-medium">
                         {(item as GalleryItem).category}
                       </span>
                     </div>
@@ -219,7 +219,7 @@ const Archive = () => {
                       {(item as GalleryItem).technologies.map((tech, techIndex) => (
                         <span
                           key={techIndex}
-                          className="px-2 py-1 bg-purple-600/20 text-purple-300 text-xs rounded-full border border-purple-500/30 group-hover:bg-purple-500/30 group-hover:border-purple-400/50 group-hover:text-purple-200 group-hover:scale-105 transition-all duration-500 ease-out"
+                          className="px-2 py-1 bg-purple-600/20 text-purple-300 text-xs rounded-full"
                         >
                           {tech}
                         </span>
@@ -239,10 +239,10 @@ const Archive = () => {
                   <button
                     key={index}
                     onClick={() => setCurrentPage(index)}
-                    className={`w-3 h-3 rounded-full transition-all duration-500 ease-out hover:scale-125 ${
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
                       index === currentPage
-                        ? 'bg-purple-500 shadow-[0_0_15px_rgba(147,51,234,0.8)] scale-125'
-                        : 'bg-gray-600 hover:bg-purple-400 hover:shadow-[0_0_12px_rgba(147,51,234,0.6)]'
+                        ? 'bg-purple-500 shadow-[0_0_10px_rgba(147,51,234,0.6)]'
+                        : 'bg-gray-600 hover:bg-purple-400 hover:shadow-[0_0_8px_rgba(147,51,234,0.4)]'
                     }`}
                   />
                 ))}

@@ -239,10 +239,10 @@ const Archive = () => {
                   <button
                     key={index}
                     onClick={() => setCurrentPage(index)}
-                    className={`w-3 h-3 rounded-full transition-all duration-500 ease-out hover:scale-125 ${
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
                       index === currentPage
-                        ? 'bg-purple-500 shadow-[0_0_15px_rgba(147,51,234,0.8)] scale-125'
-                        : 'bg-gray-600 hover:bg-purple-400 hover:shadow-[0_0_12px_rgba(147,51,234,0.6)]'
+                        ? 'bg-purple-500 shadow-[0_0_10px_rgba(147,51,234,0.6)]'
+                        : 'bg-gray-600 hover:bg-purple-400 hover:shadow-[0_0_8px_rgba(147,51,234,0.4)]'
                     }`}
                   />
                 ))}

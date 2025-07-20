@@ -1,0 +1,130 @@
+{
+  "blogs": [
+    {
+      "id": 1,
+      "title": "The Future of AI in Web Development",
+      "excerpt": "Exploring how artificial intelligence is revolutionizing the way we build and interact with web applications, from automated code generation to intelligent user experiences.",
+      "image": "/blog.jpg",
+      "author": "John Smith",
+      "date": "2024-12-15",
+      "category": "Technology",
+      "readTime": "5 min read"
+    },
+    {
+      "id": 2,
+      "title": "Building Scalable Cloud Architectures",
+      "excerpt": "A comprehensive guide to designing and implementing cloud solutions that can handle millions of users while maintaining optimal performance and cost efficiency.",
+      "image": "/blog.jpg",
+      "author": "Sarah Johnson",
+      "date": "2024-12-10",
+      "category": "Cloud Computing",
+      "readTime": "8 min read"
+    },
+    {
+      "id": 3,
+      "title": "Blockchain Beyond Cryptocurrency",
+      "excerpt": "Discover the revolutionary applications of blockchain technology in supply chain management, healthcare, and digital identity verification systems.",
+      "image": "/blog.jpg",
+      "author": "Michael Chen",
+      "date": "2024-12-05",
+      "category": "Blockchain",
+      "readTime": "6 min read"
+    },
+    {
+      "id": 4,
+      "title": "IoT Security Best Practices",
+      "excerpt": "Essential security measures and protocols for protecting Internet of Things devices and networks from cyber threats and vulnerabilities.",
+      "image": "/blog.jpg",
+      "author": "Emma Rodriguez",
+      "date": "2024-11-28",
+      "category": "Security",
+      "readTime": "7 min read"
+    },
+    {
+      "id": 5,
+      "title": "Machine Learning in Healthcare",
+      "excerpt": "How machine learning algorithms are transforming medical diagnosis, treatment planning, and patient care through data-driven insights and predictions.",
+      "image": "/blog.jpg",
+      "author": "Dr. David Park",
+      "date": "2024-11-20",
+      "category": "Healthcare Tech",
+      "readTime": "9 min read"
+    },
+    {
+      "id": 6,
+      "title": "Sustainable Tech Solutions",
+      "excerpt": "Innovative green technologies and sustainable development practices that are reshaping industries while protecting our environment for future generations.",
+      "image": "/blog.jpg",
+      "author": "Lisa Green",
+      "date": "2024-11-15",
+      "category": "Sustainability",
+      "readTime": "4 min read"
+    }
+  ],
+  "gallery": [
+    {
+      "id": 1,
+      "title": "Smart City Dashboard",
+      "category": "UI/UX Design",
+      "image": "/my pic.jpg",
+      "description": "Interactive dashboard for real-time city management and monitoring",
+      "technologies": ["React", "D3.js", "Node.js"]
+    },
+    {
+      "id": 2,
+      "title": "AI Medical Diagnostic Tool",
+      "category": "Healthcare",
+      "image": "/my pic.jpg",
+      "description": "Machine learning powered diagnostic assistance platform",
+      "technologies": ["Python", "TensorFlow", "React"]
+    },
+    {
+      "id": 3,
+      "title": "Blockchain Supply Chain",
+      "category": "Blockchain",
+      "image": "/my pic.jpg",
+      "description": "Transparent supply chain tracking using blockchain technology",
+      "technologies": ["Solidity", "Web3.js", "Ethereum"]
+    },
+    {
+      "id": 4,
+      "title": "E-commerce Analytics Platform",
+      "category": "Data Analytics",
+      "image": "/my pic.jpg",
+      "description": "Advanced analytics for e-commerce performance optimization",
+      "technologies": ["Vue.js", "Python", "PostgreSQL"]
+    },
+    {
+      "id": 5,
+      "title": "Cloud Migration Tool",
+      "category": "Cloud Computing",
+      "image": "/my pic.jpg",
+      "description": "Automated cloud migration and deployment platform",
+      "technologies": ["AWS", "Docker", "Kubernetes"]
+    },
+    {
+      "id": 6,
+      "title": "Educational Learning Platform",
+      "category": "EdTech",
+      "image": "/my pic.jpg",
+      "description": "Adaptive learning platform with personalized content delivery",
+      "technologies": ["Next.js", "GraphQL", "MongoDB"]
+    },
+    {
+      "id": 7,
+      "title": "IoT Environmental Monitor",
+      "category": "IoT",
+      "image": "/my pic.jpg",
+      "description": "Real-time environmental monitoring system with IoT sensors",
+      "technologies": ["Arduino", "Raspberry Pi", "MQTT"]
+    },
+    {
+      "id": 8,
+      "title": "Financial AI Advisor",
+      "category": "Fintech",
+      "image": "/my pic.jpg",
+      "description": "AI-powered financial advisory and portfolio management system",
+      "technologies": ["Python", "Pandas", "React Native"]
+    }
+  ]
+}
