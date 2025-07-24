@@ -17,7 +17,7 @@ export default function Home() {
       <Events />
       <Teams />
       <Projects />
-      {/* <Archive /> */}
+      <Archive />
       <About />
       <Partners />
       <Footer />
