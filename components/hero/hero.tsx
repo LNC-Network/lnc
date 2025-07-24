@@ -1,10 +1,27 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { animate } from "@/lib/hero/animation";
+
 const Hero = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    if (canvasRef.current) {
+      animate(canvasRef.current);
+    }
+  }, []);
+
+  
+
   return (
-    <section id="hero" className="h-screen w-full ">
-      <div className="w-full h-full flex justify-center items-center bg-amber-300/30 bg-[url('/bg.jpg')] bg-cover bg-center">
-        {/* <span className="text-6xl">HERO</span> */}
-      </div>
-    </section>
+    <div className="w-full h-full">
+      <canvas
+        ref={canvasRef}
+        id="canvas"
+        className="w-full h-full block"
+      ></canvas>
+    </div>
   );
 };
 

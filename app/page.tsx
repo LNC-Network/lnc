@@ -9,12 +9,15 @@ import Teams from "@/components/teams/teams";
 
 export default function Home() {
   return (
-    <div className="h-screen w-full">
+    <div
+      className="h-screen w-full "
+      style={{ backgroundColor: "rgb(14,14,14)" }}
+    >
       <Hero />
       <Events />
       <Teams />
       <Projects />
-      <Archive />
+      {/* <Archive /> */}
       <About />
       <Partners />
       <Footer />

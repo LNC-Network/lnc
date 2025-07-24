@@ -24,7 +24,7 @@ const ProjectCard = React.memo<ProjectCardProps>(({ project, index }) => {
   return (
     <div
       key={index}
-      className="bg-[#111] rounded-2xl border-2 border-[#7E27C2] p-6 sm:p-8 lg:p-10 w-[70vmin] h-[70vmin] shadow-lg transition-all duration-300 hover:scale-[1.02] hover:border-[#7E27C2] flex flex-col justify-start text-left group"
+      className=" rounded-2xl border-2 border-[#7E27C2] p-6 sm:p-8 lg:p-10 w-[70vmin] h-[70vmin] shadow-lg transition-all duration-300 hover:scale-[1.02] hover:border-[#7E27C2] flex flex-col justify-start text-left group"
       style={
         {
           boxShadow:

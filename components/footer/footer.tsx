@@ -25,37 +25,37 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="relative bg-[#1A1221] border-b-3 border-r-3 border-[#3F185D] rounded-xl p-8 mt-10 mx-3 pt-10 overflow-hidden">
-      {/* Curvy SVG lines */}
-      <svg
-        className="absolute inset-0 w-full h-full pointer-events-none"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 800 200"
-      >
-        <path
-          d="M0,100 C200,0 400,200 800,100"
-          stroke="rgba(255,255,255,0.05)"
-          strokeWidth="2"
-          className="animate-pulse"
-        />
-        <path
-          d="M0,150 C300,50 500,250 800,150"
-          stroke="rgba(255,255,255,0.03)"
-          strokeWidth="1"
-        />
-      </svg>
+    <div className="pl-10 pr-10 pt-20 pb-10" style={{ backgroundColor: "rgb(14,14,14)" }}>
+      <footer className="relative bg-fuchsia-950/20 border-b-3 border-r-3 border-[#3F185D] rounded-xl p-20 mx-auto overflow-hidden ">
+        <svg
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 800 200"
+        >
+          <path
+            d="M0,100 C200,0 400,200 800,100"
+            stroke="rgba(255,255,255,0.05)"
+            strokeWidth="2"
+            className="animate-pulse"
+          />
+          <path
+            d="M0,150 C300,50 500,250 800,150"
+            stroke="rgba(255,255,255,0.03)"
+            strokeWidth="1"
+          />
+        </svg>
 
-      {/* Email form */}
-      <form onSubmit={handleSubmit} className="relative z-10 w-full">
-        <div className="flex flex-col sm:flex-row items-center w-full gap-2">
-          <div className="relative w-full">
-            <input
-              type="email"
-              placeholder="email...."
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="
+        {/* Email form */}
+        <form onSubmit={handleSubmit} className="relative z-10 w-full ">
+          <div className="flex flex-col sm:flex-row items-center w-full gap-2">
+            <div className="relative w-full">
+              <input
+                type="email"
+                placeholder="email...."
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="
                                 w-full h-12
 +                               pl-6 pr-6 sm:pr-[190px]
                                 text-lg text-white
@@ -71,11 +71,11 @@ const Footer: React.FC = () => {
                                 transition-colors duration-300 ease-in-out
                                 font-inter
                             "
-            />
+              />
 
-            {/* glow behind button */}
-            <span
-              className="
+              {/* glow behind button */}
+              <span
+                className="
                                 absolute top-1/2 -translate-y-1/2 right-2
                                 w-[160px] h-12
                                 bg-[#8e5bb5]
@@ -84,11 +84,11 @@ const Footer: React.FC = () => {
                                 opacity-60
                                 hidden sm:block
                             "
-            />
+              />
 
-            <button
-              type="submit"
-              className="
+              <button
+                type="submit"
+                className="
                                 absolute top-1/2 -translate-y-1/2 right-0
                                 h-12 px-8
                                 text-sm font-normal text-white
@@ -103,15 +103,15 @@ const Footer: React.FC = () => {
                                 cursor-pointer
                                 hidden sm:flex
                             "
-            >
-              SUBSCRIBE NOW
-            </button>
-          </div>
+              >
+                SUBSCRIBE NOW
+              </button>
+            </div>
 
-          {/* mobile button */}
-          <button
-            type="submit"
-            className="
+            {/* mobile button */}
+            <button
+              type="submit"
+              className="
                             sm:hidden
                             w-full h-12 mt-1
                             text-sm font-normal text-white
@@ -124,40 +124,47 @@ const Footer: React.FC = () => {
                             hover:bg-opacity-80
                             cursor-pointer
                             "
-          >
-            SUBSCRIBE NOW
-          </button>
-        </div>
-      </form>
+            >
+              SUBSCRIBE NOW
+            </button>
+          </div>
+        </form>
 
-      {error && <p className="relative z-10 text-red-400 mt-2 text-center">{error}</p>}
+        {error && (
+          <p className="relative z-10 text-red-400 mt-2 text-center">{error}</p>
+        )}
 
-      {/* Footer Bottom */}
-      <div className="relative z-10 mt-10">
-        <p className="text-[#767279] text-left mb-4 text-xs">latenightcoders1@gmail.com</p>
-        <hr className="border-[#B9B8BA] mb-2.5" />
-        <div className="flex flex-col sm:flex-row items-center sm:justify-between mt-2 gap-2">
-          <p className="text-xs text-[#99969B]">&copy; Late Night Coders. All rights reserved.</p>
-          <div className="flex space-x-4 text-[#9A969B]">
-            <a href="#" aria-label="LinkedIn">
-              <FaLinkedin className="w-4 h-4 transition transform duration-200 ease-in-out hover:scale-125 hover:text-purple-400" />
-            </a>
-            <a href="#" aria-label="X">
-              <SiX className="w-4 h-4 transition transform duration-200 ease-in-out hover:scale-125 hover:text-purple-400" />
-            </a>
-            <a href="#" aria-label="Instagram">
-              <FaInstagram className="w-4 h-4 transition transform duration-200 ease-in-out hover:scale-125 hover:text-purple-400" />
-            </a>
-            <a href="#" aria-label="GitHub">
-              <FaGithub className="w-4 h-4 transition transform duration-200 ease-in-out hover:scale-125 hover:text-purple-400" />
-            </a>
-            <a href="#" aria-label="YouTube">
-              <FaYoutube className="w-4 h-4 transition transform duration-200 ease-in-out hover:scale-125 hover:text-purple-400" />
-            </a>
+        {/* Footer Bottom */}
+        <div className="relative z-10 mt-10">
+          <p className="text-[#767279] text-left mb-4 text-xs">
+            latenightcoders1@gmail.com
+          </p>
+          <hr className="border-[#B9B8BA] mb-2.5" />
+          <div className="flex flex-col sm:flex-row items-center sm:justify-between mt-2 gap-2">
+            <p className="text-xs text-[#99969B]">
+              &copy; Late Night Coders. All rights reserved.
+            </p>
+            <div className="flex space-x-4 text-[#9A969B]">
+              <a href="#" aria-label="LinkedIn">
+                <FaLinkedin className="w-4 h-4 transition transform duration-200 ease-in-out hover:scale-125 hover:text-purple-400" />
+              </a>
+              <a href="#" aria-label="X">
+                <SiX className="w-4 h-4 transition transform duration-200 ease-in-out hover:scale-125 hover:text-purple-400" />
+              </a>
+              <a href="#" aria-label="Instagram">
+                <FaInstagram className="w-4 h-4 transition transform duration-200 ease-in-out hover:scale-125 hover:text-purple-400" />
+              </a>
+              <a href="#" aria-label="GitHub">
+                <FaGithub className="w-4 h-4 transition transform duration-200 ease-in-out hover:scale-125 hover:text-purple-400" />
+              </a>
+              <a href="#" aria-label="YouTube">
+                <FaYoutube className="w-4 h-4 transition transform duration-200 ease-in-out hover:scale-125 hover:text-purple-400" />
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </div>
   );
 };
 
