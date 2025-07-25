@@ -71,7 +71,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="w-full fixed top-0 z-50">
+    <header className="w-full fixed top-5 z-50">
       {/* 🔮 SVG Filter and Background Layer */}
       <svg className="absolute w-0 h-0">
         <filter id="liquidGlass" x="0%" y="0%" width="100%" height="100%">
@@ -101,13 +101,13 @@ const Navbar = () => {
             filter: "url(#liquidGlass)",
           }}
         />
-        <div className="mx-auto relative flex justify-between items-center max-w-screen-xl px-6 py-3 xl:mt-10 xl:rounded-2xl backdrop-brightness-100 bg-black/10">
+        <div className="mx-auto relative flex justify-between items-center max-w-screen-xl px-6 py-3 backdrop-brightness-100 bg-black/10">
           <Link href="/">
             <Image
               src="/logo.png"
               alt="Lnc logo"
-              width={64}
-              height={64}
+              width={40}
+              height={40}
               priority
             />
           </Link>
