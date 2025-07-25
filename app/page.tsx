@@ -1,11 +1,11 @@
-import About from "@/components/about/about";
-import Archive from "@/components/archive/archive";
-import Events from "@/components/events/events";
-import Footer from "@/components/footer/footer";
-import Hero from "@/components/hero/hero";
-import Partners from "@/components/partners/partners";
-import Projects from "@/components/projects/projects";
-import Teams from "@/components/teams/teams";
+import About from "@/components/home/about/about";
+import Archive from "@/components/home/archive/archive";
+import Events from "@/components/home/events/events";
+import Footer from "@/components/home/footer/footer";
+import Hero from "@/components/home/hero/hero";
+import Partners from "@/components/home/partners/partners";
+import Projects from "@/components/home/projects/projects";
+import Teams from "@/components/home/teams/teams";
 
 export default function Home() {
   return (
