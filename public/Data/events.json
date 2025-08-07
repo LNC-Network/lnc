@@ -1,0 +1,53 @@
+{
+  "events": [
+    {
+      "id": "1",
+      "title": "LNC Annual Summit 2025",
+      "imageUrl": "/logo.png",
+      "date": "March 20-22, 2025",
+      "description": "Our flagship event bringing together industry leaders and innovators"
+    },
+    {
+      "id": "2",
+      "title": "Product Innovation Showcase",
+      "imageUrl": "/logo.png",
+      "date": "April 15, 2025",
+      "description": "Unveiling breakthrough technologies and solutions"
+    },
+    {
+      "id": "3",
+      "title": "Developer Conference",
+      "imageUrl": "/logo.png",
+      "date": "May 10-12, 2025",
+      "description": "Technical deep-dive sessions and workshops"
+    },
+    {
+      "id": "4",
+      "title": "Industry Partnership Forum",
+      "imageUrl": "/logo.png",
+      "date": "June 8, 2025",
+      "description": "Collaborative opportunities and strategic partnerships"
+    },
+    {
+      "id": "5",
+      "title": "Future Tech Expo",
+      "imageUrl": "/logo.png",
+      "date": "July 25-26, 2025",
+      "description": "Exploring next-generation technologies and trends"
+    },
+    {
+      "id": "6",
+      "title": "Lnc Meetup",
+      "imageUrl": "/logo.png",
+      "date": "July 25-26, 2025",
+      "description": "Exploring next-generation technologies and trends"
+    },
+    {
+      "id": "7",
+      "title": "WorkSHop",
+      "imageUrl": "/logo.png",
+      "date": "July 25-26, 2025",
+      "description": "Exploring next-generation technologies and trends"
+    }
+  ]
+}
