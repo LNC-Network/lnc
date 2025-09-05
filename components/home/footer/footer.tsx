@@ -16,7 +16,7 @@ const Footer: React.FC = () => {
     e.preventDefault();
     const result = emailSchema.safeParse({ email });
     if (!result.success) {
-      setError(result.error.errors[0].message);
+      setError(result.error.issues[0].message);
     } else {
       setError('');
       console.log('Email submitted:', result.data.email);

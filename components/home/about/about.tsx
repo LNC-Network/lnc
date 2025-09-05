@@ -96,34 +96,30 @@ const About = () => {
   }, []);
 
   // Intersection Observer for triggering animations
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-          } else {
-            // Reset when out of view for re-triggering
-            setIsVisible(false);
-          }
-        });
-      },
-      {
-        threshold: 0.3, // Trigger when 30% of the element is visible
-        rootMargin: "-50px 0px -50px 0px", // Add some margin for better timing
-      }
-    );
+useEffect(() => {
+  const target = statsRef.current; // copy ref here
 
-    if (statsRef.current) {
-      observer.observe(statsRef.current);
+  if (!target) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        setIsVisible(entry.isIntersecting);
+      });
+    },
+    {
+      threshold: 0.3,
+      rootMargin: "-50px 0px -50px 0px",
     }
+  );
 
-    return () => {
-      if (statsRef.current) {
-        observer.unobserve(statsRef.current);
-      }
-    };
-  }, []);
+  observer.observe(target);
+
+  return () => {
+    observer.unobserve(target); // cleanup on the same element
+  };
+}, []);
+
 
   return (
     <section

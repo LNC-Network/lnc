@@ -31,7 +31,7 @@ const Events: React.FC = () => {
   return (
     <section
       id="events"
-      className="min-h-screen w-full flex flex-col justify-center items-center relative overflow-hidden p-24"
+      className="min-h-screen w-full flex flex-col justify-center items-center relative overflow-hidden p-4 sm:p-8 lg:p-24"
       style={{ backgroundColor: "rgb(14,14,14)" }}
     >
       {/* Background Pattern for Visual Interest */}
@@ -41,11 +41,11 @@ const Events: React.FC = () => {
       </div>
 
       {/* Content Container */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 py-12 flex flex-col justify-center min-h-screen">
+      <div className="relative z-10 w-full max-w-sm sm:max-w-full lg:max-w-7xl mx-auto px-2 sm:px-6 py-8 sm:py-12 flex flex-col justify-center min-h-screen">
         {/* Section Header */}
-        <div className="text-left mb-16">
-          <h2 className="text-6xl md:text-7xl font-bold text-white mb-4 tracking-tight">
-            EVENTS and news
+        <div className="text-left mb-8 sm:mb-16">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white sm:mb-4 tracking-tight">
+            Events and News
           </h2>
         </div>
 
@@ -62,11 +62,11 @@ const Events: React.FC = () => {
         </div>
 
         {/* Call to Action */}
-        <div className="text-center mt-16">
-          <button className="group inline-flex items-center gap-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-gray-900">
+        <div className="text-center mt-8 sm:mt-16">
+          <button className="group inline-flex items-center gap-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-gray-900">
             <span>View All Events</span>
             <svg
-              className="w-5 h-5 transition-transform group-hover:translate-x-1"
+              className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

@@ -34,7 +34,6 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  const [transitionOffset, setTransitionOffset] = useState(0);
 
   const totalSlides = useMemo(() => events.length, [events.length]);
   const VISIBLE_CARDS = 5; // Always show 5 cards for consistent animation
@@ -45,15 +44,11 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
 
     setIsTransitioning(true);
 
-    // Start the rolling animation by shifting all cards to the left
-    setTransitionOffset(-CARD_SPACING);
-
-    // After animation completes, update index and reset offset
+    // Update index immediately and let CSS transitions handle the animation
     setTimeout(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % totalSlides);
-      setTransitionOffset(0);
       setIsTransitioning(false);
-    }, 600);
+    }, 300);
   }, [isTransitioning, totalSlides]);
 
   const goToPrevious = useCallback(() => {
@@ -61,17 +56,13 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
 
     setIsTransitioning(true);
 
-    // Start the rolling animation by shifting all cards to the right
-    setTransitionOffset(CARD_SPACING);
-
-    // After animation completes, update index and reset offset
+    // Update index immediately and let CSS transitions handle the animation
     setTimeout(() => {
       setCurrentIndex(
         (prevIndex) => (prevIndex - 1 + totalSlides) % totalSlides
       );
-      setTransitionOffset(0);
       setIsTransitioning(false);
-    }, 600);
+    }, 300);
   }, [isTransitioning, totalSlides]);
 
   const goToSlide = useCallback(
@@ -80,31 +71,12 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
 
       setIsTransitioning(true);
 
-      const direction = index > currentIndex ? "next" : "prev";
-      const steps = Math.abs(index - currentIndex);
-
-      // For multiple steps, we'll do a quick transition
-      if (steps === 1) {
-        // Single step - use smooth rolling animation
-        if (direction === "next") {
-          goToNext();
-        } else {
-          goToPrevious();
-        }
-      } else {
-        // Multiple steps - direct transition with fade effect
-        setTransitionOffset(
-          direction === "next" ? -CARD_SPACING * 2 : CARD_SPACING * 2
-        );
-
-        setTimeout(() => {
-          setCurrentIndex(index);
-          setTransitionOffset(0);
-          setIsTransitioning(false);
-        }, 400);
-      }
+      setTimeout(() => {
+        setCurrentIndex(index);
+        setIsTransitioning(false);
+      }, 300);
     },
-    [isTransitioning, currentIndex, totalSlides, goToNext, goToPrevious]
+    [isTransitioning, currentIndex, totalSlides]
   );
 
   // Auto-play functionality
@@ -168,7 +140,7 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
 
   if (!events.length) {
     return (
-      <div className="flex flex-col items-center justify-center h-96 text-gray-400">
+      <div className="flex flex-col items-center justify-center text-gray-400">
         <div className="text-6xl mb-4">🎪</div>
         <p className="text-xl font-medium">No events scheduled</p>
         <p className="text-sm text-gray-500 mt-2">
@@ -197,16 +169,8 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
           perspectiveOrigin: "center center",
         }}
       >
-        {/* Cards Container with Rolling Animation */}
-        <div
-          className="relative w-full h-full flex items-center justify-center"
-          style={{
-            transform: `translateX(${transitionOffset}px)`,
-            transition: isTransitioning
-              ? "transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)"
-              : "none",
-          }}
-        >
+        {/* Cards Container */}
+        <div className="relative w-full h-full flex items-center justify-center">
           {visibleCards.map(({ event, index, position, key }) => {
             const isCenter = position === 0;
             const absPosition = Math.abs(position);
@@ -222,17 +186,15 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
             return (
               <div
                 key={key}
-                className={`absolute transition-all duration-300 ease-out cursor-pointer ${
-                  isCenter ? "z-20" : `z-${Math.max(1, 15 - absPosition)}`
+                className={`absolute cursor-pointer ${
+                  isTransitioning 
+                    ? 'transition-all duration-300 ease-out' 
+                    : 'transition-all duration-500 ease-out'
                 }`}
                 style={{
-                  transform: `
-                    translateX(${baseTranslateX}px)
-                    translateZ(${translateZ}px)
-                    rotateY(${rotateY}deg)
-                    scale(${scale})
-                  `,
-                  opacity: opacity,
+                  zIndex: isCenter ? 20 : Math.max(1, 15 - absPosition),
+                  transform: `translateX(${baseTranslateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
+                  opacity,
                   transformStyle: "preserve-3d",
                 }}
                 onClick={() => !isCenter && goToSlide(index)}
@@ -248,16 +210,14 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
               >
                 {/* Event Card */}
                 <div
-                  className={`relative w-80 h-96 group ${
-                    isCenter ? "shadow-2xl" : "shadow-lg"
-                  }`}
+                  className={`relative w-80 h-96 group ${isCenter ? "shadow-2xl" : "shadow-lg"
+                    }`}
                 >
                   <div
-                    className={`relative w-full h-full rounded-2xl overflow-hidden border transition-all duration-500 ${
-                      isCenter
-                        ? "border-purple-500/70 bg-gray-900 shadow-purple-500/30"
-                        : "border-gray-700/50 bg-gray-800/90 backdrop-blur-sm"
-                    }`}
+                    className={`relative w-full h-full rounded-2xl overflow-hidden border transition-all duration-500 ${isCenter
+                      ? "border-purple-500/70 bg-gray-900 shadow-purple-500/30"
+                      : "border-gray-700/50 bg-gray-800/90 backdrop-blur-sm"
+                      }`}
                   >
                     {/* Event Image */}
                     <div className="relative h-56 overflow-hidden">
@@ -265,11 +225,10 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
                         src={event.imageUrl}
                         alt={event.title}
                         fill
-                        className={`object-cover transition-all duration-500 ${
-                          isCenter
-                            ? "scale-100 brightness-100 contrast-100"
-                            : "scale-95 brightness-80 contrast-95"
-                        }`}
+                        className={`object-cover transition-all duration-500 ${isCenter
+                          ? "scale-100 brightness-100 contrast-100"
+                          : "scale-95 brightness-80 contrast-95"
+                          }`}
                         sizes="320px"
                         priority={absPosition <= 1}
                         loading={absPosition <= 1 ? "eager" : "lazy"}
@@ -277,21 +236,19 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
 
                       {/* Dynamic Overlay */}
                       <div
-                        className={`absolute inset-0 transition-all duration-500 ${
-                          isCenter
-                            ? "bg-gradient-to-t from-gray-900/80 via-gray-900/20 to-transparent"
-                            : "bg-gradient-to-t from-gray-900/90 via-gray-900/60 to-gray-900/40"
-                        }`}
+                        className={`absolute inset-0 transition-all duration-500 ${isCenter
+                          ? "bg-gradient-to-t from-gray-900/80 via-gray-900/20 to-transparent"
+                          : "bg-gradient-to-t from-gray-900/90 via-gray-900/60 to-gray-900/40"
+                          }`}
                       />
 
                       {/* Category Badge */}
                       {event.category && (
                         <div
-                          className={`absolute top-4 left-4 px-3 py-1.5 backdrop-blur-sm text-white text-sm font-medium rounded-full transition-all duration-300 border ${
-                            isCenter
-                              ? "bg-purple-600/90 border-purple-400/50"
-                              : "bg-gray-700/90 border-gray-600/50"
-                          }`}
+                          className={`absolute top-4 left-4 px-3 py-1.5 backdrop-blur-sm text-white text-sm font-medium rounded-full transition-all duration-300 border ${isCenter
+                            ? "bg-purple-600/90 border-purple-400/50"
+                            : "bg-gray-700/90 border-gray-600/50"
+                            }`}
                         >
                           {event.category}
                         </div>
@@ -306,31 +263,28 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
                     {/* Event Details */}
                     <div className="p-5 space-y-3">
                       <h3
-                        className={`font-bold transition-all duration-300 line-clamp-2 leading-tight ${
-                          isCenter
-                            ? "text-lg text-white"
-                            : "text-base text-gray-300"
-                        }`}
+                        className={`font-bold transition-all duration-300 line-clamp-2 leading-tight ${isCenter
+                          ? "text-lg text-white"
+                          : "text-base text-gray-300"
+                          }`}
                       >
                         {event.title}
                       </h3>
 
                       <p
-                        className={`line-clamp-2 leading-relaxed transition-all duration-300 ${
-                          isCenter
-                            ? "text-sm text-gray-300"
-                            : "text-xs text-gray-500"
-                        }`}
+                        className={`line-clamp-2 leading-relaxed transition-all duration-300 ${isCenter
+                          ? "text-sm text-gray-300"
+                          : "text-xs text-gray-500"
+                          }`}
                       >
                         {event.description}
                       </p>
 
                       <div
-                        className={`flex items-center gap-4 transition-all duration-300 ${
-                          isCenter
-                            ? "text-xs text-gray-400"
-                            : "text-xs text-gray-600"
-                        }`}
+                        className={`flex items-center gap-4 transition-all duration-300 ${isCenter
+                          ? "text-xs text-gray-400"
+                          : "text-xs text-gray-600"
+                          }`}
                       >
                         {event.date && (
                           <div className="flex items-center gap-1.5">
@@ -349,11 +303,10 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
 
                     {/* Interactive Hover Effect */}
                     <div
-                      className={`absolute inset-0 rounded-2xl transition-all duration-300 pointer-events-none ${
-                        isCenter
-                          ? "bg-gradient-to-r from-purple-500/5 to-blue-500/5 opacity-100"
-                          : "bg-gradient-to-r from-purple-500/8 to-blue-500/8 opacity-0 group-hover:opacity-100"
-                      }`}
+                      className={`absolute inset-0 rounded-2xl transition-all duration-300 pointer-events-none ${isCenter
+                        ? "bg-gradient-to-r from-purple-500/5 to-blue-500/5 opacity-100"
+                        : "bg-gradient-to-r from-purple-500/8 to-blue-500/8 opacity-0 group-hover:opacity-100"
+                        }`}
                     />
                   </div>
 
@@ -402,17 +355,16 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
 
       {/* Progress Indicators */}
       {showIndicators && totalSlides > 1 && (
-        <div className="flex justify-center gap-2 mt-8">
+        <div className="flex justify-center gap-2 mt-6 sm:mt-8 px-4">
           {events.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
               disabled={isTransitioning}
-              className={`transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-gray-900 ${
-                index === currentIndex
-                  ? "w-8 h-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full shadow-lg shadow-purple-500/50"
-                  : "w-2 h-2 bg-gray-600 hover:bg-gray-500 rounded-full border border-gray-700 hover:border-gray-600"
-              }`}
+              className={`transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-gray-900 ${index === currentIndex
+                ? "w-8 h-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full shadow-lg shadow-purple-500/50"
+                : "w-2 h-2 bg-gray-600 hover:bg-gray-500 rounded-full border border-gray-700 hover:border-gray-600"
+                }`}
               aria-label={`Go to event ${index + 1}`}
               aria-current={index === currentIndex ? "true" : "false"}
             />
