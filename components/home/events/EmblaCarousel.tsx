@@ -101,7 +101,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   }, [emblaApi, tweenParallax]);
 
   return (
-    <div className="embla">
+    <div className="embla hover:cursor-grab active:cursor-grabbing">
       <div className="embla__viewport" ref={emblaRef}>
         <div className="embla__container">
           {slides.map((index) => (
