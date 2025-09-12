@@ -1,10 +1,19 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-
+import { motion } from "framer-motion";
 import EventsCarousel, { EventItem } from "./EventsCarousel";
+import EmblaCarousel from "./EmblaCarousel";
+import { EmblaOptionsType } from "embla-carousel";
+import "./styles/base.css";
+import "./styles/embla.css";
+import "./styles/sandbox.css";
 
-const Events: React.FC = () => {
+const OPTIONS: EmblaOptionsType = { dragFree: true, loop: true };
+const SLIDE_COUNT = 7;
+const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
+
+const Events = () => {
   const [eventsData, setEventsData] = useState<EventItem[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,51 +34,90 @@ const Events: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading events...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[rgb(14,14,14)]">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-white text-xl"
+        >
+          Loading events...
+        </motion.div>
+      </div>
+    );
   }
 
   return (
-    <section
+    <motion.section
       id="events"
-      className="min-h-screen w-full flex flex-col justify-center items-center relative overflow-hidden p-4 sm:p-8 lg:p-24"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+      className="h-auto w-full flex flex-col justify-center items-center relative overflow-hidden p-4 sm:p-8 lg:p-24"
       style={{ backgroundColor: "rgb(14,14,14)" }}
     >
-      {/* Background Pattern for Visual Interest */}
-      <div className="absolute inset-0 opacity-5">
+      {/* Background Pattern with Motion */}
+      <motion.div
+        className="absolute inset-0 opacity-5"
+        initial={{ scale: 1.1 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 2, ease: "easeOut" }}
+      >
         <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 via-transparent to-blue-500/20" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(14,14,14,0.8)_100%)]" />
-      </div>
+      </motion.div>
 
       {/* Content Container */}
-      <div className="relative z-10 w-full max-w-sm sm:max-w-full lg:max-w-7xl mx-auto px-2 sm:px-6 py-8 sm:py-12 flex flex-col justify-center min-h-screen">
-        {/* Section Header */}
-        <div className="text-left mb-8 sm:mb-16">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white sm:mb-4 tracking-tight">
+      <div className="relative z-10 w-full max-w-sm sm:max-w-full lg:max-w-7xl mx-auto px-2 sm:px-6 py-8 sm:py-12 flex flex-col justify-center h-auto">
+        {/* Section Header with Animation */}
+        <motion.div
+          className="text-left mb-8 sm:mb-16"
+          initial={{ y: -30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white sm:mb-4 tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
             Events and News
           </h2>
-        </div>
+        </motion.div>
 
-        {/* Carousel Container */}
-        <div className="flex-1 flex items-center justify-center">
-          <EventsCarousel
+        {/* Carousel Container with Stagger Animation */}
+        <div className="w-auto h-auto mt-4 sm:mt-8">
+          {/* <EventsCarousel
             events={eventsData}
             autoPlay={true}
             autoPlayInterval={5000}
             className="w-full"
             showArrows={true}
             showIndicators={true}
-          />
+          /> */}
+          <EmblaCarousel slides={SLIDES} options={OPTIONS} />
         </div>
 
-        {/* Call to Action */}
-        <div className="text-center mt-8 sm:mt-16">
-          <button className="group inline-flex items-center gap-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-gray-900">
+        {/* Call to Action with Hover Animation */}
+        <motion.div
+          className="text-center mt-8 sm:mt-16"
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <motion.button
+            whileHover={{
+              scale: 1.05,
+              boxShadow: "0 20px 40px rgba(139, 92, 246, 0.3)",
+            }}
+            whileTap={{ scale: 0.98 }}
+            className="group inline-flex items-center gap-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-gray-900 shadow-lg"
+          >
             <span>View All Events</span>
-            <svg
-              className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1"
+            <motion.svg
+              className="w-4 h-4 sm:w-5 sm:h-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              animate={{ x: 0 }}
+              whileHover={{ x: 5 }}
+              transition={{ type: "spring", stiffness: 400 }}
             >
               <path
                 strokeLinecap="round"
@@ -77,11 +125,11 @@ const Events: React.FC = () => {
                 strokeWidth={2}
                 d="M17 8l4 4m0 0l-4 4m4-4H3"
               />
-            </svg>
-          </button>
-        </div>
+            </motion.svg>
+          </motion.button>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
