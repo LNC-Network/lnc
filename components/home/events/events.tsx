@@ -2,50 +2,51 @@
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import EventsCarousel, { EventItem } from "./EventsCarousel";
+// import EventsCarousel, { EventItem } from "./EventsCarousel";
 import EmblaCarousel from "./EmblaCarousel";
 import { EmblaOptionsType } from "embla-carousel";
-import "./styles/base.css";
+
 import "./styles/embla.css";
-import "./styles/sandbox.css";
 
 const OPTIONS: EmblaOptionsType = { dragFree: true, loop: true };
 const SLIDE_COUNT = 7;
 const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
 
 const Events = () => {
-  const [eventsData, setEventsData] = useState<EventItem[]>([]);
-  const [loading, setLoading] = useState(true);
+  //   ``` EventsCarousel setup ```
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await fetch("/Data/events.json");
-        const data = await response.json();
-        setEventsData(data.events);
-      } catch (error) {
-        console.error("Error loading events:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // const [eventsData, setEventsData] = useState<EventItem[]>([]);
+  // const [loading, setLoading] = useState(true);
 
-    fetchEvents();
-  }, []);
+  // useEffect(() => {
+  //   const fetchEvents = async () => {
+  //     try {
+  //       const response = await fetch("/Data/events.json");
+  //       const data = await response.json();
+  //       setEventsData(data.events);
+  //     } catch (error) {
+  //       console.error("Error loading events:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[rgb(14,14,14)]">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-white text-xl"
-        >
-          Loading events...
-        </motion.div>
-      </div>
-    );
-  }
+  //   fetchEvents();
+  // }, []);
+
+  // if (loading) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center bg-[rgb(14,14,14)]">
+  //       <motion.div
+  //         initial={{ opacity: 0 }}
+  //         animate={{ opacity: 1 }}
+  //         className="text-white text-xl"
+  //       >
+  //         Loading events...
+  //       </motion.div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <motion.section
@@ -111,13 +112,10 @@ const Events = () => {
           >
             <span>View All Events</span>
             <motion.svg
-              className="w-4 h-4 sm:w-5 sm:h-5"
+              className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
-              animate={{ x: 0 }}
-              whileHover={{ x: 5 }}
-              transition={{ type: "spring", stiffness: 400 }}
             >
               <path
                 strokeLinecap="round"
