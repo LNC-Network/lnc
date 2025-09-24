@@ -8,45 +8,11 @@ import { EmblaOptionsType } from "embla-carousel";
 
 import "./styles/embla.css";
 
-const OPTIONS: EmblaOptionsType = { dragFree: true, loop: true };
+const OPTIONS: EmblaOptionsType = { dragFree: true, loop: true }; // change to true to enable infinite loop
 const SLIDE_COUNT = 7;
 const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
 
 const Events = () => {
-  //   ``` EventsCarousel setup ```
-
-  // const [eventsData, setEventsData] = useState<EventItem[]>([]);
-  // const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   const fetchEvents = async () => {
-  //     try {
-  //       const response = await fetch("/Data/events.json");
-  //       const data = await response.json();
-  //       setEventsData(data.events);
-  //     } catch (error) {
-  //       console.error("Error loading events:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchEvents();
-  // }, []);
-
-  // if (loading) {
-  //   return (
-  //     <div className="min-h-screen flex items-center justify-center bg-[rgb(14,14,14)]">
-  //       <motion.div
-  //         initial={{ opacity: 0 }}
-  //         animate={{ opacity: 1 }}
-  //         className="text-white text-xl"
-  //       >
-  //         Loading events...
-  //       </motion.div>
-  //     </div>
-  //   );
-  // }
 
   return (
     <motion.section
@@ -54,7 +20,7 @@ const Events = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="h-auto w-full flex flex-col justify-center items-center relative overflow-hidden p-4 sm:p-8 lg:p-24"
+      className="h-auto w-full flex flex-col justify-center items-center relative overflow-hidden"
       style={{ backgroundColor: "rgb(14,14,14)" }}
     >
       {/* Background Pattern with Motion */}
@@ -77,21 +43,13 @@ const Events = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white sm:mb-4 tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-            Events and News
+          <h2 className="text-4xl sm:text-6xl font-semibold text-white sm:mb-4 tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text">
+            Events <span className="text-purple-700">and</span> News
           </h2>
         </motion.div>
 
         {/* Carousel Container with Stagger Animation */}
-        <div className="w-auto h-auto mt-4 sm:mt-8">
-          {/* <EventsCarousel
-            events={eventsData}
-            autoPlay={true}
-            autoPlayInterval={5000}
-            className="w-full"
-            showArrows={true}
-            showIndicators={true}
-          /> */}
+        <div className="w-auto h-auto">
           <EmblaCarousel slides={SLIDES} options={OPTIONS} />
         </div>
 

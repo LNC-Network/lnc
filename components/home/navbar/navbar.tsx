@@ -121,7 +121,7 @@ const Navbar = () => {
               filter: "url(#liquidGlass)",
             }}
           />
-          <div className="mx-auto relative flex justify-between items-center max-w-screen-xl px-6 py-3 backdrop-brightness-100 bg-black/20 rounded shadow-[inset_0_0_10px_rgba(255,255,255,0.2)]">
+          <div className="mx-auto relative flex justify-between items-center max-w-screen-xl px-6 py-3 sm:backdrop-brightness-100 bg-transparent sm:bg-black/20 rounded  sm:shadow-[inset_0_0_10px_rgba(255,255,255,0.2)]">
             <Link href="/">
               <Image
                 src="/logo.png"
@@ -139,20 +139,18 @@ const Navbar = () => {
                     href={`#${link.href}`}
                     key={index}
                     onClick={(e) => handleNavClick(e, link.href)}
-                    className={`relative group transition-all duration-300  ${
-                      isActive
-                        ? "text-violet-500"
-                        : "text-white hover:text-violet-400"
-                    }`}
+                    className={`relative group transition-all duration-300  ${isActive
+                      ? "text-violet-500"
+                      : "text-white hover:text-violet-400"
+                      }`}
                   >
                     <span
                       key={isActive ? "active" : "inactive"}
                       className={`inline-block relative after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] after:bg-[#BC13FE] after:transition-all after:duration-300 
-                  ${
-                    isActive
-                      ? "after:w-full"
-                      : "after:w-0 group-hover:after:w-full"
-                  }`}
+                  ${isActive
+                          ? "after:w-full"
+                          : "after:w-0 group-hover:after:w-full"
+                        }`}
                     >
                       {link.name}
                     </span>
@@ -193,11 +191,10 @@ const Navbar = () => {
                   key={index}
                   href={`#${link.href}`}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className={`${
-                    active === link.href
-                      ? "text-violet-500"
-                      : "text-white hover:text-violet-400"
-                  }`}
+                  className={`${active === link.href
+                    ? "text-violet-500"
+                    : "text-white hover:text-violet-400"
+                    }`}
                 >
                   {link.name}
                 </a>

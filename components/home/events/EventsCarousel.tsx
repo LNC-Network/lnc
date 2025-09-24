@@ -36,16 +36,16 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const constraintsRef = useRef<HTMLDivElement>(null);
-  
-  const x = useMotionValue(0);
+
+  const x = useMotionValue<number>(0);
   const CARD_WIDTH = 320;
   const CARD_SPACING = 20;
   const DRAG_THRESHOLD = 50;
-  
+
   // Create infinite loop array (triple the events for smooth infinite scroll)
   const infiniteEvents = [...events, ...events, ...events];
   const centerOffset = events.length * (CARD_WIDTH + CARD_SPACING);
-  
+
   // Calculate drag constraints
   const dragConstraints = {
     left: -(events.length * 2 - 1) * (CARD_WIDTH + CARD_SPACING),
@@ -56,7 +56,7 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
   useEffect(() => {
     const unsubscribe = x.onChange((latest) => {
       if (isDragging) return;
-      
+
       // Reset position for infinite scroll
       if (latest > -centerOffset + (CARD_WIDTH + CARD_SPACING)) {
         x.set(latest - centerOffset);
@@ -64,7 +64,7 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
         x.set(latest + centerOffset);
       }
     });
-    
+
     return unsubscribe;
   }, [x, centerOffset, isDragging, CARD_WIDTH, CARD_SPACING]);
 
@@ -73,7 +73,7 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
     const offset = x.get() + velocity * 0.2;
     const nearestIndex = Math.round(-offset / (CARD_WIDTH + CARD_SPACING));
     const targetX = -nearestIndex * (CARD_WIDTH + CARD_SPACING);
-    
+
     animate(x, targetX, {
       type: "spring",
       stiffness: 300,
@@ -121,7 +121,7 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
     const currentModIndex = currentPos % events.length;
     const diff = index - currentModIndex;
     const targetX = x.get() - diff * (CARD_WIDTH + CARD_SPACING);
-    
+
     animate(x, targetX, {
       type: "spring",
       stiffness: 300,
@@ -163,7 +163,7 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
     >
       {/* Main Container */}
       <div className="relative h-[500px] overflow-hidden" ref={constraintsRef}>
-        <div 
+        <div
           className="absolute inset-0 flex items-center justify-center"
           style={{
             perspective: "1200px",
@@ -233,11 +233,10 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-gray-900 ${
-                index === currentIndex
-                  ? "w-8 h-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full shadow-lg shadow-purple-500/50"
-                  : "w-2 h-2 bg-gray-600 hover:bg-gray-500 rounded-full border border-gray-700 hover:border-gray-600"
-              }`}
+              className={`transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-gray-900 ${index === currentIndex
+                ? "w-8 h-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full shadow-lg shadow-purple-500/50"
+                : "w-2 h-2 bg-gray-600 hover:bg-gray-500 rounded-full border border-gray-700 hover:border-gray-600"
+                }`}
               aria-label={`Go to event ${index + 1}`}
             />
           ))}
@@ -251,7 +250,7 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
 const EventCard: React.FC<{
   event: EventItem;
   index: number;
-  x: any;
+  x: number;
   dragOffset: number;
   totalCards: number;
   centerIndex: number;
@@ -262,7 +261,7 @@ const EventCard: React.FC<{
   // Calculate distance from center for 3D effects
   const distance = useTransform(
     x,
-    (latest) => {
+    (latest: number) => {
       const cardCenter = -dragOffset;
       const viewportCenter = -latest;
       return Math.abs(viewportCenter - cardCenter) / (cardWidth + cardSpacing);
@@ -271,7 +270,7 @@ const EventCard: React.FC<{
 
   // 3D Transforms based on distance from center
   const scale = useTransform(distance, [0, 1, 2, 3], [1, 0.9, 0.85, 0.8]);
-  const rotateY = useTransform(x, (latest) => {
+  const rotateY = useTransform(x, (latest: number) => {
     const cardCenter = -dragOffset;
     const viewportCenter = -latest;
     const diff = (viewportCenter - cardCenter) / (cardWidth + cardSpacing);
@@ -312,9 +311,9 @@ const EventCard: React.FC<{
               priority={Math.abs(index - centerIndex) <= 2}
               loading={Math.abs(index - centerIndex) <= 2 ? "eager" : "lazy"}
             />
-            
+
             <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/20 to-transparent" />
-            
+
             {event.category && (
               <div className="absolute top-4 left-4 px-3 py-1.5 backdrop-blur-sm text-white text-sm font-medium rounded-full bg-purple-600/90 border border-purple-400/50">
                 {event.category}

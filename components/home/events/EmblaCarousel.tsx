@@ -98,7 +98,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
       .on("reInit", tweenParallax)
       .on("scroll", tweenParallax)
       .on("slideFocus", tweenParallax);
-  }, [emblaApi, tweenParallax]);
+  }, [emblaApi, tweenParallax, setTweenFactor, setTweenNodes]);
 
   return (
     <div className="embla hover:cursor-grab active:cursor-grabbing">
@@ -121,10 +121,10 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
       </div>
 
       <div className="embla__controls">
-        <div className="embla__buttons">
-          <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
-          <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
-        </div>
+
+        <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
+
+
 
         <div className="embla__dots">
           {scrollSnaps.map((_, index) => (
@@ -137,6 +137,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
             />
           ))}
         </div>
+        <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
       </div>
     </div>
   );
