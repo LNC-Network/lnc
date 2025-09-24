@@ -121,7 +121,7 @@ const Navbar = () => {
               filter: "url(#liquidGlass)",
             }}
           />
-          <div className="mx-auto relative flex justify-between items-center max-w-screen-xl px-6 py-3 sm:backdrop-brightness-100 bg-transparent sm:bg-black/20 rounded  sm:shadow-[inset_0_0_10px_rgba(255,255,255,0.2)]">
+          <div className="mx-auto relative flex justify-between items-center max-w-screen-xl px-6 py-3 sm:backdrop-brightness-100 bg-transparent sm:bg-black/10 rounded-2xl  sm:shadow-[inset_0_3px_5px_rgba(200,200,200,0.3)]">
             <Link href="/">
               <Image
                 src="/logo.png"
@@ -141,7 +141,7 @@ const Navbar = () => {
                     onClick={(e) => handleNavClick(e, link.href)}
                     className={`relative group transition-all duration-300  ${isActive
                       ? "text-violet-500"
-                      : "text-white hover:text-violet-400"
+                      : "text-white"
                       }`}
                   >
                     <span
