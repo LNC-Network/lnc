@@ -48,8 +48,8 @@ const members = [
 
 export default function TeamSection() {
   return (
-    <section className="bg-black text-white py-16 md:py-32" id="teams">
-      <span className="text-7xl ml-16 -mt-3.5 font-bold bg-black  text-white">
+    <section className=" text-white py-16 md:py-32" id="teams">
+      <span className="text-7xl ml-16 -mt-3.5 font-bold   text-white">
           Team
         </span>
       <div className="mx-auto max-w-5xl border-gray-700 px-6">
