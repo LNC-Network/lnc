@@ -11,6 +11,7 @@ import {
   usePrevNextButtons,
 } from "./EmblaCarouselArrowButtons";
 import { DotButton, useDotButton } from "./EmblaCarouselDotButton";
+import Image from "next/image";
 
 const TWEEN_FACTOR_BASE = 0.2;
 
@@ -108,10 +109,17 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
             <div className="embla__slide" key={index}>
               <div className="embla__parallax">
                 <div className="embla__parallax__layer">
-                  <img
+                  {/* <img
                     className="embla__slide__img embla__parallax__img"
                     src={`https://picsum.photos/600/350?v=${index}`}
                     alt="Your alt text"
+                  /> */}
+                  <Image
+                    alt="Your alt text"
+                    width={600}
+                    height={350}
+                    src={`https://picsum.photos/600/350?v=${index}`}
+                    className="embla__slide__img embla__parallax__img"
                   />
                 </div>
               </div>
@@ -121,10 +129,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
       </div>
 
       <div className="embla__controls">
-
         <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
-
-
 
         <div className="embla__dots">
           {scrollSnaps.map((_, index) => (

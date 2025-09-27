@@ -1,8 +1,15 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
-import { motion, useMotionValue, useTransform, animate, PanInfo } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  animate,
+  PanInfo,
+  MotionValue,
+} from "framer-motion";
 import { ChevronLeft, ChevronRight, Calendar, MapPin } from "lucide-react";
 
 export interface EventItem {
@@ -37,38 +44,33 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
   const [isPaused, setIsPaused] = useState(false);
   const constraintsRef = useRef<HTMLDivElement>(null);
 
-  const x = useMotionValue<number>(0);
+  const x = useMotionValue(0);
   const CARD_WIDTH = 320;
   const CARD_SPACING = 20;
-  const DRAG_THRESHOLD = 50;
 
-  // Create infinite loop array (triple the events for smooth infinite scroll)
   const infiniteEvents = [...events, ...events, ...events];
   const centerOffset = events.length * (CARD_WIDTH + CARD_SPACING);
 
-  // Calculate drag constraints
   const dragConstraints = {
     left: -(events.length * 2 - 1) * (CARD_WIDTH + CARD_SPACING),
-    right: 0
+    right: 0,
   };
 
-  // Handle infinite scroll reset
+  // Infinite scroll reset
   useEffect(() => {
     const unsubscribe = x.onChange((latest) => {
       if (isDragging) return;
 
-      // Reset position for infinite scroll
       if (latest > -centerOffset + (CARD_WIDTH + CARD_SPACING)) {
         x.set(latest - centerOffset);
       } else if (latest < -centerOffset * 2 + (CARD_WIDTH + CARD_SPACING)) {
         x.set(latest + centerOffset);
       }
     });
-
     return unsubscribe;
   }, [x, centerOffset, isDragging, CARD_WIDTH, CARD_SPACING]);
 
-  // Smooth snap to nearest card
+  // Snap to nearest card
   const snapToCard = (velocity: number = 0) => {
     const offset = x.get() + velocity * 0.2;
     const nearestIndex = Math.round(-offset / (CARD_WIDTH + CARD_SPACING));
@@ -78,21 +80,25 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
       type: "spring",
       stiffness: 300,
       damping: 30,
-      velocity: velocity,
+      velocity,
       onComplete: () => {
-        // Update current index based on position
-        const actualIndex = Math.abs(Math.round(targetX / (CARD_WIDTH + CARD_SPACING))) % events.length;
+        const actualIndex =
+          Math.abs(Math.round(targetX / (CARD_WIDTH + CARD_SPACING))) %
+          events.length;
         setCurrentIndex(actualIndex);
-      }
+      },
     });
   };
 
-  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+  const handleDragEnd = (
+    _: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) => {
     setIsDragging(false);
     snapToCard(info.velocity.x);
   };
 
-  const goToNext = () => {
+  const goToNext = useCallback(() => {
     const targetX = x.get() - (CARD_WIDTH + CARD_SPACING);
     animate(x, targetX, {
       type: "spring",
@@ -100,9 +106,9 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
       damping: 30,
       onComplete: () => {
         setCurrentIndex((prev) => (prev + 1) % events.length);
-      }
+      },
     });
-  };
+  }, [x, CARD_WIDTH, CARD_SPACING, events.length]);
 
   const goToPrevious = () => {
     const targetX = x.get() + (CARD_WIDTH + CARD_SPACING);
@@ -112,7 +118,7 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
       damping: 30,
       onComplete: () => {
         setCurrentIndex((prev) => (prev - 1 + events.length) % events.length);
-      }
+      },
     });
   };
 
@@ -128,7 +134,7 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
       damping: 30,
       onComplete: () => {
         setCurrentIndex(index);
-      }
+      },
     });
   };
 
@@ -138,9 +144,16 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
 
     const interval = setInterval(goToNext, autoPlayInterval);
     return () => clearInterval(interval);
-  }, [autoPlay, autoPlayInterval, events.length, isPaused, isDragging, x]);
+  }, [
+    autoPlay,
+    autoPlayInterval,
+    events.length,
+    isPaused,
+    isDragging,
+    goToNext,
+  ]);
 
-  // Initial position (start from center set)
+  // Start from center
   useEffect(() => {
     x.set(-centerOffset);
   }, [centerOffset, x]);
@@ -150,7 +163,9 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
       <div className="flex flex-col items-center justify-center text-gray-400">
         <div className="text-6xl mb-4">🎪</div>
         <p className="text-xl font-medium">No events scheduled</p>
-        <p className="text-sm text-gray-500 mt-2">Check back later for updates</p>
+        <p className="text-sm text-gray-500 mt-2">
+          Check back later for updates
+        </p>
       </div>
     );
   }
@@ -165,12 +180,9 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
       <div className="relative h-[500px] overflow-hidden" ref={constraintsRef}>
         <div
           className="absolute inset-0 flex items-center justify-center"
-          style={{
-            perspective: "1200px",
-            perspectiveOrigin: "center center",
-          }}
+          style={{ perspective: "1200px", perspectiveOrigin: "center center" }}
         >
-          {/* Draggable Cards Container */}
+          {/* Draggable Cards */}
           <motion.div
             className="flex items-center absolute"
             drag="x"
@@ -204,7 +216,7 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
           </motion.div>
         </div>
 
-        {/* Navigation Arrows */}
+        {/* Arrows */}
         {showArrows && events.length > 1 && (
           <>
             <button
@@ -212,7 +224,10 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
               className="absolute left-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-gray-900/95 hover:bg-purple-600/90 border border-gray-700 hover:border-purple-400 text-white rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-gray-900 group shadow-xl hover:scale-105"
               aria-label="Previous event"
             >
-              <ChevronLeft size={20} className="group-hover:scale-110 transition-transform duration-200" />
+              <ChevronLeft
+                size={20}
+                className="group-hover:scale-110 transition-transform duration-200"
+              />
             </button>
 
             <button
@@ -220,23 +235,27 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
               className="absolute right-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-gray-900/95 hover:bg-purple-600/90 border border-gray-700 hover:border-purple-400 text-white rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-gray-900 group shadow-xl hover:scale-105"
               aria-label="Next event"
             >
-              <ChevronRight size={20} className="group-hover:scale-110 transition-transform duration-200" />
+              <ChevronRight
+                size={20}
+                className="group-hover:scale-110 transition-transform duration-200"
+              />
             </button>
           </>
         )}
       </div>
 
-      {/* Progress Indicators */}
+      {/* Indicators */}
       {showIndicators && events.length > 1 && (
         <div className="flex justify-center gap-2 mt-6 sm:mt-8 px-4">
           {events.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-gray-900 ${index === currentIndex
-                ? "w-8 h-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full shadow-lg shadow-purple-500/50"
-                : "w-2 h-2 bg-gray-600 hover:bg-gray-500 rounded-full border border-gray-700 hover:border-gray-600"
-                }`}
+              className={`transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-gray-900 ${
+                index === currentIndex
+                  ? "w-8 h-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full shadow-lg shadow-purple-500/50"
+                  : "w-2 h-2 bg-gray-600 hover:bg-gray-500 rounded-full border border-gray-700 hover:border-gray-600"
+              }`}
               aria-label={`Go to event ${index + 1}`}
             />
           ))}
@@ -246,39 +265,65 @@ const EventsCarousel: React.FC<EventsCarouselProps> = ({
   );
 };
 
-// Individual Event Card Component
+// EventCard
 const EventCard: React.FC<{
   event: EventItem;
   index: number;
-  x: number;
+  x: MotionValue<number>;
   dragOffset: number;
   totalCards: number;
   centerIndex: number;
   cardWidth: number;
   cardSpacing: number;
   onCardClick: () => void;
-}> = ({ event, index, x, dragOffset, totalCards, centerIndex, cardWidth, cardSpacing, onCardClick }) => {
-  // Calculate distance from center for 3D effects
-  const distance = useTransform(
-    x,
-    (latest: number) => {
-      const cardCenter = -dragOffset;
-      const viewportCenter = -latest;
-      return Math.abs(viewportCenter - cardCenter) / (cardWidth + cardSpacing);
-    }
+}> = ({
+  event,
+  index,
+  x,
+  dragOffset,
+  centerIndex,
+  cardWidth,
+  cardSpacing,
+  onCardClick,
+}) => {
+  // Distance from center
+  const distance: MotionValue<number> = useTransform(x, (latest) => {
+    const cardCenter = -dragOffset;
+    const viewportCenter = -latest;
+    return Math.abs(viewportCenter - cardCenter) / (cardWidth + cardSpacing);
+  });
+
+  // 3D transforms
+  const scale: MotionValue<number> = useTransform(
+    distance,
+    [0, 1, 2, 3],
+    [1, 0.9, 0.85, 0.8]
   );
 
-  // 3D Transforms based on distance from center
-  const scale = useTransform(distance, [0, 1, 2, 3], [1, 0.9, 0.85, 0.8]);
-  const rotateY = useTransform(x, (latest: number) => {
+  const rotateY: MotionValue<number> = useTransform(x, (latest) => {
     const cardCenter = -dragOffset;
     const viewportCenter = -latest;
     const diff = (viewportCenter - cardCenter) / (cardWidth + cardSpacing);
     return Math.max(-15, Math.min(15, diff * 8));
   });
-  const z = useTransform(distance, [0, 1, 2, 3], [0, -50, -100, -150]);
-  const opacity = useTransform(distance, [0, 1, 2, 3, 4], [1, 0.9, 0.7, 0.5, 0.3]);
-  const brightness = useTransform(distance, [0, 1, 2], [1, 0.85, 0.7]);
+
+  const z: MotionValue<number> = useTransform(
+    distance,
+    [0, 1, 2, 3],
+    [0, -50, -100, -150]
+  );
+
+  const opacity: MotionValue<number> = useTransform(
+    distance,
+    [0, 1, 2, 3, 4],
+    [1, 0.9, 0.7, 0.5, 0.3]
+  );
+
+  const brightness: MotionValue<number> = useTransform(
+    distance,
+    [0, 1, 2],
+    [1, 0.85, 0.7]
+  );
 
   return (
     <motion.div
@@ -300,7 +345,7 @@ const EventCard: React.FC<{
         style={{ filter: useTransform(brightness, (b) => `brightness(${b})`) }}
       >
         <div className="relative w-full h-full rounded-2xl overflow-hidden border border-gray-700/50 bg-gray-800/90 backdrop-blur-sm shadow-xl hover:shadow-2xl transition-shadow duration-300">
-          {/* Event Image */}
+          {/* Image */}
           <div className="relative h-56 overflow-hidden">
             <Image
               src={event.imageUrl}
@@ -311,9 +356,7 @@ const EventCard: React.FC<{
               priority={Math.abs(index - centerIndex) <= 2}
               loading={Math.abs(index - centerIndex) <= 2 ? "eager" : "lazy"}
             />
-
             <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/20 to-transparent" />
-
             {event.category && (
               <div className="absolute top-4 left-4 px-3 py-1.5 backdrop-blur-sm text-white text-sm font-medium rounded-full bg-purple-600/90 border border-purple-400/50">
                 {event.category}
@@ -321,16 +364,14 @@ const EventCard: React.FC<{
             )}
           </div>
 
-          {/* Event Details */}
+          {/* Details */}
           <div className="p-5 space-y-3">
             <h3 className="font-bold text-lg text-white line-clamp-2 leading-tight">
               {event.title}
             </h3>
-
             <p className="text-sm text-gray-300 line-clamp-2 leading-relaxed">
               {event.description}
             </p>
-
             <div className="flex items-center gap-4 text-xs text-gray-400">
               {event.date && (
                 <div className="flex items-center gap-1.5">
@@ -347,7 +388,7 @@ const EventCard: React.FC<{
             </div>
           </div>
 
-          {/* Hover Glow Effect */}
+          {/* Glow */}
           <motion.div
             className="absolute inset-0 rounded-2xl pointer-events-none"
             initial={{ opacity: 0 }}

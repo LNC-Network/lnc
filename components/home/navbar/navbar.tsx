@@ -8,8 +8,8 @@ import { motion } from "framer-motion";
 
 const NavLinks = [
   {
-    name: "EVENTS",
-    href: "events",
+    name: "Games",
+    href: "/games",
   },
   {
     name: "TEAM",
@@ -45,6 +45,8 @@ const Navbar = () => {
     if (section) {
       section.scrollIntoView({ behavior: "smooth", block: "start" });
       setActive(href);
+    } else {
+      window.location.href = href;
     }
   };
 
@@ -136,21 +138,21 @@ const Navbar = () => {
                 const isActive = active === link.href;
                 return (
                   <a
-                    href={`#${link.href}`}
+                    href={`${link.href}`}
                     key={index}
                     onClick={(e) => handleNavClick(e, link.href)}
-                    className={`relative group transition-all duration-300  ${isActive
-                      ? "text-violet-500"
-                      : "text-white"
-                      }`}
+                    className={`relative group transition-all duration-300  ${
+                      isActive ? "text-violet-500" : "text-white"
+                    }`}
                   >
                     <span
                       key={isActive ? "active" : "inactive"}
                       className={`inline-block relative after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] after:bg-[#BC13FE] after:transition-all after:duration-300 
-                  ${isActive
-                          ? "after:w-full"
-                          : "after:w-0 group-hover:after:w-full"
-                        }`}
+                  ${
+                    isActive
+                      ? "after:w-full"
+                      : "after:w-0 group-hover:after:w-full"
+                  }`}
                     >
                       {link.name}
                     </span>
@@ -191,10 +193,11 @@ const Navbar = () => {
                   key={index}
                   href={`#${link.href}`}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className={`${active === link.href
-                    ? "text-violet-500"
-                    : "text-white hover:text-violet-400"
-                    }`}
+                  className={`${
+                    active === link.href
+                      ? "text-violet-500"
+                      : "text-white hover:text-violet-400"
+                  }`}
                 >
                   {link.name}
                 </a>
