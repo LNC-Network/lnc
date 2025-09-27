@@ -1,0 +1,32 @@
+name: Sync Fork
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # runs daily at midnight
+  workflow_dispatch: # allow manual trigger
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target repo
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add upstream
+        run: git remote add upstream https://github.com/LNC-Network/lnc.git
+
+      - name: Fetch upstream
+        run: git fetch upstream
+
+      - name: Merge upstream changes
+        run: |
+          git checkout main
+          git merge upstream/main
+          git push origin main
