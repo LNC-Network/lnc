@@ -102,7 +102,7 @@ const Partners: React.FC = () => {
       style={{ backgroundColor: "rgb(14,14,14)" }}
     >
       <div className="max-w-7xl mx-auto px-6 ">
-        <div className="flex items-center justify-center mb-10 border border-gray-400 p-2 rounded-2xl shadow-[inset_0_3px_5px_rgba(200,200,200,0.3)]">
+        <div className="flex flex-col items-center justify-center mb-10 ">
           {/* Header */}
           <div className="text-left">
             <h2 className="text-2xl font-bold text-white  tracking-tight">
@@ -111,11 +111,11 @@ const Partners: React.FC = () => {
           </div>
 
           {/* Partners Carousel - Contained Width */}
-          <div className="">
+          <div className="max-w-full border border-gray-400 p-2 rounded-2xl shadow-[inset_0_3px_5px_rgba(200,200,200,0.3)]">
             {isLoaded ? (
               <PartnersCarousel
                 partners={partners}
-                speed={0.1}
+                speed={0.03}
                 cardWidth={120}
                 gap={20}
                 autoPlay={true}

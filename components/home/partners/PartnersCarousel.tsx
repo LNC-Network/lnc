@@ -9,7 +9,7 @@ import { usePartnerAnimation } from "@/hooks/usePartnerAnimation";
 
 const PartnersCarousel: React.FC<PartnersCarouselProps> = ({
   partners,
-  speed = 0.8,
+  speed = 0.10,
   cardWidth = 120,
   gap = 20,
   autoPlay = true,
@@ -42,7 +42,7 @@ const PartnersCarousel: React.FC<PartnersCarouselProps> = ({
       <div 
         className="relative overflow-hidden"
         style={{
-          maxWidth: '1000px',
+          maxWidth: '100%',
           width: '100%',
           maskImage: "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
           WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
