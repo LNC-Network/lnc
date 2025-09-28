@@ -13,6 +13,8 @@ import {
 import { DotButton, useDotButton } from "./EmblaCarouselDotButton";
 import Image from "next/image";
 
+
+
 const TWEEN_FACTOR_BASE = 0.2;
 
 type PropType = {

@@ -4,6 +4,7 @@ import React, { useState, useCallback } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence, PanInfo, spring } from "framer-motion";
 import { ProjectCard } from "./project-card";
+import useMediaQuery from "./useMediaQuery";
 
 interface Project {
   title: string;
@@ -58,13 +59,13 @@ const buttonVariants = {
     boxShadow: "0 0 25px #7E27C2, 0 0 50px #7E27C2",
     transition: {
       type: spring,
-      stiffness: 400,
-      damping: 10,
+      stiffness: 400, // ⚡ snappy spring
+      damping: 10, // less resistance
     },
   },
   tap: {
-    scale: 0.95,
-    transition: { duration: 0.1 },
+    scale: 0.92,
+    transition: { duration: 0.05 },
   },
 };
 
@@ -94,20 +95,24 @@ const Projects = () => {
     [handleNext, handlePrev]
   );
 
+  const isLarge = useMediaQuery("(min-width: 1024px)");
+  const visibleCards = isLarge ? 2 : 1;
+
   return (
     <section
       id="projects"
-      className="bg-black text-white px-4 sm:px-6 lg:px-12 py-8 sm:py-12 min-h-screen"
+      className=" text-white px-4 sm:px-6 lg:px-12 py-8 sm:py-12"
+      style={{ backgroundColor: "rgb(14,14,14)" }}
     >
       {/* Title */}
       <motion.div
-        className="flex justify-center items-center mb-12 sm:mb-16"
+        className="flex justify-start items-center mb-12 sm:mb-16"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
         <motion.h2
-          className="text-5xl sm:text-6xl lg:text-7xl font-bold text-center"
+          className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-center"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, duration: 0.8 }}
@@ -117,7 +122,7 @@ const Projects = () => {
       </motion.div>
 
       {/* Slider */}
-      <div className="relative flex items-center justify-center w-full max-w-6xl mx-auto px-4 lg:px-16 xl:px-24">
+      <div className="relative flex items-center justify-center w-full mx-auto px-4 lg:px-16 xl:px-24">
         {/* Left Arrow */}
         <motion.button
           onClick={handlePrev}
@@ -128,8 +133,8 @@ const Projects = () => {
           whileTap="tap"
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-          className="hidden lg:flex absolute left-0 lg:left-4 xl:left-8 z-10 p-3 sm:p-4 lg:p-5 rounded-full bg-black/80 backdrop-blur-sm border-2 border-[#7E27C2] cursor-pointer transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#7E27C2]/20"
+          transition={{ duration: 0.001 }}
+          className="hidden lg:flex absolute left-0 lg:left-4 xl:left-8 z-10 p-3 sm:p-4 lg:p-5 rounded-full bg-black/80 border-2 border-[#7E27C2] cursor-pointer transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#7E27C2]/20"
           style={{
             boxShadow: "0 0 10px #7E27C2, 0 0 20px #7E27C2",
           }}
@@ -147,7 +152,7 @@ const Projects = () => {
           whileTap="tap"
           initial={{ opacity: 0, x: 10 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
+          transition={{ duration: 0.05 }} // ⚡ instant entry
           className="hidden lg:flex absolute right-0 lg:right-4 xl:right-8 z-10 p-3 sm:p-4 lg:p-5 rounded-full bg-black/80 backdrop-blur-sm border-2 border-[#7E27C2] cursor-pointer transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#7E27C2]/20"
           style={{
             boxShadow: "0 0 10px #7E27C2, 0 0 20px #7E27C2",
@@ -162,16 +167,22 @@ const Projects = () => {
             <motion.div
               key={index}
               custom={direction}
-              initial="enter"
-              animate="center"
-              exit="exit"
+              // initial={{ x: direction > 0 ? 300 : -300, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              // exit={{ x: direction > 0 ? -300 : 300, opacity: 0 }}
+              // transition={{ type: "spring", stiffness: 300, damping: 10 }}
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.3}
               onDragEnd={handleDragEnd}
-              className="w-full flex justify-center"
+              className="w-full flex justify-center gap-6 px-4"
             >
-              <ProjectCard project={projectData[index]} index={index} />
+              {Array.from({ length: visibleCards }).map((_, i) => {
+                const project = projectData[(index + i) % projectData.length];
+                return (
+                  <ProjectCard key={i} project={project} index={index + i} />
+                );
+              })}
             </motion.div>
           </AnimatePresence>
         </div>

@@ -18,7 +18,7 @@ interface ProjectCardProps {
 }
 
 const cardVariants = {
-  hidden: { opacity: 0.5, x: 50 },
+  hidden: { opacity: 0.5 },
   visible: {
     opacity: 1,
     x: 0,
@@ -48,10 +48,11 @@ export const ProjectCard = memo<ProjectCardProps>(({ project }) => {
       className="
         rounded-xl border border-[#222] 
         p-6 sm:p-8 lg:p-10 
-        w-[70vmin] h-[70vmin] 
+        // w-[70vw] h-[70vmin] 
         flex flex-col justify-start text-left 
         group cursor-pointer 
-        transition-all duration-500
+        transition-all
+        
         shadow-[inset_0_0_10px_rgba(255,255,255,0.40)]
         hover:shadow-[inset_0_0_20px_rgba(255,255,255,0.50)]
       "

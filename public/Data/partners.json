@@ -1,0 +1,76 @@
+{
+  "partners": [
+    {
+      "id": "1",
+      "name": "Tech Corp",
+      "shortName": "TC",
+      "logo": "/logo.png",
+      "website": "https://techcorp.com",
+      "category": "technology"
+    },
+    {
+      "id": "2",
+      "name": "NextLevel Solutions",
+      "shortName": "NL",
+      "logo": "/logo.png",
+      "website": "https://nextlevel.com",
+      "category": "strategic"
+    },
+    {
+      "id": "3",
+      "name": "Advanced Digital",
+      "shortName": "AD",
+      "logo": "/logo.png",
+      "website": "https://advanceddigital.com",
+      "category": "integration"
+    },
+    {
+      "id": "4",
+      "name": "Data Masters",
+      "shortName": "DM",
+      "logo": "/logo.png",
+      "website": "https://datamasters.com",
+      "category": "technology"
+    },
+    {
+      "id": "5",
+      "name": "Quantum Analytics",
+      "shortName": "QA",
+      "logo": "/logo.png",
+      "website": "https://quantumanalytics.com",
+      "category": "strategic"
+    },
+    {
+      "id": "6",
+      "name": "GlobalTech",
+      "shortName": "G",
+      "logo": "/logo.png",
+      "website": "https://globaltech.com",
+      "category": "channel"
+    },
+    {
+      "id": "7",
+      "name": "MicroSoft Solutions",
+      "shortName": "MS",
+      "logo": "/logo.png",
+      "website": "https://microsoft-solutions.com",
+      "category": "technology"
+    },
+    {
+      "id": "8",
+      "name": "NeoVision",
+      "shortName": "NV",
+      "logo": "/logo.png",
+      "website": "https://neovision.com",
+      "category": "integration"
+    },
+    {
+      "id": "9",
+      "name": "MetaFlow",
+      "shortName": "M",
+      "logo": "/logo.png",
+      "website": "https://metaflow.com",
+      "category": "strategic"
+    }
+  ]
+}
