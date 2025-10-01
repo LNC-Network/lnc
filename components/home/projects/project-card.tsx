@@ -1,4 +1,5 @@
 import { motion, easeOut } from "framer-motion";
+import { Rotate3D } from "lucide-react";
 import { memo } from "react";
 
 interface Project {
@@ -22,6 +23,7 @@ const cardVariants = {
   visible: {
     opacity: 1,
     x: 0,
+
     transition: { duration: 0.5 },
   },
   exit: { opacity: 0, x: -100, transition: { duration: 0.5 } },
@@ -43,7 +45,6 @@ export const ProjectCard = memo<ProjectCardProps>(({ project }) => {
       initial="hidden"
       animate="visible"
       exit="exit"
-      whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       className="
         rounded-xl border border-[#222] 
