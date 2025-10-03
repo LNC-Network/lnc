@@ -1,31 +1,60 @@
 "use client";
-import React, { useState } from 'react';
-import { z } from 'zod';
-import { FaLinkedin, FaInstagram, FaGithub, FaYoutube } from 'react-icons/fa';
-import { SiX } from 'react-icons/si';
+import React, { useState } from "react";
+import { z } from "zod";
+import { FaLinkedin, FaInstagram, FaGithub, FaYoutube } from "react-icons/fa";
+import { SiX } from "react-icons/si";
 
 const Footer: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
 
   const emailSchema = z.object({
-    email: z.string().email({ message: 'Please enter a valid email address.' })
+    email: z.email({ message: "Please enter a valid email address." }),
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const subscribe = async () => {
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+        }),
+      });
+
+      if (!res.ok) {
+        return false;
+      }
+      return true;
+    } catch (err) {
+      console.error(err);
+      return false;
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const result = emailSchema.safeParse({ email });
+
     if (!result.success) {
       setError(result.error.issues[0].message);
     } else {
-      setError('');
-      console.log('Email submitted:', result.data.email);
-      // Dummy submission logic
+      setError("");
+      const success = await subscribe();
+      if (!success) {
+        setError("Subscription failed. Please try again later.");
+        return;
+      }
+      console.log("Email submitted:", result.data.email);
+      setEmail("");
     }
   };
 
   return (
-    <div className="pl-10 pr-10 pt-20 pb-10" style={{ backgroundColor: "rgb(14,14,14)" }}>
+    <div
+      className="pl-10 pr-10 pt-20 pb-10"
+      style={{ backgroundColor: "rgb(14,14,14)" }}
+    >
       <footer className="relative bg-fuchsia-950/20 border-b-3 border-r-3 border-[#3F185D] rounded-xl p-20 mx-auto overflow-hidden ">
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none"
@@ -52,12 +81,12 @@ const Footer: React.FC = () => {
             <div className="relative w-full">
               <input
                 type="email"
-                placeholder="email...."
+                placeholder="Subscribe to our newsletter"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="
                                 w-full h-12
-+                               pl-6 pr-6 sm:pr-[190px]
+                                pl-6 pr-6 sm:pr-[190px]
                                 text-lg text-white
                                 border-2 border-[#8e5bb5]
                                 bg-gradient-to-r from-[#5F1D95] to-[#561189]
