@@ -1,5 +1,4 @@
 import { motion, easeOut } from "framer-motion";
-import { Rotate3D } from "lucide-react";
 import { memo } from "react";
 
 interface Project {

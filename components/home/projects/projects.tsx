@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence, PanInfo, spring } from "framer-motion";
 import { ProjectCard } from "./project-card";
 import useMediaQuery from "./useMediaQuery";
@@ -55,8 +54,6 @@ const sampleProjects: Project[] = [
 
 const buttonVariants = {
   hover: {
-    scale: 1.1,
-    boxShadow: "0 0 25px #7E27C2, 0 0 50px #7E27C2",
     transition: {
       type: spring,
       stiffness: 400, // ⚡ snappy spring
@@ -64,13 +61,13 @@ const buttonVariants = {
     },
   },
   tap: {
-    scale: 0.92,
+    scale: 0.8,
     transition: { duration: 0.05 },
   },
 };
 
 const Projects = () => {
-  const [[index, direction], setIndex] = useState<[number, number]>([0, 0]);
+  const [[index], setIndex] = useState<[number, number]>([0, 0]);
 
   const projectData = sampleProjects;
 
@@ -131,15 +128,27 @@ const Projects = () => {
           variants={buttonVariants}
           whileHover="hover"
           whileTap="tap"
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
+          // initial={{ opacity: 0, x: -10 }}
+          // animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.001 }}
-          className="hidden lg:flex absolute left-0 lg:left-4 xl:left-8 z-10 p-3 sm:p-4 lg:p-5 rounded-full bg-black/80 border-2 border-[#7E27C2] cursor-pointer transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#7E27C2]/20"
+          className="hidden lg:flex absolute left-0 lg:left-4 xl:left-8 z-10 p-3 sm:p-4 lg:p-5 rounded-full bg-black/80 border-1 border-[#7E27C2] cursor-pointer transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#7E27C2]/20"
           style={{
-            boxShadow: "0 0 10px #7E27C2, 0 0 20px #7E27C2",
+            boxShadow: "inset 0 0 10px #7E27C2,inset 0 0 20px #7E27C2",
           }}
         >
-          <ArrowLeft className="text-white w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7" />
+          <svg
+            className="w-4 h-4 sm:w-5 sm:h-5 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
         </motion.button>
 
         {/* Right Arrow */}
@@ -150,23 +159,38 @@ const Projects = () => {
           variants={buttonVariants}
           whileHover="hover"
           whileTap="tap"
-          initial={{ opacity: 0, x: 10 }}
-          animate={{ opacity: 1, x: 0 }}
+          // initial={{ opacity: 0, x: 10 }}
+          // animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.05 }} // ⚡ instant entry
-          className="hidden lg:flex absolute right-0 lg:right-4 xl:right-8 z-10 p-3 sm:p-4 lg:p-5 rounded-full bg-black/80 backdrop-blur-sm border-2 border-[#7E27C2] cursor-pointer transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#7E27C2]/20"
+          className="hidden lg:flex absolute right-0 lg:right-4 xl:right-8 z-10 p-3 sm:p-4 lg:p-5 rounded-full bg-black/80 border-1 border-[#7E27C2] cursor-pointer transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#7E27C2]/20"
           style={{
-            boxShadow: "0 0 10px #7E27C2, 0 0 20px #7E27C2",
+            boxShadow: "inset 0 0 10px #7E27C2, inset 0 0 20px #7E27C2",
           }}
         >
-          <ArrowRight className="text-white w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7" />
+          <svg
+            className="w-4 h-4 sm:w-5 sm:h-5 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
         </motion.button>
 
         {/* Card Slider */}
         <div className="relative w-full flex items-center justify-center overflow-hidden">
-          <AnimatePresence custom={direction} mode="wait">
+          <AnimatePresence
+            // custom={direction}
+            mode="wait"
+          >
             <motion.div
               key={index}
-              custom={direction}
+              // custom={direction}
               // initial={{ x: direction > 0 ? 300 : -300, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               // exit={{ x: direction > 0 ? -300 : 300, opacity: 0 }}

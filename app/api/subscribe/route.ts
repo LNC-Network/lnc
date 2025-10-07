@@ -21,6 +21,7 @@ export async function POST(request: Request) {
 
     return new Response("Subscription successful", { status: 201 });
   } catch (error) {
+    console.log(error);
     return new Response("Unexpected error", { status: 500 });
   }
 }
