@@ -20,6 +20,9 @@
 .vscode
 .vscode/*
 
+.zed/
+.zed/*
+
 # production
 /build
 
