@@ -5,7 +5,7 @@ export interface Partner {
   logo: string;
   shortName: string;
   website?: string;
-  category?: "technology" | "strategic" | "integration" | "channel";
+  category?: string;
 }
 
 export interface PartnersCarouselProps {
