@@ -1,8 +1,6 @@
 "use client";
-
-import React, { useState, useEffect } from "react";
 import PartnersCarousel from "./PartnersCarousel";
-import { partners } from "@/public/Data/partners.json";
+import data from "./partners.json";
 
 const Partners = () => {
   return (
@@ -19,7 +17,7 @@ const Partners = () => {
         {/* Partners Carousel - Contained Width */}
         <div className="w-[70vw] p-2">
           <PartnersCarousel
-            partners={partners}
+            partners={data.PT}
             speed={0.03}
             cardWidth={100}
             gap={20}
