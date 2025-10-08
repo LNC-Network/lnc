@@ -3,93 +3,73 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { format } from "date-fns";
 
-interface Event {
+interface events {
   id: number;
   title: string;
-  date: string;
+  event_date: string;
   description: string;
-  imageUrl: string;
+  image_url: string;
+  event_page_url: string;
 }
 
 export default function EventsPage() {
-  const [currentEvents, setCurrentEvents] = useState<Event[]>([]);
-  const [pastEvents, setPastEvents] = useState<Event[]>([]);
-  const [futureEvents, setFutureEvents] = useState<Event[]>([]);
+  const [currentEvents, setCurrentEvents] = useState<events[]>([]);
+  const [pastEvents, setPastEvents] = useState<events[]>([]);
+  const [futureEvents, setFutureEvents] = useState<events[]>([]);
+
   const [activeTab, setActiveTab] = useState<
     "happening" | "happened" | "upcoming"
   >("happening");
 
   useEffect(() => {
-    const now = new Date();
-    const allEvents: Event[] = [
-      {
-        id: 1,
-        title: "Hackathon 2025",
-        date: new Date().toISOString(), // happening today
-        description:
-          "A 24-hour coding sprint where developers build innovative solutions.",
-        imageUrl:
-          "https://images.unsplash.com/photo-1559027615-5d5374c648f2?q=80&w=1200",
-      },
-      {
-        id: 2,
-        title: "Tech Conference 2024",
-        date: "2024-06-12",
-        description: "Annual gathering of developers, startups, and investors.",
-        imageUrl:
-          "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200",
-      },
-      {
-        id: 3,
-        title: "AI Workshop",
-        date: "2025-10-05",
-        description: "Hands-on workshop exploring AI tools and applications.",
-        imageUrl:
-          "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200",
-      },
-      {
-        id: 4,
-        title: "Developer Meetup",
-        date: "2025-09-15",
-        description:
-          "Community meetup for software engineers to network and share knowledge.",
-        imageUrl:
-          "https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=1200",
-      },
-    ];
+    const fetchEvents = async () => {
+      const now = new Date();
 
-    setCurrentEvents(
-      allEvents.filter((event) => {
-        const eventDate = new Date(event.date);
-        return eventDate.toDateString() === now.toDateString();
-      })
-    );
+      const res = await fetch("/api/events", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    setPastEvents(
-      allEvents.filter((event) => {
-        const eventDate = new Date(event.date);
-        return (
-          eventDate < now && eventDate.toDateString() !== now.toDateString()
-        );
-      })
-    );
+      const events: events[] = await res.json();
 
-    setFutureEvents(
-      allEvents.filter((event) => {
-        const eventDate = new Date(event.date);
-        return eventDate > now;
-      })
-    );
+      setCurrentEvents(
+        events.filter((event) => {
+          const eventDate = new Date(event.event_date);
+          return eventDate.toDateString() === now.toDateString();
+        }),
+      );
+
+      setPastEvents(
+        events.filter((event) => {
+          const eventDate = new Date(event.event_date);
+          return (
+            eventDate < now && eventDate.toDateString() !== now.toDateString()
+          );
+        }),
+      );
+
+      setFutureEvents(
+        events.filter((event) => {
+          const eventDate = new Date(event.event_date);
+          return eventDate > now;
+        }),
+      );
+    };
+
+    fetchEvents();
   }, []);
 
-  const renderEventCard = (event: Event) => (
+  const renderEventCard = (event: events) => (
     <div
       key={event.id}
       className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+      onClick={() => (window.location.href = event.event_page_url)}
     >
       <div className="relative h-48 w-full">
         <Image
-          src={event.imageUrl}
+          src={event.image_url}
           alt={event.title}
           fill
           className="object-cover"
@@ -98,7 +78,7 @@ export default function EventsPage() {
       <div className="p-5">
         <h3 className="text-lg font-bold text-gray-800">{event.title}</h3>
         <p className="text-sm text-gray-500">
-          {format(new Date(event.date), "PPP")}
+          {format(new Date(event.event_date), "PPP")}
         </p>
         <p className="mt-3 text-gray-700">{event.description}</p>
       </div>
