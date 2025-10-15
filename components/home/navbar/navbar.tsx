@@ -16,27 +16,200 @@ const NavLinks = [
     href: "/events",
   },
   {
+    name: "Spaces",
+    href: "/spaces",
+  },
+  {
     name: "Learn",
     href: "/learn",
   },
   {
-    name: "Fund us",
+    name: "Support us",
     href: "/fundus",
   },
-  {
-    name: "Spaces",
-    href: "/spaces",
-  },
 ];
+
+// Desktop Navigation Component
+const DesktopNav = ({
+  active,
+  handleNavClick,
+}: {
+  active: string;
+  handleNavClick: (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => void;
+}) => {
+  return (
+    <div className="hidden md:block">
+      <svg className="absolute w-0 h-0">
+        <filter id="liquidGlass" x="0%" y="0%" width="100%" height="100%">
+          <feTurbulence
+            type="turbulence"
+            baseFrequency="0"
+            numOctaves="0"
+            result="turbulence"
+            seed="0"
+          />
+          <feDisplacementMap
+            in="SourceGraphic"
+            in2="turbulence"
+            scale="50"
+            xChannelSelector="R"
+            yChannelSelector="G"
+          />
+        </filter>
+      </svg>
+
+      <div className="relative">
+        <div
+          className="absolute inset-0 max-w-screen-xl mx-auto xl:rounded-2xl z-[-1]"
+          style={{
+            backdropFilter: "blur(10px)",
+            filter: "url(#liquidGlass)",
+          }}
+        />
+        <div className="mx-auto relative flex justify-between items-center max-w-screen-xl px-6 py-3 backdrop-brightness-100 bg-black/10 rounded-2xl shadow-[inset_0_3px_5px_rgba(200,200,200,0.3)]">
+          <Link href="/">
+            <Image
+              src="/logo.png"
+              alt="Lnc logo"
+              width={40}
+              height={40}
+              priority
+            />
+          </Link>
+          <div className="flex gap-10 items-center justify-between lg:text-xl">
+            {NavLinks.map((link, index) => {
+              const isActive = active === link.href;
+              return (
+                <a
+                  href={`${link.href}`}
+                  key={index}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className={`relative group transition-all duration-300 ${
+                    isActive ? "text-violet-500" : "text-white"
+                  }`}
+                >
+                  <span
+                    key={isActive ? "active" : "inactive"}
+                    className={`inline-block relative after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] after:bg-[#BC13FE] after:transition-all after:duration-300 ${
+                      isActive
+                        ? "after:w-full"
+                        : "after:w-0 group-hover:after:w-full"
+                    }`}
+                  >
+                    {link.name}
+                  </span>
+                </a>
+              );
+            })}
+          </div>
+          <Button
+            size="lg"
+            className="bg-[#BC13FE] hover:bg-[#A911E5] cursor-pointer text-lg text-white font-light text-shadow-lg text-shadow-purple-300"
+          >
+            JOIN US
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Mobile Navigation Component
+const MobileNav = ({
+  active,
+  handleNavClick,
+  isMobileMenuOpen,
+  setIsMobileMenuOpen,
+}: {
+  active: string;
+  handleNavClick: (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => void;
+  isMobileMenuOpen: boolean;
+  setIsMobileMenuOpen: (value: boolean) => void;
+}) => {
+  return (
+    <div className="md:hidden">
+      <div className="relative">
+        <div
+          className="mx-auto relative flex justify-between items-center max-w-screen-xl px-6 py-4"
+          style={{
+            backgroundColor: "rgb(14,14,14)",
+          }}
+        >
+          <Link href="/">
+            <Image
+              src="/logo.png"
+              alt="Lnc logo"
+              width={40}
+              height={40}
+              priority
+            />
+          </Link>
+          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            {isMobileMenuOpen ? (
+              <X size={32} className="text-white" />
+            ) : (
+              <Menu size={32} className="text-white" />
+            )}
+          </button>
+        </div>
+
+        {isMobileMenuOpen && (
+          <div
+            className="absolute top-full left-0 w-full flex flex-col items-center py-4 space-y-6 z-40 text-lg"
+            style={{
+              backgroundColor: "rgb(14,14,14)",
+            }}
+          >
+            {NavLinks.map((link, index) => (
+              <a
+                key={index}
+                href={`#${link.href}`}
+                onClick={(e) => {
+                  handleNavClick(e, link.href);
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`${
+                  active === link.href
+                    ? "text-violet-500"
+                    : "text-white hover:text-violet-400"
+                } transition-colors duration-300`}
+              >
+                {link.name}
+              </a>
+            ))}
+            <Button
+              size="lg"
+              className="bg-[#BC13FE] hover:bg-[#A911E5] text-white font-light"
+            >
+              JOIN US
+            </Button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Main Navbar Component
 const Navbar = () => {
   const [active, setActive] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
-
   const [lastScrollY, setLastScrollY] = useState(0);
   const [show, setShow] = useState(true);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
     e.preventDefault();
     const section = document.getElementById(href);
     if (section) {
@@ -48,6 +221,12 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    {
+      // Checking mobile breakpoint
+      const width = window.innerWidth;
+      if (width < 768) setIsMobile(true);
+    }
+
     const handleScroll = () => {
       if (window.scrollY > lastScrollY) setShow(false);
       else setShow(true);
@@ -86,113 +265,18 @@ const Navbar = () => {
   return (
     <motion.div
       initial={{ y: 0 }}
-      animate={{ y: show ? 0 : -100 }}
+      animate={{ y: show || isMobileMenuOpen ? 0 : -100 }}
       transition={{ duration: 0.3 }}
       className="fixed top-0 left-0 w-full shadow-lg z-50"
     >
-      <header className="w-full fixed top-5 z-50">
-        {/* 🔮 SVG Filter and Background Layer */}
-        <svg className="absolute w-0 h-0 ">
-          <filter id="liquidGlass" x="0%" y="0%" width="100%" height="100%">
-            <feTurbulence
-              type="turbulence"
-              baseFrequency="0"
-              numOctaves="0"
-              result="turbulence"
-              seed="0"
-            />
-            <feDisplacementMap
-              in="SourceGraphic"
-              in2="turbulence"
-              scale="50"
-              xChannelSelector="R"
-              yChannelSelector="G"
-            />
-          </filter>
-        </svg>
-
-        {/* 🔳 Glass Background Layer */}
-        <div className="relative ">
-          <div
-            className="absolute inset-0 max-w-screen-xl mx-auto xl:rounded-2xl z-[-1]"
-            style={{
-              backdropFilter: "blur(10px)",
-              filter: "url(#liquidGlass)",
-            }}
-          />
-          <div className="mx-auto relative flex justify-between items-center max-w-screen-xl px-6 py-3 sm:backdrop-brightness-100 bg-transparent sm:bg-black/10 rounded-2xl  sm:shadow-[inset_0_3px_5px_rgba(200,200,200,0.3)]">
-            <Link href="/">
-              <Image src="/logo.png" alt="Lnc logo" width={40} height={40} priority />
-            </Link>
-            <div className="hidden md:flex gap-10 items-center justify-between lg:text-xl">
-              {NavLinks.map((link, index) => {
-                const isActive = active === link.href;
-                return (
-                  <a
-                    href={`${link.href}`}
-                    key={index}
-                    onClick={(e) => handleNavClick(e, link.href)}
-                    className={`relative group transition-all duration-300  ${
-                      isActive ? "text-violet-500" : "text-white"
-                    }`}
-                  >
-                    <span
-                      key={isActive ? "active" : "inactive"}
-                      className={`inline-block relative after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] after:bg-[#BC13FE] after:transition-all after:duration-300
-                  ${isActive ? "after:w-full" : "after:w-0 group-hover:after:w-full"}`}
-                    >
-                      {link.name}
-                    </span>
-                  </a>
-                );
-              })}
-            </div>
-            <Button
-              size="lg"
-              className="hidden md:block bg-[#BC13FE] hover:bg-[#A911E5] cursor-pointer text-lg text-white font-light text-shadow-lg text-shadow-purple-300"
-            >
-              JOIN US
-            </Button>
-            {/* Mobile Menu Toggle */}
-            <div className="md:hidden">
-              <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-                {isMobileMenuOpen ? (
-                  <X size={32} className="text-white" />
-                ) : (
-                  <Menu size={32} className="text-white" />
-                )}
-              </button>
-            </div>
-          </div>
-          {/* Mobile Dropdown Menu */}
-          {isMobileMenuOpen && (
-            <div className="md:hidden absolute top-full left-0 w-full flex flex-col items-center py-4 space-y-6 z-40 text-lg bg-black/20">
-              <div
-                className="absolute inset-0 max-w-screen-xl h-full mx-auto xl:rounded-2xl z-[-1]"
-                style={{
-                  backdropFilter: "blur(2px)",
-                  filter: "url(#liquidGlass)",
-                }}
-              />
-
-              {NavLinks.map((link, index) => (
-                <a
-                  key={index}
-                  href={`#${link.href}`}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  className={`${
-                    active === link.href ? "text-violet-500" : "text-white hover:text-violet-400"
-                  }`}
-                >
-                  {link.name}
-                </a>
-              ))}
-              <Button size="lg" className="bg-[#BC13FE] hover:bg-[#A911E5] text-white font-light">
-                JOIN US
-              </Button>
-            </div>
-          )}
-        </div>
+      <header className={`w-full fixed z-50 ${isMobile ? "top-0" : "top-5"}`}>
+        <DesktopNav active={active} handleNavClick={handleNavClick} />
+        <MobileNav
+          active={active}
+          handleNavClick={handleNavClick}
+          isMobileMenuOpen={isMobileMenuOpen}
+          setIsMobileMenuOpen={setIsMobileMenuOpen}
+        />
       </header>
     </motion.div>
   );

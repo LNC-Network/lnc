@@ -1,22 +1,19 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { metadata } from "./metadata";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// Define theme colors here
+export const themeColor = [
+  { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+  { media: "(prefers-color-scheme: dark)", color: "#000000" },
+];
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "LNC Community",
-  description: "For The Greater Future",
+// Define viewport here
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export default function RootLayout({
@@ -26,9 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} dark antialiased`}
-      >
+      <body className="dark antialiased">
         <Analytics />
         <SpeedInsights />
         {children}
@@ -36,3 +31,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+export { metadata };

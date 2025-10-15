@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "assets.hackquest.io" },
     ],
   },
+  devIndicators: false,
   eslint: {
     ignoreDuringBuilds: true,
   },

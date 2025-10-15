@@ -1,0 +1,22 @@
+{
+  "name": "LNC Community",
+  "short_name": "LNC",
+  "description": "A platform for Hackathons, Open Source projects, and developer community networking.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f1f1f1",
+  "theme_color": "#0e0e0e",
+  "icons": [
+    {
+      "src": "/image.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "lang": "en-IN"
+}
