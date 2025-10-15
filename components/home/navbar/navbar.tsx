@@ -12,20 +12,20 @@ const NavLinks = [
     href: "/games",
   },
   {
-    name: "TEAM",
-    href: "teams",
+    name: "Events",
+    href: "/events",
   },
   {
-    name: "PROJECTS",
-    href: "projects",
+    name: "Learn",
+    href: "/learn",
   },
   {
-    name: "ARCHIVE",
-    href: "archive",
+    name: "Fund us",
+    href: "/fundus",
   },
   {
-    name: "ABOUT US",
-    href: "about",
+    name: "Spaces",
+    href: "/spaces",
   },
 ];
 const Navbar = () => {
@@ -36,10 +36,7 @@ const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [show, setShow] = useState(true);
 
-  const handleNavClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string
-  ) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     const section = document.getElementById(href);
     if (section) {
@@ -125,13 +122,7 @@ const Navbar = () => {
           />
           <div className="mx-auto relative flex justify-between items-center max-w-screen-xl px-6 py-3 sm:backdrop-brightness-100 bg-transparent sm:bg-black/10 rounded-2xl  sm:shadow-[inset_0_3px_5px_rgba(200,200,200,0.3)]">
             <Link href="/">
-              <Image
-                src="/logo.png"
-                alt="Lnc logo"
-                width={40}
-                height={40}
-                priority
-              />
+              <Image src="/logo.png" alt="Lnc logo" width={40} height={40} priority />
             </Link>
             <div className="hidden md:flex gap-10 items-center justify-between lg:text-xl">
               {NavLinks.map((link, index) => {
@@ -147,12 +138,8 @@ const Navbar = () => {
                   >
                     <span
                       key={isActive ? "active" : "inactive"}
-                      className={`inline-block relative after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] after:bg-[#BC13FE] after:transition-all after:duration-300 
-                  ${
-                    isActive
-                      ? "after:w-full"
-                      : "after:w-0 group-hover:after:w-full"
-                  }`}
+                      className={`inline-block relative after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] after:bg-[#BC13FE] after:transition-all after:duration-300
+                  ${isActive ? "after:w-full" : "after:w-0 group-hover:after:w-full"}`}
                     >
                       {link.name}
                     </span>
@@ -194,18 +181,13 @@ const Navbar = () => {
                   href={`#${link.href}`}
                   onClick={(e) => handleNavClick(e, link.href)}
                   className={`${
-                    active === link.href
-                      ? "text-violet-500"
-                      : "text-white hover:text-violet-400"
+                    active === link.href ? "text-violet-500" : "text-white hover:text-violet-400"
                   }`}
                 >
                   {link.name}
                 </a>
               ))}
-              <Button
-                size="lg"
-                className="bg-[#BC13FE] hover:bg-[#A911E5] text-white font-light"
-              >
+              <Button size="lg" className="bg-[#BC13FE] hover:bg-[#A911E5] text-white font-light">
                 JOIN US
               </Button>
             </div>

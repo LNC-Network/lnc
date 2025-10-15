@@ -17,16 +17,15 @@ const LearningPage = () => {
     },
     {
       title: "Next.js Tutorial",
-      description:
-        "Comprehensive guide to building applications with Next.js framework.",
+      description: "Comprehensive guide to building applications with Next.js framework.",
       link: "https://nextjs.org/learn",
     },
     // Add more resources as needed
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Learning Resources</h1>
+    <div className="container mx-auto px-4 py-8 bg-white h-screen">
+      <h1 className="text-3xl font-bold mb-6 text-black">Learning Resources</h1>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {resources.map((resource, index) => (
           <LearningResource
@@ -49,14 +48,10 @@ interface LearningResourceProps {
   link: string;
 }
 
-const LearningResource: React.FC<LearningResourceProps> = ({
-  title,
-  description,
-  link,
-}) => {
+const LearningResource: React.FC<LearningResourceProps> = ({ title, description, link }) => {
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
-      <h2 className="text-xl font-semibold mb-2">{title}</h2>
+    <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-lg transition-shadow">
+      <h2 className="text-xl font-semibold mb-2 text-black">{title}</h2>
       <p className="text-gray-600 mb-4">{description}</p>
       <a
         href={link}
