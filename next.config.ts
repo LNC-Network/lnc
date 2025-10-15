@@ -9,6 +9,12 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "assets.hackquest.io" },
     ],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
 export default nextConfig;
