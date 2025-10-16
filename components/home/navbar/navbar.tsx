@@ -21,7 +21,7 @@ const NavLinks = [
   },
   {
     name: "Learn",
-    href: "/learn",
+    href: "https://docs-lnc-community.vercel.app/docs/intro",
   },
   {
     name: "Support us",
