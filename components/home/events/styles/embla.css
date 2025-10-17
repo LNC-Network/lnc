@@ -165,3 +165,11 @@
     height: 0.8rem;
   }
 }
+
+@layer components {
+  @media (max-width: 767px) {
+    .embla__controls {
+      display: none !important;
+    }
+  }
+}
