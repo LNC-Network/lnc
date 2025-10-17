@@ -3,13 +3,15 @@ import React, { useState } from "react";
 import { z } from "zod";
 import { FaLinkedin, FaInstagram, FaGithub, FaYoutube } from "react-icons/fa";
 import { SiX } from "react-icons/si";
+import Image from "next/image";
 
 const Footer: React.FC = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const emailSchema = z.object({
-    email: z.email({ message: "Please enter a valid email address." }),
+    email: z.string().email({ message: "Please enter a valid email address." }),
   });
 
   const subscribe = async () => {
@@ -17,11 +19,8 @@ const Footer: React.FC = () => {
       const res = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-        }),
+        body: JSON.stringify({ email }),
       });
-
       if (!res.ok) {
         return false;
       }
@@ -34,28 +33,35 @@ const Footer: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const result = emailSchema.safeParse({ email });
 
     if (!result.success) {
       setError(result.error.issues[0].message);
+      return;
     } else {
       setError("");
-      const success = await subscribe();
-      if (!success) {
-        setError("Subscription failed. Please try again later.");
-        return;
-      }
-      console.log("Email submitted:", result.data.email);
-      setEmail("");
     }
+
+    setLoading(true);
+    const success = await subscribe();
+    setLoading(false);
+
+    if (!success) {
+      setError("Subscription failed. Please try again later.");
+      return;
+    }
+
+    console.log("Email submitted:", result.data.email);
+    setEmail("");
   };
 
   return (
     <div
-      className="pl-10 pr-10 pt-20 pb-10"
+      className="p-10 pt-20"
       style={{ backgroundColor: "rgb(14,14,14)" }}
     >
-      <footer className="relative bg-fuchsia-950/20 border-b-3 border-r-3 border-[#3F185D] rounded-xl p-20 mx-auto overflow-hidden ">
+      <footer className="relative bg-fuchsia-950/20 border-b-3 border-r-3 border-[#3F185D] rounded-xl p-8 md:p-20 mx-auto overflow-hidden ">
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none"
           xmlns="http://www.w3.org/2000/svg"
@@ -85,55 +91,67 @@ const Footer: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="
-                                w-full h-12
-                                pl-6 pr-6 sm:pr-[190px]
-                                text-lg text-white
-                                border-2 border-[#8e5bb5]
-                                bg-gradient-to-r from-[#5F1D95] to-[#561189]
-                                rounded-full
-                                placeholder-[#987CAf]
-                                placeholder:font-thin
-                                placeholder:text-base
-                                focus:outline-none
-                                focus:border-[#D6C6E2]
-                                hover:border-[#D6C6E2]
-                                transition-colors duration-300 ease-in-out
-                                font-inter
-                            "
+                  w-full h-12
+                  pl-6 pr-6 sm:pr-[190px]
+                  text-lg text-white
+                  border-2 border-[#8e5bb5]
+                  bg-gradient-to-r from-[#5F1D95] to-[#561189]
+                  rounded-full
+                  placeholder-[#987CAf]
+                  placeholder:font-thin
+                  placeholder:text-base
+                  focus:outline-none
+                  focus:border-[#D6C6E2]
+                  hover:border-[#D6C6E2]
+                  transition-colors duration-300 ease-in-out
+                  font-inter
+                "
+                disabled={loading}
               />
 
               {/* glow behind button */}
               <span
                 className="
-                                absolute top-1/2 -translate-y-1/2 right-2
-                                w-[160px] h-12
-                                bg-[#8e5bb5]
-                                rounded-full
-                                filter blur-[30px]
-                                opacity-60
-                                hidden sm:block
-                            "
+                  absolute top-1/2 -translate-y-1/2 right-2
+                  w-[160px] h-12
+                  bg-[#8e5bb5]
+                  rounded-full
+                  filter blur-[30px]
+                  opacity-60
+                  hidden sm:block
+                "
               />
 
               <button
                 type="submit"
                 className="
-                                absolute top-1/2 -translate-y-1/2 right-0
-                                h-12 px-8
-                                text-sm font-normal text-white
-                                items-center justify-center
-                                bg-gradient-to-r from-[#5F1D95] to-[#561189]
-                                border-2 border-[#D6C6E2]
-                                rounded-full
-                                drop-shadow-[0_0_20px_rgba(86,17,137,0.7)]
-                                transform transition duration-300 ease-in-out
-                                hover:scale-105
-                                hover:bg-opacity-80
-                                cursor-pointer
-                                hidden sm:flex
-                            "
+                  absolute top-1/2 -translate-y-1/2 right-0
+                  h-12 px-8
+                  text-sm font-normal text-white
+                  items-center justify-center
+                  bg-gradient-to-r from-[#5F1D95] to-[#561189]
+                  border-2 border-[#D6C6E2]
+                  rounded-full
+                  drop-shadow-[0_0_20px_rgba(86,17,137,0.7)]
+                  transform transition duration-300 ease-in-out
+                  hover:scale-105
+                  hover:bg-opacity-80
+                  cursor-pointer
+                  hidden sm:flex
+                "
+                disabled={loading}
               >
-                SUBSCRIBE NOW
+                {loading ? (
+                  <Image
+                    src="/loading-spinner.svg"
+                    alt="Loading..."
+                    width={24}
+                    height={24}
+                    className="mx-auto animate-spin"
+                  />
+                ) : (
+                  "SUBSCRIBE NOW"
+                )}
               </button>
             </div>
 
@@ -141,20 +159,31 @@ const Footer: React.FC = () => {
             <button
               type="submit"
               className="
-                            sm:hidden
-                            w-full h-12 mt-1
-                            text-sm font-normal text-white
-                            bg-gradient-to-r from-[#5F1D95] to-[#561189]
-                            border-2 border-[#D6C6E2]
-                            rounded-full
-                            drop-shadow-[0_0_20px_rgba(86,17,137,0.7)]
-                            transform transition duration-300 ease-in-out
-                            hover:scale-105
-                            hover:bg-opacity-80
-                            cursor-pointer
-                            "
+                sm:hidden
+                w-full h-12 mt-1
+                text-sm font-normal text-white
+                bg-gradient-to-r from-[#5F1D95] to-[#561189]
+                border-2 border-[#D6C6E2]
+                rounded-full
+                drop-shadow-[0_0_20px_rgba(86,17,137,0.7)]
+                transform transition duration-300 ease-in-out
+                hover:scale-105
+                hover:bg-opacity-80
+                cursor-pointer
+              "
+              disabled={loading}
             >
-              SUBSCRIBE NOW
+              {loading ? (
+                <Image
+                  src="/loading-spinner.svg"
+                  alt="Loading..."
+                  width={24}
+                  height={24}
+                  className="mx-auto animate-spin"
+                />
+              ) : (
+                "SUBSCRIBE NOW"
+              )}
             </button>
           </div>
         </form>
