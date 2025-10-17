@@ -13,7 +13,7 @@ export const viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "Innovation Meets Obsession",
+    default: "When Innovation Meets Obsession",
     template: "%s",
   },
   description:
