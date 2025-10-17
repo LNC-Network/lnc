@@ -6,19 +6,12 @@ const baseUrl = "https://lnc-community.vercel.app/";
 // Site configuration
 const siteConfig = {
   name: "LNC Community",
-  title: "Your Site Title - Tagline",
+  title: "Innovation Meets Obsession",
   description:
-    "Your comprehensive site description. Make it compelling and include relevant keywords naturally.",
+    "LNC Community is where innovation meets action. From hackathons to open-source collaborations, we bring together passionate minds to create impactful solutions, explore new technologies, and push the boundaries of what’s possible.",
   url: baseUrl,
   ogImage: `${baseUrl}/banner.png`,
-  keywords: [
-    "LNC Community",
-    "Hackathons",
-    "Open Source",
-    "community",
-    "games",
-    "chat",
-  ],
+  keywords: ["LNC Community", "Hackathons", "Open Source", "community", "games", "chat"],
   author: "LNC Devs",
   creator: "Jit Debnath",
   publisher: "LNC Community",
@@ -85,9 +78,8 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
-      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+      { url: "/image.png", sizes: "192x192", type: "image/png" },
+      { url: "/logo.png", sizes: "512x512", type: "image/png" },
     ],
     apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
     shortcut: "/favicon.ico",
@@ -116,23 +108,8 @@ export const metadata: Metadata = {
     },
   },
 
-  // App links (for mobile deep linking)
-  //   appLinks: {
-  //     ios: {
-  //       url: "your-app-url-scheme://path",
-  //       app_store_id: "your-app-store-id",
-  //     },
-  //     android: {
-  //       package: "com.yourcompany.yourapp",
-  //       url: "your-app-url-scheme://path",
-  //     },
-  //   },
+  category: "technology",
 
-  // Category
-  category: "technology", // Adjust to your site's category
-
-
-  // Additional tags
   other: {
     "mobile-web-app-capable": "yes",
     "apple-mobile-web-app-capable": "yes",
@@ -140,60 +117,4 @@ export const metadata: Metadata = {
   },
 };
 
-// Helper function for generating page-specific metadata
-// use in another layout.tsx
-export function generatePageMetadata({
-  title,
-  description,
-  image,
-  path = "",
-  noIndex = false,
-}: {
-  title: string;
-  description?: string;
-  image?: string;
-  path?: string;
-  noIndex?: boolean;
-}): Metadata {
-  const pageUrl = `${baseUrl}${path}`;
-  const pageImage = image || siteConfig.ogImage;
-  const pageDescription = description || siteConfig.description;
-
-  return {
-    title,
-    description: pageDescription,
-    alternates: {
-      canonical: pageUrl,
-    },
-    openGraph: {
-      title,
-      description: pageDescription,
-      url: pageUrl,
-      images: [
-        {
-          url: pageImage,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
-      type: "website",
-      siteName: siteConfig.name,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description: pageDescription,
-      images: [pageImage],
-    },
-    robots: noIndex
-      ? {
-          index: false,
-          follow: false,
-        }
-      : undefined,
-  };
-}
-
-// Export site config for use in other components
 export { siteConfig };
