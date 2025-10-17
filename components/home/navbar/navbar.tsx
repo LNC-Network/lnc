@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
@@ -35,10 +36,7 @@ const DesktopNav = ({
   handleNavClick,
 }: {
   active: string;
-  handleNavClick: (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string
-  ) => void;
+  handleNavClick: (href: string) => void;
 }) => {
   return (
     <div className="hidden md:block">
@@ -83,10 +81,9 @@ const DesktopNav = ({
             {NavLinks.map((link, index) => {
               const isActive = active === link.href;
               return (
-                <a
-                  href={`${link.href}`}
+                <button
                   key={index}
-                  onClick={(e) => handleNavClick(e, link.href)}
+                  onClick={() => handleNavClick(link.href)}
                   className={`relative group transition-all duration-300 ${
                     isActive ? "text-violet-500" : "text-white"
                   }`}
@@ -101,7 +98,7 @@ const DesktopNav = ({
                   >
                     {link.name}
                   </span>
-                </a>
+                </button>
               );
             })}
           </div>
@@ -125,10 +122,7 @@ const MobileNav = ({
   setIsMobileMenuOpen,
 }: {
   active: string;
-  handleNavClick: (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string
-  ) => void;
+  handleNavClick: (href: string) => void;
   isMobileMenuOpen: boolean;
   setIsMobileMenuOpen: (value: boolean) => void;
 }) => {
@@ -167,11 +161,10 @@ const MobileNav = ({
             }}
           >
             {NavLinks.map((link, index) => (
-              <a
+              <button
                 key={index}
-                href={`#${link.href}`}
-                onClick={(e) => {
-                  handleNavClick(e, link.href);
+                onClick={() => {
+                  handleNavClick(link.href);
                   setIsMobileMenuOpen(false);
                 }}
                 className={`${
@@ -181,7 +174,7 @@ const MobileNav = ({
                 } transition-colors duration-300`}
               >
                 {link.name}
-              </a>
+              </button>
             ))}
             <Button
               size="lg"
@@ -198,34 +191,36 @@ const MobileNav = ({
 
 // Main Navbar Component
 const Navbar = () => {
+  const router = useRouter();
   const [active, setActive] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [show, setShow] = useState(true);
-
   const [isMobile, setIsMobile] = useState(false);
 
-  const handleNavClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string
-  ) => {
-    e.preventDefault();
+  const handleNavClick = (href: string) => {
+    // Check if it's an external URL
+    if (href.startsWith("http")) {
+      window.open(href, "_blank");
+      return;
+    }
+
+    // Check if section exists on current page
     const section = document.getElementById(href);
     if (section) {
       section.scrollIntoView({ behavior: "smooth", block: "start" });
       setActive(href);
     } else {
-      window.location.href = href;
+      // Navigate to the route
+      router.push(href);
     }
   };
 
   useEffect(() => {
-    {
-      // Checking mobile breakpoint
-      const width = window.innerWidth;
-      if (width < 768) setIsMobile(true);
-    }
+    // Checking mobile breakpoint
+    const width = window.innerWidth;
+    if (width < 768) setIsMobile(true);
 
     const handleScroll = () => {
       if (window.scrollY > lastScrollY) setShow(false);

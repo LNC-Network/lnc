@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { Sigma } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const members = [
   {
@@ -139,6 +141,8 @@ function TeamCard({ member, index }: TeamCardProps) {
 }
 
 export default function TeamSection() {
+  const router = useRouter();
+
   return (
     <section
       className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-16 lg:px-24"
@@ -171,6 +175,29 @@ export default function TeamSection() {
           {members.map((member, index) => (
             <TeamCard key={index} member={member} index={index} />
           ))}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            whileHover={{
+              background:
+                "linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05))",
+            }}
+            transition={{ duration: 0.3 }}
+            viewport={{ once: true }}
+            className="group w-full h-full border border-white/30 rounded-md flex justify-center items-center text-white/80 hover:text-white font-light tracking-widest cursor-pointer"
+            onClick={() => {
+              router.push("/team");
+            }}
+          >
+            <span className="relative flex justify-center items-center">
+              <Sigma className="mr-2" />
+              Full Squad
+              <span
+                className="absolute left-0 bottom-[-2px] h-[1px] bg-white origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"
+                style={{ width: "100%" }}
+              />
+            </span>
+          </motion.div>
         </div>
       </div>
     </section>

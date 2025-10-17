@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 // import EventsCarousel, { EventItem } from "./EventsCarousel";
 import EmblaCarousel from "./EmblaCarousel";
 import { EmblaOptionsType } from "embla-carousel";
+import { useRouter } from "next/navigation";
 
 import "./styles/embla.css";
 
@@ -13,6 +14,7 @@ const SLIDE_COUNT = 7;
 const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
 
 const Events = () => {
+  const router = useRouter();
   return (
     <motion.section
       id="events"
@@ -66,8 +68,9 @@ const Events = () => {
             }}
             whileTap={{ scale: 0.98 }}
             className="group inline-flex items-center gap-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-gray-900 shadow-lg"
-
-            onClick={() => { window.location.href = "/events"; }}
+            onClick={() => {
+              router.push("/events");
+            }}
           >
             <span>View All Events</span>
             <motion.svg
