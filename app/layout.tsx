@@ -11,7 +11,13 @@ export const viewport = {
   maximumScale: 5,
 };
 
+const baseUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://lnc-community.vercel.app"
+    : "http://localhost:3000";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(baseUrl),
   title: {
     default: "When Innovation Meets Obsession",
     template: "%s",
