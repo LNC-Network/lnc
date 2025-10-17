@@ -6,12 +6,19 @@ const baseUrl = "https://lnc-community.vercel.app/";
 // Site configuration
 const siteConfig = {
   name: "LNC Community",
-  title: "Innovation Meets Obsession",
+  title: "When Innovation Meets Obsession",
   description:
     "LNC Community is where innovation meets action. From hackathons to open-source collaborations, we bring together passionate minds to create impactful solutions, explore new technologies, and push the boundaries of what’s possible.",
   url: baseUrl,
   ogImage: `${baseUrl}/banner.png`,
-  keywords: ["LNC Community", "Hackathons", "Open Source", "community", "games", "chat"],
+  keywords: [
+    "LNC Community",
+    "Hackathons",
+    "Open Source",
+    "community",
+    "games",
+    "chat",
+  ],
   author: "LNC Devs",
   creator: "Jit Debnath",
   publisher: "LNC Community",
