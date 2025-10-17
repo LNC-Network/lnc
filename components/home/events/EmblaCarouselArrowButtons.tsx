@@ -59,7 +59,7 @@ export const PrevButton: React.FC<PropType> = (props) => {
 
   return (
     <button
-      className="embla__button embla__button--prev "
+      className="embla__button embla__button--prev"
       type="button"
       {...restProps}
     >

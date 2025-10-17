@@ -6,7 +6,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
-      easing: (t) => 1 - Math.pow(1 - t, 3),
+      easing: (t) => 1 - Math.pow(1 - t, 9),
       smoothWheel: true,
       syncTouch: true,
     })

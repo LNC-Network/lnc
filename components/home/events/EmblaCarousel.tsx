@@ -130,7 +130,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
         </div>
       </div>
 
-      <div className="embla__controls">
+      <div className="embla__controls hidden md:flex">
         <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
 
         <div className="embla__dots">
