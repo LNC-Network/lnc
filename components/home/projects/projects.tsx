@@ -63,9 +63,16 @@ const sampleProjects: Project[] = [
     color: "#FFD23F",
   },
   {
-    title: "Vlab-lnc",
+    title: "Vlab",
     description:
       "",
+    githubUrl: "https://github.com/LNC-Network/Vlab-lnc",
+    color: "#FFD23F",
+  },
+  {
+    title: "Coming Soon",
+    description:
+      "Coming Soon",
     githubUrl: "https://github.com/LNC-Network/",
     color: "#FFD23F",
   },
