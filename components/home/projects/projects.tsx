@@ -7,47 +7,66 @@ import useMediaQuery from "./useMediaQuery";
 
 interface Project {
   title: string;
-  quote: string;
-  author: {
-    name: string;
-    position: string;
-    company: string;
-  };
+  description: string;
+  githubUrl: string;
   color: string;
 }
 
 const sampleProjects: Project[] = [
   {
-    title: "E-Commerce Platform",
-    quote:
-      "This platform revolutionized our online sales and increased our conversion rate by 300%. The user experience is seamless and the backend is incredibly robust.",
-    author: {
-      name: "Sarah Johnson",
-      position: "CEO",
-      company: "TechCorp Solutions",
-    },
+    title: "LYNQ - Decentralized Finance Platform",
+    description:
+      "LYNQ is a revolutionary decentralized finance platform built entirely on the U2U blockchain. Our mission is to democratize access to financial services while maintaining the highest standards of security, compliance, and user experience. We provide innovative lending solutions for both crypto-native users and Web3 newcomers.",
+    githubUrl: "https://github.com/ROHIT8759/FLASH_Lone_System",
+    color: "#FFD23F",
+  },
+  {
+    title: "Higher",
+    description:
+      "Higher is an open platform for writing and sharing articles and documents. It's a place for anyone to express ideas, share knowledge, and connect with readers.",
+    githubUrl: "https://github.com/LNC-Network/higher",
     color: "#FF6B35",
   },
   {
-    title: "AI Analytics Dashboard",
-    quote:
+    title: "TuringLab",
+    description:
       "The insights we get from this dashboard have transformed how we make business decisions. It's intuitive, powerful, and saves us hours of manual analysis.",
-    author: {
-      name: "Mike Chen",
-      position: "Data Director",
-      company: "Analytics Pro",
-    },
+    githubUrl: "https://github.com/LNC-Network/TuringLab",
     color: "#00C896",
   },
   {
-    title: "Mobile Banking App",
-    quote:
-      "Security, speed, and simplicity - this app delivers on all fronts. Our customers love it and our support tickets have decreased by 70%.",
-    author: {
-      name: "Lisa Rodriguez",
-      position: "Product Manager",
-      company: "SecureBank",
-    },
+    title: "DOCS",
+    description:
+      "LNC Network's central documentation hub built with Docusaurus, providing comprehensive guides and references for multiple technologies.",
+    githubUrl: "https://github.com/LNC-Network/docs",
+    color: "#FFD23F",
+  },
+  {
+    title: "Fortress",
+    description:
+      "Secure, open-source alternative to HashiCorp Vault for managing secrets, API keys, and credentials. Features encryption, access control, audit logs, and a modern web dashboard.",
+    githubUrl: "https://github.com/LNC-Network/Fortress",
+    color: "#FFD23F",
+  },
+  {
+    title: "Smart Mirror Model Trainer: CNN-Based Image Classification",
+    description:
+      "",
+    githubUrl: "https://github.com/LNC-Network/emotion-recognition-model",
+    color: "#FFD23F",
+  },
+  {
+    title: "NQTR",
+    description:
+      "",
+    githubUrl: "https://github.com/LNC-Network/nqtr",
+    color: "#FFD23F",
+  },
+  {
+    title: "Vlab-lnc",
+    description:
+      "",
+    githubUrl: "https://github.com/LNC-Network/",
     color: "#FFD23F",
   },
 ];
@@ -225,9 +244,8 @@ const Projects = () => {
               key={i}
               onClick={() => setIndex([i, i > index ? 1 : -1])}
               aria-label={`Go to project ${i + 1}`}
-              className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all ${
-                i === index ? "bg-violet-500" : "bg-gray-600 hover:bg-gray-400"
-              }`}
+              className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all ${i === index ? "bg-violet-500" : "bg-gray-600 hover:bg-gray-400"
+                }`}
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
               animate={{ scale: i === index ? 1.25 : 1 }}
