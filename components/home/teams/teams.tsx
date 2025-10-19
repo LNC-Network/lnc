@@ -35,14 +35,14 @@ const members = [
   },
   {
     name: "Rohit Kumar Kundu",
-    role: "HR/POC",
+    role: "HR / Developer",
     avatar:
       "https://media.licdn.com/dms/image/v2/D4D03AQHkd1mfPPuQeg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1727883990929?e=1762387200&v=beta&t=7VZUDiEz53_7scO8cwNQGk_HLfFW2awOBDkeJn7hBrw",
     link: "https://www.linkedin.com/in/rohit-kumar-kundu/",
   },
   {
     name: "Snihita Nandi",
-    role: "Designing Lead",
+    role: "Designing Lead / Core Executive",
     avatar:
       "https://media.licdn.com/dms/image/v2/D4D03AQEYEK16Wct7kw/profile-displayphoto-scale_400_400/B4DZeq0rOpHAAg-/0/1750917625467?e=1762387200&v=beta&t=0XALHFcVSBkLj1VDKsjPr-uV0kNpypkDTnH8ITVByeY",
     link: "https://www.linkedin.com/in/snihita-nandi/",
