@@ -49,9 +49,9 @@ const sampleProjects: Project[] = [
     color: "#FFD23F",
   },
   {
-    title: "Smart Mirror Model Trainer: CNN-Based Image Classification",
+    title: "Smart Mirror Model Trainer",
     description:
-      "",
+      "CNN-Based Image Classification",
     githubUrl: "https://github.com/LNC-Network/emotion-recognition-model",
     color: "#FFD23F",
   },
