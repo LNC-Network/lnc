@@ -3,7 +3,7 @@ name: Next.js Build
 permissions:
   contents: read
   pull-requests: write
-  
+
 on:
   push:
     branches:
@@ -33,7 +33,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build Next.js
+      - name: Lint
+        env:
+        run: pnpm run lint
+
+      - name: Typecheck
+        env:
+        run: pnpm run type-check
+
+      - name: Build Next.js app
         env:
           NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME }}
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
