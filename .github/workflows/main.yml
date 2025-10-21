@@ -7,7 +7,7 @@ permissions:
 on:
   push:
     branches:
-      - dev
+      - main
   pull_request:
 
 jobs:
@@ -34,11 +34,9 @@ jobs:
         run: pnpm install
 
       - name: Lint
-        env:
         run: pnpm run lint
 
       - name: Typecheck
-        env:
         run: pnpm run type-check
 
       - name: Build Next.js app
