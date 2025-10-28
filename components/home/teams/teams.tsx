@@ -61,6 +61,7 @@ const members = [
     link: "https://www.linkedin.com/in/prachi-jha-297b962b3/",
   },
 ];
+
 interface Member {
   name: string;
   role: string;
@@ -113,10 +114,7 @@ function TeamCard({ member, index }: TeamCardProps) {
           animate={isHovered ? { opacity: 1 } : { opacity: 0.7 }}
           transition={{ duration: 0.3 }}
         >
-          <motion.div
-            animate={isHovered ? { y: -8 } : { y: 0 }}
-            transition={{ duration: 0.3 }}
-          >
+          <motion.div animate={isHovered ? { y: -8 } : { y: 0 }} transition={{ duration: 0.3 }}>
             <h3 className="text-white text-lg sm:text-xl font-light tracking-tight">
               {member.name}
             </h3>
@@ -165,15 +163,13 @@ export default function TeamSection() {
           viewport={{ once: true }}
           className="mb-12 sm:mb-16 md:mb-20"
         >
-          <span className="text-xs tracking-widest text-white/70 uppercase">
-            The Team
-          </span>
+          <span className="text-xs tracking-widest text-white/70 uppercase">The Team</span>
           <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white mt-4 sm:mt-6 tracking-tight leading-tight">
             Leadership <span className="font-thin">Collective</span>
           </h2>
           <p className="text-white/60 text-base sm:text-lg font-light mt-6 sm:mt-8 max-w-xl leading-relaxed">
-            Diverse expertise unified by vision. Each member contributes
-            distinctive perspective and depth to drive excellence.
+            Diverse expertise unified by vision. Each member contributes distinctive perspective and
+            depth to drive excellence.
           </p>
         </motion.div>
 
@@ -187,8 +183,7 @@ export default function TeamSection() {
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           whileHover={{
-            background:
-              "linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05))",
+            background: "linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05))",
           }}
           transition={{ duration: 0.3 }}
           viewport={{ once: true }}
