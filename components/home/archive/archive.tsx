@@ -125,11 +125,10 @@ const Archive = () => {
           variants={buttonVariants}
           whileHover="hover"
           whileTap="tap"
-          className={`px-6 sm:px-8 py-2 sm:py-3 rounded-lg text-base sm:text-lg font-medium transition-all duration-300 ${
-            activeTab === 'blogs'
+          className={`px-6 sm:px-8 py-2 sm:py-3 rounded-lg text-base sm:text-lg font-medium transition-all duration-300 ${activeTab === 'blogs'
               ? 'bg-purple-600 text-white shadow-[0_0_20px_rgba(147,51,234,0.6)]'
               : 'bg-gray-800/50 text-gray-400 hover:text-white hover:bg-purple-600/20'
-          }`}
+            }`}
         >
           BLOGS
         </motion.button>
@@ -139,11 +138,10 @@ const Archive = () => {
           variants={buttonVariants}
           whileHover="hover"
           whileTap="tap"
-          className={`px-6 sm:px-8 py-2 sm:py-3 rounded-lg text-base sm:text-lg font-medium transition-all duration-300 ${
-            activeTab === 'gallery'
+          className={`px-6 sm:px-8 py-2 sm:py-3 rounded-lg text-base sm:text-lg font-medium transition-all duration-300 ${activeTab === 'gallery'
               ? 'bg-purple-600 text-white shadow-[0_0_20px_rgba(147,51,234,0.6)]'
               : 'bg-gray-800/50 text-gray-400 hover:text-white hover:bg-purple-600/20'
-          }`}
+            }`}
         >
           GALLERY
         </motion.button>
@@ -305,9 +303,8 @@ const Archive = () => {
               key={i}
               onClick={() => setIndex([i, i > index ? 1 : -1])}
               aria-label={`Go to item ${i + 1}`}
-              className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all ${
-                i === index ? 'bg-violet-500' : 'bg-gray-600 hover:bg-gray-400'
-              }`}
+              className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all ${i === index ? 'bg-violet-500' : 'bg-gray-600 hover:bg-gray-400'
+                }`}
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
               animate={{ scale: i === index ? 1.25 : 1 }}

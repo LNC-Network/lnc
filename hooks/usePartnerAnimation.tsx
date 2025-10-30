@@ -30,8 +30,8 @@ export const usePartnerAnimation = ({
   const { duplicatedPartners, singleSetWidth } = useMemo(() => {
     if (!partners.length) return { duplicatedPartners: [], singleSetWidth: 0 };
 
-    // Use only 2 sets for smoother performance
-    const duplicated = [...partners, ...partners];
+    // Use 4 sets for truly seamless infinite scrolling in both directions
+    const duplicated = [...partners, ...partners, ...partners, ...partners];
     const singleWidth = partners.length * (cardWidth + gap);
 
     return {
@@ -43,12 +43,20 @@ export const usePartnerAnimation = ({
   // Smooth continuous animation without visible resets
   useAnimationFrame((_, delta) => {
     if (autoPlay && (!pauseOnHover || !isHovered) && singleSetWidth > 0) {
-      // Move smoothly to the left
+      // Move smoothly based on speed direction
       translateXRef.current -= delta * speed;
 
-      // Reset position smoothly when one set has passed
-      if (Math.abs(translateXRef.current) >= singleSetWidth) {
-        translateXRef.current = translateXRef.current + singleSetWidth;
+      // Reset position smoothly when one set has passed (works for both directions)
+      if (speed > 0) {
+        // Moving left (positive speed)
+        if (Math.abs(translateXRef.current) >= singleSetWidth) {
+          translateXRef.current = translateXRef.current + singleSetWidth;
+        }
+      } else {
+        // Moving right (negative speed)
+        if (translateXRef.current >= 0) {
+          translateXRef.current = translateXRef.current - singleSetWidth;
+        }
       }
 
       // Force re-render for smooth animation
