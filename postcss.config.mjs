@@ -1,5 +1,14 @@
 const config = {
-  plugins: ["@tailwindcss/postcss"],
+  plugins: {
+    "@tailwindcss/postcss": {},
+  },
+  theme: {
+    extend: {
+      fontFamily: {
+        pixel: "var(--font-pixel)",
+      },
+    },
+  },
 };
 
 export default config;
