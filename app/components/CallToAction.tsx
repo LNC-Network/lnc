@@ -1,43 +1,49 @@
 "use client";
 
-import { useRef } from "react";
-import Image from "next/image";
+import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Link from "next/link";
+import { PROJECTS, Project } from "../data/projects";
+import ProjectCard from "./ProjectCard";
+import ProjectModal from "./ProjectModal";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function CallToAction() {
   const container = useRef(null);
-  const textRef = useRef(null);
-  const imageRef = useRef(null);
+  const titleRef = useRef(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
+  // Animation for the entry
   useGSAP(
     () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: container.current,
-          start: "top 70%",
+          start: "top bottom", // Trigger as soon as section enters viewport
         },
       });
 
-      tl.from(textRef.current, {
-        y: 50,
+      tl.from(titleRef.current, {
+        y: 30,
         opacity: 0,
         duration: 0.8,
         ease: "power3.out",
-      })
-        .from(
-          imageRef.current,
-          {
-            scale: 0.95,
-            opacity: 0,
-            duration: 1,
-            ease: "power3.out",
-          },
-          "-=0.4"
-        );
+      }).from(
+        ".project-card",
+        {
+          y: 50,
+          // Removed opacity: 0 to ensure visibility if animation stalls.
+          // The cards will just slide up.
+          duration: 0.6,
+          stagger: 0.2,
+          ease: "power3.out",
+        },
+        "-=0.4"
+      );
     },
     { scope: container }
   );
@@ -45,42 +51,49 @@ export default function CallToAction() {
   return (
     <section
       ref={container}
-      className="bg-transparent py-20 px-6 md:px-12 w-full text-center font-pixel"
+      className="bg-transparent py-20 px-6 md:px-12 w-full font-pixel relative"
     >
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div ref={textRef}>
-          <h2 className="text-3xl md:text-5xl font-black uppercase mb-6 tracking-widest text-white">
-            START BUILDING WITH US
+        <div ref={titleRef} className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-black uppercase mb-4 tracking-widest text-white">
+            Project Showcase
           </h2>
-          <p className="text-xs md:text-sm font-bold uppercase tracking-widest text-[#a1a1aa] mb-12">
-            THE BEST TIME TO JOIN WAS YESTERDAY. THE SECOND BEST TIME IS NOW.
+          <p className="text-xs md:text-sm font-bold uppercase tracking-widest text-[#a1a1aa]">
+            Explore what we are building
           </p>
-
-          {/* Buttons */}
-          <div className="flex justify-center gap-4 mb-16">
-            <button className="px-8 py-3 bg-purple-500 text-white font-bold text-xs md:text-sm uppercase tracking-widest border-2 border-purple-500 hover:bg-purple-400 transition shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
-              JOIN
-            </button>
-            <button className="px-8 py-3 bg-transparent text-white font-bold text-xs md:text-sm uppercase tracking-widest border-2 border-white hover:bg-white hover:text-black transition shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
-              EXPLORE
-            </button>
-          </div>
         </div>
 
-        {/* Image */}
+        {/* Project Grid */}
         <div
-          ref={imageRef}
-          className="w-full h-[400px] md:h-[600px] relative border-2 border-white"
+          ref={cardsRef}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          <Image
-            src="/cta_builder.png"
-            alt="Start Building"
-            fill
-            className="object-cover"
-          />
+          {PROJECTS.map((project) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              onClick={setSelectedProject}
+            />
+          ))}
+        </div>
+
+        {/* View All Button */}
+        <div className="flex justify-center mt-20">
+          <Link
+            href="/projects"
+            className="px-8 py-4 bg-purple-500 text-white font-bold uppercase tracking-widest hover:bg-purple-400 transition-all duration-200 shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]"
+          >
+            View All Projects
+          </Link>
         </div>
       </div>
+
+      {/* Project Details Modal */}
+      <ProjectModal
+        project={selectedProject}
+        onClose={() => setSelectedProject(null)}
+      />
     </section>
   );
 }

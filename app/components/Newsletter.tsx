@@ -1,10 +1,13 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
+import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import animationData from "../data/newsletter_anim.json";
+
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -72,16 +75,15 @@ export default function Newsletter() {
           </p>
         </div>
 
-        {/* Right Column - Image */}
+        {/* Right Column - Animation */}
         <div
           ref={rightColRef}
-          className="relative w-full h-[400px] md:h-[500px] border-2 border-white"
+          className="relative w-full h-[400px] md:h-[500px] border-2 border-white flex items-center justify-center overflow-hidden bg-black/20"
         >
-          <Image
-            src="/newsletter_feature.png"
-            alt="Stay in the loop"
-            fill
-            className="object-cover"
+          <Lottie
+            animationData={animationData}
+            loop={true}
+            className="w-full h-full max-w-[80%] max-h-[80%]"
           />
         </div>
       </div>
