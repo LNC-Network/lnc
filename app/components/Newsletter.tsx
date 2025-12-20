@@ -78,7 +78,7 @@ export default function Newsletter() {
         {/* Right Column - Animation */}
         <div
           ref={rightColRef}
-          className="relative w-full h-[400px] md:h-[500px] border-2 border-white flex items-center justify-center overflow-hidden bg-black/20"
+          className="relative w-full h-[400px] md:h-[500px] flex items-center justify-center overflow-hidden bg-black/20"
         >
           <Lottie
             animationData={animationData}
