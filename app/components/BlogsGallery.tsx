@@ -207,7 +207,7 @@ export default function BlogsGallery() {
                                             className="object-cover"
                                             priority
                                         />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent" />
+                                        <div className="absolute inset-0 bg-linear-to-t from-[#0a0a0a] via-transparent to-transparent" />
                                         
                                         <div className="absolute bottom-6 left-6 right-6">
                                             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/50 px-3 py-1 text-[10px] font-bold uppercase backdrop-blur-md">
@@ -266,7 +266,7 @@ export default function BlogsGallery() {
                                         fill
                                         className="object-cover transition-transform duration-700 group-hover:scale-110"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                                    <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                                     <div className="absolute bottom-4 left-4 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                                         <p className="font-mono text-xs font-bold uppercase text-[#00ff94] mb-1">
                                             {img.tag}
