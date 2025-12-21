@@ -131,7 +131,7 @@ const DockItem = ({
             <button
                 ref={elRef}
                 onClick={handleClick}
-                className={`dock-item relative z-10 flex items-center justify-center px-6 h-12 transition-all duration-300 cursor-pointer font-pixel text-sm tracking-wider uppercase
+                className={`dock-item relative z-10 flex items-center justify-center max-md:px-2 md:px-6 h-12 transition-all duration-300 cursor-pointer font-pixel text-sm tracking-wider uppercase
                     ${isOpen ? "text-black" : "text-white/80 hover:text-white"}
                 `}
             >

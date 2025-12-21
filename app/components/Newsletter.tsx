@@ -51,7 +51,7 @@ export default function Newsletter() {
     >
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         {/* Left Column - Content */}
-        <div ref={leftColRef}>
+        <div ref={leftColRef} className="order-2 md:order-1">
           <h2 className="text-3xl md:text-5xl font-black uppercase mb-6 tracking-widest text-white">
             STAY IN THE LOOP
           </h2>
@@ -78,7 +78,7 @@ export default function Newsletter() {
         {/* Right Column - Animation */}
         <div
           ref={rightColRef}
-          className="relative w-full h-[400px] md:h-[500px] flex items-center justify-center overflow-hidden bg-black/20"
+          className="order-1 md:order-2 relative w-full h-[400px] md:h-[500px] flex items-center justify-center overflow-hidden bg-black/20"
         >
           <Lottie
             animationData={animationData}

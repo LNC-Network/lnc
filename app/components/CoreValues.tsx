@@ -1,14 +1,17 @@
 "use client";
 
 import { useRef } from "react";
-import { Share2, Calendar } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Link from "next/link";
+import { EVENTS } from "../data/events";
+import EventCard from "./EventCard";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function CoreValues() {
+export default function EventsShowcase() {
   const container = useRef(null);
   const headerRef = useRef(null);
   const gridRef = useRef(null);
@@ -29,13 +32,14 @@ export default function CoreValues() {
 
       // Grid Animation
       const items = (gridRef.current as any).children;
-      gsap.from(items, {
+      gsap.set(items, { opacity: 0, y: 40 }); // Set initial state
+      gsap.to(items, {
         scrollTrigger: {
           trigger: gridRef.current,
           start: "top 75%",
         },
-        y: 40,
-        opacity: 0,
+        y: 0,
+        opacity: 1,
         duration: 0.8,
         stagger: 0.2,
         ease: "power3.out",
@@ -47,74 +51,36 @@ export default function CoreValues() {
   return (
     <section
       ref={container}
-      className="bg-transparent py-20 px-6 md:px-12 w-full text-center border-t-2 border-dashed border-white/10 font-pixel"
+      className="bg-transparent pt-20 pb-0 px-6 md:px-12 w-full text-center border-t-2 border-dashed border-white/10 font-pixel"
     >
       {/* Header */}
       <div ref={headerRef}>
         <h3 className="text-sm font-bold uppercase tracking-widest text-[#71717a] mb-4">
-          Core
+          Community
         </h3>
         <h2 className="text-3xl md:text-4xl font-black uppercase mb-6 tracking-wide text-white">
-          What Makes LNC Different
+          Upcoming Events
         </h2>
         <p className="max-w-3xl mx-auto text-white/80 text-sm md:text-base leading-relaxed mb-16 font-mono">
-          We built LNC around three pillars that matter. Each one drives how we
-          work and who we become as a community.
+          Join us, learn together, and build the future. Here is what is happening next.
         </p>
       </div>
 
       {/* Grid */}
       <div
         ref={gridRef}
-        className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto"
+        className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto"
       >
-        {/* Item 1 */}
-        <div className="flex flex-col items-center">
-          <Share2 className="w-10 h-10 mb-6 text-white" strokeWidth={1.5} />
-          <h3 className="text-lg font-bold uppercase mb-4 tracking-wider text-white">
-            Open-Source Collaboration
-          </h3>
-          <p className="text-white/60 text-xs md:text-sm font-mono leading-relaxed max-w-xs">
-            We create together, share freely, and believe good code belongs to
-            everyone.
-          </p>
-        </div>
-
-        {/* Item 2 */}
-        <div className="flex flex-col items-center">
-          <Share2
-            className="w-10 h-10 mb-6 text-white rotate-180"
-            strokeWidth={1.5}
-          />
-          <h3 className="text-lg font-bold uppercase mb-4 tracking-wider text-white">
-            Knowledge Sharing
-          </h3>
-          <p className="text-white/60 text-xs md:text-sm font-mono leading-relaxed max-w-xs">
-            Learning happens when we teach each other, not when we hoard what we
-            know.
-          </p>
-        </div>
-
-        {/* Item 3 */}
-        <div className="flex flex-col items-center">
-          <Calendar className="w-10 h-10 mb-6 text-white" strokeWidth={1.5} />
-          <h3 className="text-lg font-bold uppercase mb-4 tracking-wider text-white">
-            Inclusive Events
-          </h3>
-          <p className="text-white/60 text-xs md:text-sm font-mono leading-relaxed max-w-xs">
-            Our doors are open to anyone willing to show up and do the work.
-          </p>
-        </div>
+        {EVENTS.slice(0, 3).map((event) => (
+          <EventCard key={event.id} event={event} />
+        ))}
       </div>
 
       {/* Button */}
-      <div className="mt-20 flex justify-center items-center gap-4">
-        <button className="px-8 py-3 bg-purple-500 text-white font-bold text-xs uppercase tracking-widest border-2 border-purple-500 hover:bg-purple-400 transition shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
-          Explore
-        </button>
-        <span className="text-sm font-bold uppercase tracking-widest flex items-center gap-1 cursor-pointer hover:underline text-white">
-          Arrow &gt;
-        </span>
+      <div className="mt-16 flex justify-center items-center gap-6">
+        <Link href="/events" className="relative group px-8 py-3 bg-white text-black font-bold text-xs uppercase tracking-widest border-2 border-white hover:bg-black hover:text-white transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.5)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
+          View All Events
+        </Link>
       </div>
     </section>
   );

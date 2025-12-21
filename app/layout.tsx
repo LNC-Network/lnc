@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Press_Start_2P } from "next/font/google";
 import Starfield from "./components/Starfield";
-import TreeNavbar from "./components/TreeNavbar";
 import CrystalDock from "./components/CrystalDock";
 import ScrollProgress from "./components/ScrollProgress";
 

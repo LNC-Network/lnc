@@ -20,7 +20,7 @@ export default function Starfield() {
         mouseRef.current = { x: width / 2, y: height / 2 };
 
         const stars: { x: number; y: number; z: number; color: string }[] = [];
-        const numStars = 1000;
+        const numStars = 500;
         const speed = 2; // Slightly faster for more energy
 
         // Initialize stars

@@ -26,14 +26,15 @@ export default function Stats() {
         ease: "power3.out",
       });
 
-      // Stats Counting Animation
+      // Stats Counting & Scramble Animation
       const statItems = (statsRef.current as any).children;
       Array.from(statItems).forEach((item: any) => {
         const numberEl = item.querySelector("h3");
-        const targetValue = parseInt(
-          numberEl.textContent.replace(/,/g, "").replace(/\+/g, "")
-        );
+        // Remove formatting to get raw number
+        const rawText = numberEl.textContent.replace(/,/g, "").replace(/\+/g, "");
+        const targetValue = parseInt(rawText);
         const suffix = numberEl.textContent.includes("+") ? "+" : "";
+        const chars = "XYZ0123456789!@#$%^&*";
 
         // Fade in
         gsap.from(item, {
@@ -47,24 +48,39 @@ export default function Stats() {
           ease: "power3.out",
         });
 
-        // Count up
-        gsap.fromTo(
-          numberEl,
-          { textContent: "0" },
+        // Scramble / Count Effect
+        gsap.to(
+          {},
           {
             scrollTrigger: {
               trigger: statsRef.current,
               start: "top 80%",
             },
-            textContent: targetValue,
-            duration: 2,
-            ease: "power1.out",
-            snap: { textContent: 1 },
+            duration: 2.5,
+            ease: "circ.out",
             onUpdate: function () {
-              numberEl.textContent =
-                Math.floor(this.targets()[0].textContent).toLocaleString() +
-                suffix;
+              const progress = this.progress();
+              // Calculate current numeric value
+              const currentNum = Math.floor(targetValue * progress);
+              // Format it
+              const currentStr = currentNum.toLocaleString();
+
+              // Scramble Logic:
+              // Replace some characters with random glyphs based on progress (inverse)
+              // As progress -> 1, scramble -> 0
+              if (progress < 1) {
+                const scrambled = currentStr.split('').map(char => {
+                  // 30% chance to be random character if not done
+                  return Math.random() < (1 - progress) * 0.5 ? chars[Math.floor(Math.random() * chars.length)] : char;
+                }).join('');
+                numberEl.textContent = scrambled + suffix;
+              } else {
+                numberEl.textContent = currentStr + suffix;
+              }
             },
+            onComplete: () => {
+              numberEl.textContent = targetValue.toLocaleString() + suffix;
+            }
           }
         );
       });

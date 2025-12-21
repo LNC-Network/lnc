@@ -52,9 +52,6 @@ const LEADS = [
   },
 ];
 
-// repeat same data
-const LOOPED_LEADS = [...LEADS, ...LEADS, ...LEADS];
-
 export default function RealVoices() {
   const containerRef = useRef<HTMLDivElement>(null); // The pin wrapper
   const triggerRef = useRef<HTMLDivElement>(null); // The scroll trigger
@@ -70,70 +67,95 @@ export default function RealVoices() {
       headerRef.current &&
       cardsRef.current
     ) {
+      let mm = gsap.matchMedia();
+
       const scrollWidth = cardsRef.current.scrollWidth;
       const windowWidth = window.innerWidth;
-      // Calculate how far to scroll left. 
-      // We want to scroll until the end of the cards list.
-      // Initial X of cards will be around 400px (header width) + padding. 
-      // Let's say it settles at 25vw or similar.
-      // Simplification: We'll calculate dynamic end based on where it lands.
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: triggerRef.current,
-          start: "top top",
-          end: "+=3000", // Longer scroll distance for the multi-stage effect
-          scrub: 1,
-          pin: true,
-          invalidateOnRefresh: true,
-        },
-      });
+      // --- DESKTOP ANIMATION ( > 768px ) ---
+      mm.add("(min-width: 768px)", () => {
+        // Reset to Desktop Center Layout
+        gsap.set(headerRef.current, { left: "50%", top: "50%", xPercent: -50, yPercent: -50, opacity: 1 });
+        gsap.set(cardsRef.current, { x: windowWidth + 100, autoAlpha: 0, top: "50%", bottom: "auto", yPercent: -50 });
 
-      // 1. Header starts Centered (CSS default). 
-      // Animate it to the Left.
-      tl.to(headerRef.current, {
-        left: "4rem",
-        xPercent: 0, // Reset transform centering
-        top: "50%",
-        yPercent: -50, // Keep vertical center
-        duration: 1,
-        ease: "power2.inOut"
-      });
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: triggerRef.current,
+            start: "top top",
+            end: "+=3000",
+            scrub: 1,
+            pin: true,
+            invalidateOnRefresh: true,
+          },
+        });
 
-      // Animate Background In
-      tl.to(".header-bg", {
-        opacity: 1,
-        duration: 0.5,
-        ease: "power2.inOut"
-      }, "<0.5"); // Start halfway through the move
+        // 1. Header moves Left
+        tl.to(headerRef.current, {
+          left: "4rem",
+          xPercent: 0,
+          duration: 1,
+          ease: "power2.inOut"
+        });
 
-      // 2. Cards entering from right
-      tl.fromTo(
-        cardsRef.current,
-        {
-          x: windowWidth + 100, // Starts off screen right
-          autoAlpha: 0,
-        },
-        {
-          x: windowWidth * 0.35, // Lands somewhat to the right of header
+        // Animate Background
+        tl.to(".header-bg", { opacity: 1, duration: 0.5 }, "<0.5");
+
+        // 2. Cards enter
+        tl.to(cardsRef.current, {
+          x: windowWidth * 0.35,
           autoAlpha: 1,
           duration: 1,
           ease: "power2.out",
-        },
-        "<0.2" // Start slightly after header moves
-      );
+        }, "<0.2");
 
-      // 3. Horizontal Scroll of cards
-      // We need to move them enough so the last card is visible.
-      // Current X is windowWidth * 0.35.
-      // We want final X to be: windowWidth - scrollWidth - padding.
-      const finalX = -(scrollWidth - windowWidth + 100);
-
-      tl.to(cardsRef.current, {
-        x: finalX,
-        duration: 3, // Takes more scroll space relative to the intro
-        ease: "none",
+        // 3. Horizontal Scroll
+        const finalX = -(scrollWidth - windowWidth + 100);
+        tl.to(cardsRef.current, {
+          x: finalX,
+          duration: 3,
+          ease: "none",
+        });
       });
+
+      // --- MOBILE ANIMATION ( < 767px ) ---
+      mm.add("(max-width: 767px)", () => {
+        // Initial States: Header at Top, Cards explicitly below it using Top %
+        gsap.set(headerRef.current, { left: "50%", top: "15%", xPercent: -50, yPercent: 0, opacity: 1 });
+        // Set cards to 55% from top to guarantee they are below the header
+        gsap.set(cardsRef.current, { x: windowWidth, autoAlpha: 0, top: "55%", bottom: "auto", yPercent: 0 });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: triggerRef.current,
+            start: "top top",
+            end: "+=2000",
+            scrub: 1,
+            pin: true,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        // Header BG fade in (Immediate)
+        tl.to(".header-bg", { opacity: 1, duration: 0.5 });
+
+        // Cards enter from right
+        tl.to(cardsRef.current, {
+          x: 0, // Center/Start
+          autoAlpha: 1,
+          duration: 0.8,
+          ease: "power2.out",
+        }, "<");
+
+        // Horizontal Scroll
+        const finalX = -(scrollWidth - windowWidth + 40); // 40px padding
+        tl.to(cardsRef.current, {
+          x: finalX,
+          duration: 3,
+          ease: "none",
+        });
+      });
+
+      return () => mm.revert();
     }
   }, { scope: triggerRef });
 
@@ -142,17 +164,17 @@ export default function RealVoices() {
       {/* The Trigger / Pin Wrapper */}
       <div ref={triggerRef} className="relative h-screen w-full overflow-hidden">
 
-        {/* Background (Transparent as requested, but occupies space) */}
+        {/* Background */}
         <div ref={containerRef} className="relative h-full w-full">
 
-          {/* Header: Absolute Centered Initially */}
+          {/* Header - Z-30 to stay on top */}
           <div
             ref={headerRef}
-            className="absolute left-1/2 top-1/2 z-20 flex w-max max-w-2xl -translate-x-1/2 -translate-y-1/2 flex-col justify-center px-6 py-28 text-center md:text-left"
+            className="absolute z-30 flex w-full max-w-2xl flex-col justify-center px-6 text-center md:text-left"
           >
             {/* Animated Background Layer */}
             <div
-              className="header-bg absolute inset-0 -z-10 bg-linear-to-r from-black/90 via-black/80 to-transparent opacity-1 backdrop-blur-sm"
+              className="header-bg absolute inset-0 -z-10 bg-linear-to-r from-black/90 via-black/80 to-transparent opacity-0 backdrop-blur-sm transition-opacity"
             />
 
             <p className="mb-3 text-xs font-bold uppercase tracking-widest text-white/40">
@@ -167,39 +189,34 @@ export default function RealVoices() {
             </p>
           </div>
 
-          {/* Cards Container: Absolute, formatted as row */}
-          {/* Mask Wrapper: Static, full width/height, applies the fade effect */}
+          {/* Cards Container */}
           <div
-            className="absolute inset-0 z-10"
-            style={{
-              maskImage: "linear-gradient(to right, transparent 0%, transparent 30%, black 45%, black 100%)",
-              WebkitMaskImage: "linear-gradient(to right, transparent 0%, transparent 30%, black 45%, black 100%)",
-            }}
+            className="absolute inset-0 z-10 pointer-events-none md:pointer-events-auto"
           >
             <div
               ref={cardsRef}
-              className="absolute top-1/2 flex -translate-y-1/2 flex-row gap-8 opacity-0"
+              className="absolute flex flex-row gap-6 opacity-0 pointer-events-auto pl-6 md:pl-0"
             >
               {LEADS.map((lead, i) => (
                 <Card
                   key={i}
                   className="
-                  relative flex h-[50vh] w-[300px] shrink-0 flex-col
+                  relative flex h-[40vh] md:h-[50vh] w-[280px] md:w-[360px] shrink-0 flex-col
                   justify-between border-2 border-white/20 bg-[#1f1f23]
-                  p-8 shadow-[4px_4px_0px_0px_rgb(255,255,255)]
-                  transition-all duration-200 md:w-[360px]
+                  p-6 md:p-8 shadow-[4px_4px_0px_0px_rgb(255,255,255)]
+                  transition-all duration-200
                   hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]
                   rounded-none
                 "
                 >
-                  <div className="mb-6 text-6xl font-serif text-white/10">“</div>
+                  <div className="mb-4 md:mb-6 text-5xl md:text-6xl font-serif text-white/10">“</div>
 
-                  <p className="mb-8 text-sm font-bold uppercase leading-relaxed text-white/90 md:text-base">
+                  <p className="mb-6 md:mb-8 text-xs md:text-sm font-bold uppercase leading-relaxed text-white/90">
                     {lead.quote}
                   </p>
 
-                  <div className="flex items-center gap-4 border-t border-white/10 pt-6">
-                    <div className="h-12 w-12 overflow-hidden rounded-full border border-white/20">
+                  <div className="flex items-center gap-4 border-t border-white/10 pt-4 md:pt-6">
+                    <div className="h-10 w-10 md:h-12 md:w-12 overflow-hidden rounded-full border border-white/20">
                       <Image
                         src={lead.image}
                         alt={lead.name}
@@ -209,10 +226,10 @@ export default function RealVoices() {
                       />
                     </div>
                     <div>
-                      <h4 className="text-sm font-black uppercase tracking-wider text-white">
+                      <h4 className="text-xs md:text-sm font-black uppercase tracking-wider text-white">
                         {lead.name}
                       </h4>
-                      <p className="font-mono text-[10px] uppercase tracking-wider text-white/40">
+                      <p className="font-mono text-[8px] md:text-[10px] uppercase tracking-wider text-white/40">
                         {lead.role}
                       </p>
                     </div>

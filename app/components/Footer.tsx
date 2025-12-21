@@ -6,31 +6,6 @@ export default function Footer() {
   return (
     <footer className="bg-transparent text-white pt-20 pb-10 px-6 md:px-12 w-full font-pixel border-t border-white/10">
       <div className="max-w-6xl mx-auto">
-        {/* Newsletter Header - Simplified version inside footer as per design */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-20 border-b border-white/10 pb-16">
-          <div className="max-w-md">
-            <h2 className="text-xl md:text-2xl font-black uppercase mb-4 tracking-widest">
-              STAY IN THE LOOP
-            </h2>
-            <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-[#d8b4fe] mb-4">
-              GET UPDATES ON NEW PROJECTS AND COMMUNITY EVENTS
-            </p>
-          </div>
-          <form className="flex w-full md:max-w-md gap-0">
-            <input
-              type="email"
-              placeholder="YOUR EMAIL ADDRESS"
-              className="flex-1 bg-white/5 border border-white/20 p-3 text-xs font-mono placeholder:text-white/30 text-white outline-none focus:border-white/50"
-            />
-            <button className="px-6 py-3 bg-[#e9d5ff] text-black font-bold text-xs uppercase tracking-widest border border-white/20 hover:bg-white transition">
-              SUBSCRIBE
-            </button>
-          </form>
-          <p className="text-[8px] uppercase font-bold text-[#d8b4fe] tracking-wider md:hidden">
-            WE RESPECT YOUR PRIVACY. UNSUBSCRIBE ANYTIME.
-          </p>
-        </div>
-
         {/* Links Grid */}
         <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-20">
           {/* Column 1 */}
@@ -124,6 +99,9 @@ export default function Footer() {
           <p className="text-[10px] font-bold uppercase text-[#d8b4fe] tracking-wider">
             © 2025 LNC. ALL RIGHTS RESERVED.
           </p>
+        </div>
+        <div className="h-24 w-full">
+
         </div>
       </div>
     </footer >
