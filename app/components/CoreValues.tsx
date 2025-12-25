@@ -78,7 +78,7 @@ export default function EventsShowcase() {
 
       {/* Button */}
       <div className="mt-16 flex justify-center items-center gap-6">
-        <Link href="/events" className="relative group px-8 py-3 bg-white text-black font-bold text-xs uppercase tracking-widest border-2 border-white hover:bg-black hover:text-white transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.5)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
+        <Link href="/events" className="relative group px-8 py-3 bg-white text-black font-bold text-xs uppercase tracking-widest border border-white hover:bg-black hover:text-white transition-all duration-300 rounded-full hover:scale-105">
           View All Events
         </Link>
       </div>

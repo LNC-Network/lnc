@@ -63,9 +63,9 @@ export default function Newsletter() {
             <input
               type="email"
               placeholder="ENTER YOUR EMAIL"
-              className="flex-1 bg-white/5 border border-white/20 p-4 text-sm font-mono placeholder:text-white/30 text-white outline-none focus:border-white/50"
+              className="flex-1 bg-white/5 border border-white/20 p-4 text-sm font-mono placeholder:text-white/30 text-white outline-none focus:border-white/50 rounded-full pl-6"
             />
-            <button className="px-8 py-4 bg-purple-500 text-white font-bold text-xs uppercase tracking-widest border-2 border-purple-500 hover:bg-purple-400 transition shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
+            <button className="px-8 py-4 bg-purple-500 text-white font-bold text-xs uppercase tracking-widest border border-purple-500 hover:bg-purple-400 transition rounded-full hover:scale-105">
               SUBSCRIBE
             </button>
           </form>

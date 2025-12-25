@@ -170,7 +170,7 @@ export default function RealVoices() {
           {/* Header - Z-30 to stay on top */}
           <div
             ref={headerRef}
-            className="absolute z-30 flex w-full max-w-2xl flex-col justify-center px-6 text-center md:text-left"
+            className="absolute z-30 flex w-full max-w-2xl flex-col justify-center px-6 py-36 text-center md:text-left"
           >
             {/* Animated Background Layer */}
             <div
@@ -202,11 +202,11 @@ export default function RealVoices() {
                   key={i}
                   className="
                   relative flex h-[40vh] md:h-[50vh] w-[280px] md:w-[360px] shrink-0 flex-col
-                  justify-between border-2 border-white/20 bg-[#1f1f23]
-                  p-6 md:p-8 shadow-[4px_4px_0px_0px_rgb(255,255,255)]
+                  justify-between border border-white/10 bg-[#1f1f23]
+                  p-6 md:p-8
                   transition-all duration-200
-                  hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]
-                  rounded-none
+                  hover:bg-[#25252a] hover:scale-[1.02]
+                  rounded-3xl
                 "
                 >
                   <div className="mb-4 md:mb-6 text-5xl md:text-6xl font-serif text-white/10">“</div>

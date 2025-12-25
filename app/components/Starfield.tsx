@@ -5,7 +5,6 @@ import gsap from "gsap";
 
 export default function Starfield() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const mouseRef = useRef({ x: 0, y: 0 });
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -15,9 +14,6 @@ export default function Starfield() {
 
         let width = (canvas.width = window.innerWidth);
         let height = (canvas.height = window.innerHeight);
-
-        // Initial mouse position at center
-        mouseRef.current = { x: width / 2, y: height / 2 };
 
         const stars: { x: number; y: number; z: number; color: string }[] = [];
         const numStars = 500;
@@ -29,7 +25,7 @@ export default function Starfield() {
                 x: Math.random() * width - width / 2,
                 y: Math.random() * height - height / 2,
                 z: Math.random() * width,
-                color: `rgba(254, 254, 254, 0.59)`, // Cyan/Blueish
+                color: `rgba(254, 254, 254, 0.2)`, // Toned down opacity
             });
         }
 
@@ -40,10 +36,6 @@ export default function Starfield() {
 
             const cx = width / 2;
             const cy = height / 2;
-
-            const mx = mouseRef.current.x;
-            const my = mouseRef.current.y;
-            const repulsionRadius = 250;
 
             stars.forEach((star) => {
                 // Move star closer
@@ -60,22 +52,6 @@ export default function Starfield() {
                 const k = 128 / star.z; // Field of view
                 const px = star.x * k + cx;
                 const py = star.y * k + cy;
-
-                // Interaction: Repulsion
-                const dx = px - mx;
-                const dy = py - my;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-
-                if (dist < repulsionRadius) {
-                    const angle = Math.atan2(dy, dx);
-                    const force = (repulsionRadius - dist) / repulsionRadius;
-                    const power = 4 * force; // Strength of push logic
-
-                    // Push the actual 3D coordinates to persist the effect slightly
-                    // Adjusting x/y based on screen space push, scaled by depth to maintain "feel"
-                    star.x += Math.cos(angle) * power * (star.z / 100);
-                    star.y += Math.sin(angle) * power * (star.z / 100);
-                }
 
                 // Size based on depth
                 const size = (1 - star.z / width) * 1.5;
@@ -99,17 +75,11 @@ export default function Starfield() {
             height = canvas.height = window.innerHeight;
         };
 
-        const handleMouseMove = (e: MouseEvent) => {
-            mouseRef.current = { x: e.clientX, y: e.clientY };
-        };
-
         window.addEventListener("resize", handleResize);
-        window.addEventListener("mousemove", handleMouseMove);
 
         return () => {
             gsap.ticker.remove(draw);
             window.removeEventListener("resize", handleResize);
-            window.removeEventListener("mousemove", handleMouseMove);
         };
     }, []);
 

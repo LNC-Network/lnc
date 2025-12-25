@@ -132,13 +132,13 @@ export default function BlogsGallery() {
                     </div>
 
                     {/* Top Level Tabs */}
-                    <div className="header-reveal flex gap-0 border border-white/20 bg-black/40">
+                    <div className="header-reveal flex gap-0 border border-white/20 bg-black/40 rounded-full overflow-hidden p-1">
                         <button
                             onClick={() => setActiveSection('blogs')}
                             className={cn(
-                                "flex items-center gap-2 px-6 py-3 text-sm font-bold uppercase tracking-wider transition-all border-r border-white/20 last:border-r-0",
+                                "flex items-center gap-2 px-6 py-3 text-sm font-bold uppercase tracking-wider transition-all rounded-full",
                                 activeSection === 'blogs'
-                                    ? "bg-purple-500 text-white shadow-[inset_0_0_10px_rgba(0,0,0,0.2)]"
+                                    ? "bg-purple-500 text-white"
                                     : "text-white/60 hover:text-white hover:bg-white/5"
                             )}
                         >
@@ -148,9 +148,9 @@ export default function BlogsGallery() {
                         <button
                             onClick={() => setActiveSection('images')}
                             className={cn(
-                                "flex items-center gap-2 px-6 py-3 text-sm font-bold uppercase tracking-wider transition-all",
+                                "flex items-center gap-2 px-6 py-3 text-sm font-bold uppercase tracking-wider transition-all rounded-full",
                                 activeSection === 'images'
-                                    ? "bg-purple-500 text-white shadow-[inset_0_0_10px_rgba(0,0,0,0.2)]"
+                                    ? "bg-purple-500 text-white"
                                     : "text-white/60 hover:text-white hover:bg-white/5"
                             )}
                         >
@@ -173,13 +173,13 @@ export default function BlogsGallery() {
                                         key={post.id}
                                         onClick={() => setActiveTab(index)}
                                         className={cn(
-                                            "group relative flex min-w-[280px] cursor-pointer items-start gap-4 border-2 p-4 text-left transition-all lg:min-w-0 w-full hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]",
+                                            "group relative flex min-w-[280px] cursor-pointer items-start gap-4 border p-4 text-left transition-all lg:min-w-0 w-full hover:bg-white/5 rounded-2xl",
                                             activeTab === index
-                                                ? "border-purple-500 bg-white/5 shadow-[4px_4px_0px_0px_#a855f7]"
+                                                ? "border-purple-500 bg-white/5"
                                                 : "border-white/10 bg-black/40 hover:border-purple-500/50"
                                         )}
                                     >
-                                        <div className="relative h-16 w-16 shrink-0 overflow-hidden bg-black/50 border border-white/10">
+                                        <div className="relative h-16 w-16 shrink-0 overflow-hidden bg-black/50 border border-white/10 rounded-xl">
                                             <Image
                                                 src={post.image}
                                                 alt={post.title}
@@ -206,14 +206,10 @@ export default function BlogsGallery() {
 
                             {/* Right: Active Blog Content */}
                             <div className="relative lg:col-span-8">
-                                <div className="active-content-anim group relative h-full overflow-hidden border-2 border-white/10 bg-black/60 shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)]">
-                                    {/* Corner Brackets */}
-                                    <div className="absolute top-0 left-0 w-4 h-4 border-l-2 border-t-2 border-purple-500 z-20" />
-                                    <div className="absolute top-0 right-0 w-4 h-4 border-r-2 border-t-2 border-purple-500 z-20" />
-                                    <div className="absolute bottom-0 left-0 w-4 h-4 border-l-2 border-b-2 border-purple-500 z-20" />
-                                    <div className="absolute bottom-0 right-0 w-4 h-4 border-r-2 border-b-2 border-purple-500 z-20" />
+                                <div className="active-content-anim group relative h-full overflow-hidden border border-white/10 bg-black/60 rounded-3xl">
+                                    {/* Corner Brackets removed for rounded look */}
 
-                                    <div className="relative aspect-video w-full overflow-hidden border-b-2 border-white/10">
+                                    <div className="relative aspect-video w-full overflow-hidden border-b border-white/10">
                                         <Image
                                             src={BLOG_POSTS[activeTab].image}
                                             alt={BLOG_POSTS[activeTab].title}
@@ -226,7 +222,7 @@ export default function BlogsGallery() {
                                         <div className="absolute inset-0 bg-linear-to-t from-black via-transparent to-transparent" />
 
                                         <div className="absolute bottom-6 left-6 right-6">
-                                            <div className="mb-4 inline-flex items-center gap-2 border-2 border-purple-500 bg-black/80 px-4 py-1 text-xs font-bold uppercase text-purple-400">
+                                            <div className="mb-4 inline-flex items-center gap-2 border border-purple-500 bg-black/80 px-4 py-1 text-xs font-bold uppercase text-purple-400 rounded-full">
                                                 {BLOG_POSTS[activeTab].tag}
                                             </div>
                                             <h3 className="text-2xl font-black leading-tight md:text-4xl text-white uppercase tracking-wide drop-shadow-lg">
@@ -239,7 +235,7 @@ export default function BlogsGallery() {
                                         <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-6 text-xs text-white/40 font-mono uppercase tracking-wider">
                                             <div className="flex items-center gap-4">
                                                 <div className="flex items-center gap-2">
-                                                    <div className="h-8 w-8 rounded-none border border-white/20 overflow-hidden relative">
+                                                    <div className="h-8 w-8 rounded-full border border-white/20 overflow-hidden relative">
                                                         <Image src={BLOG_POSTS[activeTab].image} alt="author" fill className="object-cover grayscale" />
                                                     </div>
                                                     <span className="text-white">{BLOG_POSTS[activeTab].author}</span>
@@ -256,7 +252,7 @@ export default function BlogsGallery() {
 
                                         <Link
                                             href={BLOG_POSTS[activeTab].link}
-                                            className="group/btn relative inline-flex items-center gap-3 border-2 border-white bg-white px-8 py-4 text-sm font-bold uppercase text-black transition-all hover:bg-black hover:text-white hover:border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,0.5)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]"
+                                            className="group/btn relative inline-flex items-center gap-3 border border-white bg-white px-8 py-4 text-sm font-bold uppercase text-black transition-all hover:bg-black hover:text-white hover:border-white rounded-full hover:scale-105"
                                         >
                                             Read Full Story
                                             <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
@@ -274,7 +270,7 @@ export default function BlogsGallery() {
                                 {GALLERY_IMAGES.slice(0, visibleImages).map((img, i) => (
                                     <div
                                         key={i}
-                                        className="group relative aspect-square overflow-hidden border-2 border-white/10 bg-[#111] transition-all hover:border-purple-500 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]"
+                                        className="group relative aspect-square overflow-hidden border border-white/10 bg-[#111] transition-all hover:border-purple-500 rounded-2xl"
                                     >
                                         <Image
                                             src={img.src}
@@ -283,6 +279,7 @@ export default function BlogsGallery() {
                                             className="object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0"
                                         />
                                         <div className="absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
 
                                         {/* Corner Brackets on Hover */}
                                         <div className="absolute top-2 left-2 w-3 h-3 border-l-2 border-t-2 border-white opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -305,7 +302,7 @@ export default function BlogsGallery() {
                             {visibleImages < GALLERY_IMAGES.length && (
                                 <button
                                     onClick={handleLoadMore}
-                                    className="px-8 py-3 border-2 border-white/20 bg-transparent text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black hover:border-white transition-all duration-300"
+                                    className="px-8 py-3 border border-white/20 bg-transparent text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black hover:border-white transition-all duration-300 rounded-full"
                                 >
                                     Load More
                                 </button>

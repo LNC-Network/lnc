@@ -82,7 +82,7 @@ export default function CallToAction() {
         <div className="flex justify-center mt-20">
           <Link
             href="/projects"
-            className="px-8 py-4 bg-purple-500 text-white font-bold uppercase tracking-widest hover:bg-purple-400 transition-all duration-200 shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]"
+            className="px-8 py-4 bg-purple-500 text-white font-bold uppercase tracking-widest hover:bg-purple-400 transition-all duration-200 rounded-full hover:scale-105"
           >
             View All Projects
           </Link>

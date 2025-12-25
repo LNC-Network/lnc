@@ -28,11 +28,11 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 className="absolute inset-0 bg-black/80 backdrop-blur-md"
                 onClick={onClose}
             />
-            <div className="relative w-full max-w-4xl max-h-[90vh] bg-black border-2 border-white/20 overflow-hidden flex flex-col md:flex-row animate-in fade-in zoom-in-95 duration-200">
+            <div className="relative w-full max-w-4xl max-h-[90vh] bg-black border border-white/20 overflow-hidden flex flex-col md:flex-row animate-in fade-in zoom-in-95 duration-200 rounded-3xl">
                 {/* Close Button */}
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 z-20 p-2 bg-black border border-white hover:bg-white hover:text-black transition-colors"
+                    className="absolute top-4 right-4 z-20 p-2 bg-black border border-white hover:bg-white hover:text-black transition-colors rounded-full"
                 >
                     <X size={20} />
                 </button>

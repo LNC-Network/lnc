@@ -13,7 +13,7 @@ export default function ProjectCard({ project, onClick, className = "" }: Projec
     return (
         <div
             onClick={() => onClick(project)}
-            className={`project-card group relative h-[300px] border-2 border-white/20 hover:border-purple-500 bg-black/40 backdrop-blur-sm cursor-pointer transition-all duration-300 hover:-translate-y-2 overflow-hidden ${className}`}
+            className={`project-card group relative h-[300px] border border-white/20 hover:border-purple-500 bg-black/40 backdrop-blur-sm cursor-pointer transition-all duration-300 hover:-translate-y-2 overflow-hidden rounded-3xl ${className}`}
         >
             {/* Image or Fallback */}
             <div className="absolute inset-0 z-0">

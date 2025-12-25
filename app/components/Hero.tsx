@@ -1,55 +1,29 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 export default function Hero() {
   const container = useRef(null);
-  const maskRef = useRef<SVGSVGElement>(null);
-  const textRef = useRef(null);
-  const contentRef = useRef(null);
 
   useGSAP(
     () => {
-      const tl = gsap.timeline({ defaults: { ease: "power2.inOut" } });
+      const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
 
-      // Initial clean state
-      gsap.set(".hero-element", { opacity: 0, y: 30 });
-
-      // The Reveal Animation
-      tl.to(textRef.current, {
-        scale: 60,
-        duration: 3,
-        transformOrigin: "50% 50%",
-        ease: "power3.inOut",
+      tl.from(".hero-text", {
+        y: 30,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.1,
       })
-        .to(
-          maskRef.current,
-          {
-            opacity: 0, // Fade out concurrently with the end of the zoom
-            duration: 0.8,
-            ease: "power2.inOut",
-            onComplete: () => {
-              if (maskRef.current) maskRef.current.style.display = "none";
-            },
-          },
-          "<60%" // Start this at 60% of the previous tween (Zoom)
-        )
-        // Bring in the actual text content early
-        .call(() => {
-          window.dispatchEvent(new CustomEvent("reveal-dock"));
-        }, [], "<65%")
-        .to(
-          ".hero-element",
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            stagger: 0.1,
-          },
-          "<70%" // Start overlapping shortly after the fade begins
-        );
+        .from(".hero-visual", {
+          opacity: 0,
+          scale: 0.95,
+          duration: 1.5,
+          ease: "power3.out"
+        }, "-=0.5");
     },
     { scope: container }
   );
@@ -57,68 +31,55 @@ export default function Hero() {
   return (
     <section
       ref={container}
-      className="relative w-full h-screen overflow-hidden font-pixel"
+      className="relative w-full min-h-screen flex items-center pt-20"
     >
-      {/* The Magic Mask Layer */}
-      <svg
-        ref={maskRef}
-        className="absolute inset-0 z-20 w-full h-full pointer-events-none"
-        preserveAspectRatio="xMidYMid slice"
-      >
-        <defs>
-          <mask id="hero-mask">
-            <rect width="100%" height="100%" fill="white" />
+      <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        {/* Left Column: Content */}
+        <div className="flex flex-col items-start text-left z-10">
 
-            {/* Wrap text inside group */}
-            <g ref={textRef}>
-              <text
-                x="50%"
-                y="50%"
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fill="black"
-                className="font-pixel text-[15vw] font-bold"
+          <h1 className="hero-text text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-[1.1]">
+            Build Something <br />
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-purple-500">
+              Real
+            </span>
+            {" "}with LNC
+          </h1>
+
+          <p className="hero-text text-lg text-muted-foreground max-w-xl mb-10 leading-relaxed">
+            Join a community of developers, designers, and makers collaborating on open source projects.
+            Ship code, meaningful products, and grow alongside passionate builders.
+          </p>
+
+          <div className="hero-text flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+            <Link
+              href="https://chat.whatsapp.com/Fdv9D3iIgyQ9caeM20iH5l"
+              className="px-8 py-4 bg-fuchsia-300 text-black font-bold text-sm tracking-wide hover:bg-white/90 transition-all rounded-full flex items-center justify-center gap-2 group"
+            >
+              Join WhatsApp Community
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="group-hover:translate-x-1 transition-transform"
               >
-                LNC
-              </text>
-            </g>
-          </mask>
-        </defs>
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </Link>
 
-        <rect
-          width="100%"
-          height="100%"
-          fill="#110023ff"
-          mask="url(#hero-mask)"
-        />
-      </svg>
-
-
-
-      {/* Foreground Content */}
-      <div
-        ref={contentRef}
-        className="absolute inset-0 z-10 flex flex-col items-center justify-center h-full px-6 text-center"
-      >
-        <h1 className="hero-element font-pixel text-white text-4xl md:text-6xl leading-snug">
-          BUILD SOMETHING REAL
-          <br />
-          WITH LNC
-        </h1>
-
-        <p className="hero-element text-white/90 max-w-2xl mt-6 text-sm md:text-base tracking-wide">
-          WE ARE A COMMUNITY OF DEVELOPERS, DESIGNERS, AND MAKERS WHO BELIEVE IN
-          THE POWER OF OPEN SOURCE. JOIN US TO COLLABORATE ON PROJECTS THAT
-          MATTER AND GROW ALONGSIDE PEOPLE WHO SHARE YOUR PASSION.
-        </p>
-
-        <div className="hero-element mt-12 flex flex-col md:flex-row gap-6">
-          <button className="px-8 py-4 bg-purple-500 text-white font-bold uppercase hover:bg-purple-400 transition-all duration-200 shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
-            Start Contributing
-          </button>
-          <button className="px-8 py-4 bg-transparent text-white border-2 border-white font-bold uppercase hover:bg-white hover:text-black transition-all duration-200 shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
-            Join Discord
-          </button>
+            <Link
+              href="https://discord.gg/lnc"
+              target="_blank"
+              className="px-8 py-4 bg-transparent border border-white/20 text-white font-medium text-sm tracking-wide hover:bg-white/5 transition-all rounded-full flex items-center justify-center"
+            >
+              Join Discord
+            </Link>
+          </div>
         </div>
       </div>
     </section>

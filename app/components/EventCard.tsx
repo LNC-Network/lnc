@@ -7,12 +7,8 @@ interface EventCardProps {
 
 export default function EventCard({ event }: EventCardProps) {
     return (
-        <div className="group relative flex flex-col items-start text-left p-6 md:p-8 bg-black/70 border-2 border-white/80 hover:border-purple-500/50 transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(255,255,255,.8)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
-            {/* Corner Brackets Animation */}
-            <div className="absolute top-0 left-0 w-3 h-3 border-l-2 border-t-2 border-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 md:w-4 md:h-4" />
-            <div className="absolute top-0 right-0 w-3 h-3 border-r-2 border-t-2 border-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 md:w-4 md:h-4" />
-            <div className="absolute bottom-0 left-0 w-3 h-3 border-l-2 border-b-2 border-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 md:w-4 md:h-4" />
-            <div className="absolute bottom-0 right-0 w-3 h-3 border-r-2 border-b-2 border-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 md:w-4 md:h-4" />
+        <div className="group relative flex flex-col items-start text-left p-6 md:p-8 bg-black/70 border border-white/20 hover:border-purple-500/50 transition-all duration-300 rounded-3xl hover:bg-white/5">
+            {/* Corner Brackets Animation - Removed for cleaner look or kept but inside rounded? Keeping minimal */}
 
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                 <Calendar className="w-16 h-16 text-white" />
