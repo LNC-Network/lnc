@@ -7,51 +7,17 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { Card } from "@/components/ui/card";
 
-const LEADS = [
-  {
-    name: "Sarah Chen",
-    role: "Lead Architect",
-    quote: "We’re not just writing code. We’re architecting open collaboration.",
-    image: "/avatar_sarah.png",
-  },
-  {
-    name: "Marcus Rodriguez",
-    role: "Community Lead",
-    quote: "Communities scale only when every voice matters.",
-    image: "/avatar_marcus.png",
-  },
-  {
-    name: "Alex Thompson",
-    role: "Design Lead",
-    quote: "Design is how it feels to build together.",
-    image: "/avatar_alex.png",
-  },
-  {
-    name: "Emily Davis",
-    role: "DevOps Lead",
-    quote: "Speed means nothing without stability.",
-    image: "/avatar_sarah.png",
-  },
-  {
-    name: "David Kim",
-    role: "Security Lead",
-    quote: "Trust is our most valuable system.",
-    image: "/avatar_marcus.png",
-  },
-  {
-    name: "Jessica Lee",
-    role: "Product Lead",
-    quote: "Building the right thing comes first.",
-    image: "/avatar_alex.png",
-  },
-  {
-    name: "Ryan Park",
-    role: "Education Lead",
-    quote: "Teaching multiplies impact.",
-    image: "/avatar_sarah.png",
-  },
-];
+import { LEADS } from "@/app/data/team";
 
+/**
+ * RealVoices Component
+ * 
+ * A scrolling carousel that introduces the team leads.
+ * 
+ * Animations:
+ * - Desktop: Horizontal scroll synced with vertical scroll (Pinning).
+ * - Mobile: Adapts layout for smaller screens but keeps the horizontal flow feel.
+ */
 export default function RealVoices() {
   const containerRef = useRef<HTMLDivElement>(null); // The pin wrapper
   const triggerRef = useRef<HTMLDivElement>(null); // The scroll trigger
@@ -67,7 +33,7 @@ export default function RealVoices() {
       headerRef.current &&
       cardsRef.current
     ) {
-      let mm = gsap.matchMedia();
+      const mm = gsap.matchMedia();
 
       const scrollWidth = cardsRef.current.scrollWidth;
       const windowWidth = window.innerWidth;

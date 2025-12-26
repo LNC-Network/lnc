@@ -7,28 +7,42 @@ import { useGSAP } from "@gsap/react";
 import Image from "next/image";
 import Link from "next/link";
 
+/**
+ * Hero Component
+ * 
+ * The main entry point of the homepage.
+ * Features a split layout with a strong value proposition text on the left
+ * and a visual element (currently a logo/image) on the right.
+ * 
+ * Animations:
+ * - Text elements stagger in from bottom.
+ * - Right visual scales and fades in.
+ */
 export default function Hero() {
-  const container = useRef(null);
+  const container = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {
       const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
 
+      // Animate text elements stagger
       tl.from(".hero-text", {
         y: 30,
         opacity: 0,
         duration: 1,
         stagger: 0.1,
-      }).from(
-        ".hero-visual",
-        {
-          opacity: 0,
-          scale: 0.95,
-          duration: 1.5,
-          ease: "power3.out",
-        },
-        "-=0.5"
-      );
+      })
+        // Animate visual element after text starts
+        .from(
+          ".hero-visual",
+          {
+            opacity: 0,
+            scale: 0.95,
+            duration: 1.5,
+            ease: "power3.out",
+          },
+          "-=0.5"
+        );
     },
     { scope: container }
   );
@@ -39,7 +53,8 @@ export default function Hero() {
       className="relative w-full min-h-screen flex items-center py-20 px-6 lg:p-20"
     >
       <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        {/* Left Column: Content */}
+
+        {/* Left Column: Hero Content */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
           <h1 className="hero-text text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-[1.1]">
             Build Something <br />
@@ -54,7 +69,9 @@ export default function Hero() {
             on open source projects. Ship code, meaningful products, and grow
             alongside passionate builders.
           </p>
+
           <div className="hero-text flex flex-col sm:flex-row gap-4 w-full items-center justify-center lg:justify-start">
+            {/* Primary Call to Action */}
             <Button
               asChild
               className="w-full sm:w-[280px] px-8 py-6 bg-fuchsia-400 text-black font-bold text-sm tracking-wide hover:shadow-[0_0_10px_#f0abfc] hover:bg-fuchsia-400 transition-all rounded-full flex items-center justify-center gap-2 group"
@@ -78,10 +95,11 @@ export default function Hero() {
               </Link>
             </Button>
 
+            {/* Secondary Link */}
             <Button
               asChild
               variant="outline"
-              className="w-full sm:w-[280px] px-8 py-6 bg-transparent border border-white/20 text-white font-medium text-sm tracking-wide  transition-all rounded-full flex items-center justify-center"
+              className="w-full sm:w-[280px] px-8 py-6 bg-transparent border border-white/20 text-white font-medium text-sm tracking-wide transition-all rounded-full flex items-center justify-center"
             >
               <Link href="https://linktr.ee/lnc_community" target="_blank">
                 All Links
@@ -90,14 +108,15 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right Column: Logo (Hidden on small screens) */}
-        <div className="hidden lg:flex justify-end">
+        {/* Right Column: Visual / Logo (Hidden on mobile) */}
+        <div className="hidden lg:flex justify-end hero-visual">
           <Image
             src="/assets/logo/logo.png"
             alt="Hero Image"
             width={600}
             height={400}
             className="w-full max-w-max"
+            priority /* Prioritize loading LCP image */
           />
         </div>
       </div>

@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Link from "next/link";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
 import { NAV_TREE, NavNode } from "@/app/data/nav-tree";
 
 // --- Kinetic Typography Component ---
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|{}[]";
 
-// --- Pixel Art Icons (SVG Paths) ---
+/**
+ * Pixel Art Icons as SVG Paths.
+ * Used for the mobile view or compact dock items.
+ */
 const PIXEL_ICONS: Record<string, React.ReactNode> = {
     home: (
         <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
@@ -34,22 +35,27 @@ const PIXEL_ICONS: Record<string, React.ReactNode> = {
     )
 };
 
+/**
+ * ScrambleText Component.
+ * 
+ * Provides a "decoding" text effect on hover.
+ */
 const ScrambleText = ({ text, active }: { text: string; active: boolean }) => {
     const [display, setDisplay] = useState(text);
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         if (!active) {
-            setDisplay(text);
+            const t = setTimeout(() => setDisplay(text), 0);
             if (intervalRef.current) clearInterval(intervalRef.current);
-            return;
+            return () => clearTimeout(t);
         }
 
         let iteration = 0;
         if (intervalRef.current) clearInterval(intervalRef.current);
 
         intervalRef.current = setInterval(() => {
-            setDisplay((_) =>
+            setDisplay(() =>
                 text
                     .split("")
                     .map((char, index) => {
@@ -76,6 +82,10 @@ const ScrambleText = ({ text, active }: { text: string; active: boolean }) => {
     return <span>{display}</span>;
 };
 
+/**
+ * Single item in the Crystal Dock.
+ * Handles hover states and sub-menu rendering.
+ */
 const DockItem = ({
     node,
     isOpen,
@@ -179,6 +189,14 @@ const DockItem = ({
     );
 };
 
+/**
+ * CrystalDock Component
+ * 
+ * A futuristic, responsive navigation dock.
+ * - Desktop: Floats at the bottom.
+ * - Mobile: Floats at the top.
+ * - Features complex hover effects and sub-menus.
+ */
 export default function CrystalDock() {
     const dockRef = useRef<HTMLDivElement>(null);
     const [activeLabel, setActiveLabel] = useState<string | null>(null);
@@ -203,8 +221,8 @@ export default function CrystalDock() {
     useEffect(() => {
         // If we are NOT on the home page, show immediately
         if (pathname !== "/") {
-            setIsVisible(true);
-            return;
+            const t = setTimeout(() => setIsVisible(true), 0);
+            return () => clearTimeout(t);
         }
 
         // If we ARE on the home page, wait for the event

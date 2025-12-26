@@ -2,6 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 
+/**
+ * ScrollProgress Component
+ * 
+ * Displays the current scroll percentage at the bottom right of the screen.
+ * Useful for long landing pages to give context on reading position.
+ */
 export default function ScrollProgress() {
     const [progress, setProgress] = useState(0);
 

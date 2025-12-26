@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useMemo, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -8,6 +8,42 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { NAV_TREE, NavNode } from "@/app/data/nav-tree";
 
 gsap.registerPlugin(ScrollTrigger);
+
+/**
+ * TreeNavbar Component
+ * 
+ * A radial, exploring navigation system.
+ * - Root node expands into children nodes arranged in a radial arc.
+ * - Supports depth navigation (clicking a node opens its children).
+ * - Adapts layout (radius, spread) based on screen size (Mobile/Desktop).
+ */
+// Helper for Curved Text
+const TwistedLabel = ({ id, text, isMobile }: { id: string, text: string, isMobile: boolean }) => {
+    // Dynamic Path based on size
+    // Mobile (Size 60, R=30) -> Label R ~24. Path 50-24=26 to 74.
+    // Desktop (Size 80, R=40) -> Label R ~34. Path 50-34=16 to 84.
+    const labelR = isMobile ? 24 : 34;
+    const startX = 50 - labelR;
+    const endX = 50 + labelR;
+    const fontSize = isMobile ? 16 : 19;
+
+    return (
+        <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible z-10" viewBox="0 0 100 100">
+            <defs>
+                <path id={id} d={`M ${startX},50 A ${labelR},${labelR} 0 0,1 ${endX},50`} />
+            </defs>
+            {/* Strong drop shadow for text over images */}
+            <filter id="textShadow">
+                <feDropShadow dx="0" dy="1" stdDeviation="0.5" floodColor="black" floodOpacity="0.9" />
+            </filter>
+            <text fill="white" fontSize={fontSize} fontWeight="bold" letterSpacing="0.05em" filter="url(#textShadow)">
+                <textPath href={`#${id}`} startOffset="50%" textAnchor="middle">
+                    {text}
+                </textPath>
+            </text>
+        </svg>
+    );
+};
 
 export default function TreeNavbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -147,33 +183,7 @@ export default function TreeNavbar() {
         return "/assets/planets/moon.png";
     };
 
-    // Helper for Curved Text
-    const TwistedLabel = ({ id, text }: { id: string, text: string }) => {
-        // Dynamic Path based on size
-        // Mobile (Size 60, R=30) -> Label R ~24. Path 50-24=26 to 74.
-        // Desktop (Size 80, R=40) -> Label R ~34. Path 50-34=16 to 84.
-        const labelR = isMobile ? 24 : 34;
-        const startX = 50 - labelR;
-        const endX = 50 + labelR;
-        const fontSize = isMobile ? 16 : 19;
 
-        return (
-            <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible z-10" viewBox="0 0 100 100">
-                <defs>
-                    <path id={id} d={`M ${startX},50 A ${labelR},${labelR} 0 0,1 ${endX},50`} />
-                </defs>
-                {/* Strong drop shadow for text over images */}
-                <filter id="textShadow">
-                    <feDropShadow dx="0" dy="1" stdDeviation="0.5" floodColor="black" floodOpacity="0.9" />
-                </filter>
-                <text fill="white" fontSize={fontSize} fontWeight="bold" letterSpacing="0.05em" filter="url(#textShadow)">
-                    <textPath href={`#${id}`} startOffset="50%" textAnchor="middle">
-                        {text}
-                    </textPath>
-                </text>
-            </svg>
-        );
-    };
 
     return (
         <>
@@ -237,12 +247,13 @@ export default function TreeNavbar() {
                         }}
                     >
                         {/* Sun Image */}
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                             src="/assets/planets/sun.png"
                             alt="Sun"
                             className="absolute inset-0 w-full h-full object-cover rounded-full"
                         />
-                        <TwistedLabel id="root-label" text={activePath.length > 0 ? "back" : (isOpen ? "close" : "nav")} />
+                        <TwistedLabel id="root-label" text={activePath.length > 0 ? "back" : (isOpen ? "close" : "nav")} isMobile={isMobile} />
                     </button>
 
 
@@ -279,6 +290,7 @@ export default function TreeNavbar() {
                                     group-hover:scale-110 group-hover:brightness-110
                                     shadow-lg
                                 `}>
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img
                                         src={planetImg}
                                         alt={node.label}

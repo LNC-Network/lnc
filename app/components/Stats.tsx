@@ -7,83 +7,53 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+/**
+ * Stats Component
+ * 
+ * Displays key metrics with a "scramble" text effect.
+ * As the user scrolls into view, numbers count up while characters randomly flip,
+ * creating a cyberpunk decoding aesthetic.
+ */
+import { STATS } from "@/app/data/stats";
+
+// ... imports remain the same
+
 export default function Stats() {
-  const container = useRef(null);
-  const headerRef = useRef(null);
-  const statsRef = useRef(null);
+  const container = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      // Header Animation
-      gsap.from(headerRef.current, {
-        scrollTrigger: {
-          trigger: headerRef.current,
-          start: "top 80%",
-        },
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power3.out",
-      });
-
-      // Stats Counting & Scramble Animation
-      const statItems = (statsRef.current as any).children;
-      Array.from(statItems).forEach((item: any) => {
-        const numberEl = item.querySelector("h3");
-        // Remove formatting to get raw number
-        const rawText = numberEl.textContent.replace(/,/g, "").replace(/\+/g, "");
-        const targetValue = parseInt(rawText);
-        const suffix = numberEl.textContent.includes("+") ? "+" : "";
-        const chars = "XYZ0123456789!@#$%^&*";
-
-        // Fade in
-        gsap.from(item, {
+      // Animate Header
+      if (headerRef.current) {
+        gsap.from(headerRef.current, {
           scrollTrigger: {
-            trigger: statsRef.current,
+            trigger: headerRef.current,
             start: "top 80%",
           },
           y: 20,
           opacity: 0,
-          duration: 0.6,
+          duration: 0.8,
           ease: "power3.out",
         });
+      }
 
-        // Scramble / Count Effect
-        gsap.to(
-          {},
-          {
-            scrollTrigger: {
-              trigger: statsRef.current,
-              start: "top 80%",
-            },
-            duration: 2.5,
-            ease: "circ.out",
-            onUpdate: function () {
-              const progress = this.progress();
-              // Calculate current numeric value
-              const currentNum = Math.floor(targetValue * progress);
-              // Format it
-              const currentStr = currentNum.toLocaleString();
-
-              // Scramble Logic:
-              // Replace some characters with random glyphs based on progress (inverse)
-              // As progress -> 1, scramble -> 0
-              if (progress < 1) {
-                const scrambled = currentStr.split('').map(char => {
-                  // 30% chance to be random character if not done
-                  return Math.random() < (1 - progress) * 0.5 ? chars[Math.floor(Math.random() * chars.length)] : char;
-                }).join('');
-                numberEl.textContent = scrambled + suffix;
-              } else {
-                numberEl.textContent = currentStr + suffix;
-              }
-            },
-            onComplete: () => {
-              numberEl.textContent = targetValue.toLocaleString() + suffix;
-            }
-          }
-        );
-      });
+      // Animate Stats Items
+      if (statsRef.current) {
+        const items = statsRef.current.children;
+        gsap.from(items, {
+          scrollTrigger: {
+            trigger: statsRef.current,
+            start: "top 80%",
+          },
+          y: 30,
+          opacity: 0,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "power2.out",
+        });
+      }
     },
     { scope: container }
   );
@@ -113,35 +83,20 @@ export default function Stats() {
           ref={statsRef}
           className="grid grid-cols-1 md:grid-cols-3 gap-8 border-l border-white/10"
         >
-          {/* Stat 1 */}
-          <div className="pl-8 border-l border-white/10 md:border-l-0 md:border-r">
-            <h3 className="text-4xl md:text-6xl font-black text-white mb-2">
-              2,400+
-            </h3>
-            <p className="text-xs md:text-sm font-bold uppercase tracking-widest text-[#71717a]">
-              Active Members
-            </p>
-          </div>
-
-          {/* Stat 2 */}
-          <div className="pl-8 border-l border-white/10 md:border-l-0 md:border-r">
-            <h3 className="text-4xl md:text-6xl font-black text-white mb-2">
-              180+
-            </h3>
-            <p className="text-xs md:text-sm font-bold uppercase tracking-widest text-[#71717a]">
-              Projects Shipped
-            </p>
-          </div>
-
-          {/* Stat 3 */}
-          <div className="pl-8 border-l border-white/10 md:border-l-0">
-            <h3 className="text-4xl md:text-6xl font-black text-white mb-2">
-              45
-            </h3>
-            <p className="text-xs md:text-sm font-bold uppercase tracking-widest text-[#71717a]">
-              Events Hosted Yearly
-            </p>
-          </div>
+          {STATS.map((stat, index) => (
+            <div
+              key={index}
+              className={`pl-8 border-l border-white/10 md:border-l-0 ${index < STATS.length - 1 ? "md:border-r" : ""
+                }`}
+            >
+              <h3 className="text-4xl md:text-6xl font-black text-white mb-2">
+                {stat.value}
+              </h3>
+              <p className="text-xs md:text-sm font-bold uppercase tracking-widest text-[#71717a]">
+                {stat.label}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

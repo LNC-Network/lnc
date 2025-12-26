@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -11,6 +11,12 @@ import ProjectModal from "./ProjectModal";
 
 gsap.registerPlugin(ScrollTrigger);
 
+/**
+ * CallToAction (CTA) / Projects Showcase Section
+ * 
+ * A horizontal scrolling section that showcases projects in a timeline-like fashion.
+ * It uses GSAP ScrollTrigger to pin the section while scrolling horizontally through the content.
+ */
 export default function CallToAction() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLElement>(null);
@@ -21,9 +27,7 @@ export default function CallToAction() {
       const scrollContainer = sectionRef.current;
       if (!scrollContainer) return;
 
-      // Calculate total width of all cards plus gaps
-      // We'll use a functional resizing logic if needed, but for now assuming fixed interaction
-
+      // Create a horizontal scroll animation linked to vertical scroll
       gsap.to(scrollContainer, {
         x: () => -(scrollContainer.scrollWidth - window.innerWidth),
         ease: "none",
@@ -32,8 +36,8 @@ export default function CallToAction() {
           pin: true,
           scrub: 1,
           start: "top top",
-          end: () => "+=" + scrollContainer.scrollWidth,
-          invalidateOnRefresh: true, // Recalculate on resize
+          end: () => "+=" + scrollContainer.scrollWidth, // Scroll distance = width of content
+          invalidateOnRefresh: true, // Recalculate on window resize
         },
       });
     },
@@ -42,7 +46,7 @@ export default function CallToAction() {
 
   return (
     <section ref={triggerRef} className="overflow-hidden bg-transparent font-pixel relative">
-      {/* Header - Stays Fixed or Scrolls? Let's make it part of the horizontal flow or fixed top */}
+      {/* Sticky Header: Remains visible while the user scrolls through the projects */}
       <div className="absolute top-10 left-6 md:left-12 z-20 pointer-events-none mix-blend-difference">
         <h2 className="text-3xl md:text-5xl font-black uppercase tracking-widest text-white mb-2">
           Project Showcase
@@ -52,12 +56,15 @@ export default function CallToAction() {
         </p>
       </div>
 
-      {/* Horizontal Scroll Container */}
+      {/* 
+        Horizontal Scroll Container 
+        Moves left as the user scrolls down.
+      */}
       <div
         ref={sectionRef}
         className="flex gap-8 items-center h-screen px-6 md:px-12 w-fit pt-20"
       >
-        {/* Intro Spacer */}
+        {/* Intro Spacer to offset the first item */}
         <div className="w-[10vw] md:w-[20vw] shrink-0" />
 
         {PROJECTS.map((project) => (
@@ -70,7 +77,7 @@ export default function CallToAction() {
           </div>
         ))}
 
-        {/* View All Ends the flow */}
+        {/* "View All" Card at the end of the list */}
         <div className="w-[85vw] md:w-[400px] shrink-0 h-[60vh] md:h-[70vh] flex items-center justify-center border border-white/20 rounded-3xl bg-white/5 hover:bg-white/10 transition-colors group cursor-pointer">
           <Link
             href="https://github.com/LNC-Network"
@@ -84,7 +91,7 @@ export default function CallToAction() {
           </Link>
         </div>
 
-        {/* Outro Spacer */}
+        {/* Outro Spacer to allow scrolling past the last item */}
         <div className="w-[10vw] md:w-[10vw] shrink-0" />
       </div>
 

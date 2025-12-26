@@ -3,12 +3,24 @@
 import Image from "next/image";
 import { Project } from "../data/projects";
 
+/**
+ * Props for the ProjectCard component.
+ */
 interface ProjectCardProps {
+    /** The project data to display. */
     project: Project;
+    /** Callback when card is clicked. */
     onClick: (project: Project) => void;
+    /** Optional custom classes. */
     className?: string;
 }
 
+/**
+ * ProjectCard Component
+ * 
+ * Displays a single project with a hover effect that reveals details.
+ * Used in the CallToAction horizontal scroll list.
+ */
 export default function ProjectCard({ project, onClick, className = "" }: ProjectCardProps) {
     return (
         <div

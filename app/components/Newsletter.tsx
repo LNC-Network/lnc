@@ -7,10 +7,20 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import animationData from "../data/newsletter_anim.json";
 
+// Dynamically import Lottie to avoid SSR issues
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 gsap.registerPlugin(ScrollTrigger);
 
+/**
+ * Newsletter Component
+ * 
+ * Invites users to subscribe.
+ * Features:
+ * - Two-column layout (Text + Animation).
+ * - GSAP animations for entry on scroll.
+ * - Lottie animation for visual engagement.
+ */
 export default function Newsletter() {
   const container = useRef(null);
   const leftColRef = useRef(null);

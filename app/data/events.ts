@@ -1,5 +1,11 @@
+/**
+ * Supported categories for events.
+ */
 export type EventCategory = "Hackathon" | "Workshop" | "Social" | "Conference";
 
+/**
+ * Interface representing a community event.
+ */
 export interface Event {
   id: number;
   title: string;
@@ -9,6 +15,10 @@ export interface Event {
   category: EventCategory;
 }
 
+/**
+ * Mock Data: Community Events
+ * Used in EventsTimeline and EventsPage.
+ */
 export const EVENTS: Event[] = [
   {
     id: 1,

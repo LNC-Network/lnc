@@ -1,10 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
+
+/**
+ * Navbar Component
+ * 
+ * Floating navigation bar that resides at the top of the scree.
+ * Features links/anchors to different sections and social links.
+ * 
+ * Note: Uses a glassmorphism effect (backdrop-blur) to blend with background.
+ */
 export default function Navbar() {
-    const pathname = usePathname();
+
 
     const navLinks = [
         { name: "About", href: "https://linktr.ee/lnc_community" },
@@ -15,12 +23,14 @@ export default function Navbar() {
     return (
         <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 px-4">
             <nav className="flex items-center justify-between px-8 py-3 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full shadow-2xl w-full max-w-5xl">
+                {/* Logo Section */}
                 <div className="flex items-center">
                     <Link href="/" className="text-xl font-bold tracking-tighter hover:opacity-80 transition-opacity">
                         LNC
                     </Link>
                 </div>
 
+                {/* Desktop Navigation Links */}
                 <div className="hidden md:flex items-center gap-8">
                     {navLinks.map((link) => (
                         <Link
@@ -34,14 +44,16 @@ export default function Navbar() {
                     ))}
                 </div>
 
+                {/* Social & External Links */}
                 <div className="flex items-center gap-4">
                     <Link
                         href="https://github.com/LNC-Network"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="p-2 hover:bg-white/10 rounded-full transition-colors"
+                        aria-label="GitHub Profile"
                     >
-                        {/* Simple GitHub Icon */}
+                        {/* GitHub Icon */}
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="20"

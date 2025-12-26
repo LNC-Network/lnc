@@ -4,12 +4,22 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Calendar, MapPin, ArrowRight, Circle, Activity } from "lucide-react";
+import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import { EVENTS } from "../data/events";
 import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
+/**
+ * EventsTimeline Component
+ * 
+ * A 3D scrolling timeline that animates event cards towards the user's view (Z-axis movement).
+ * As the user scrolls, the events move from the background to the foreground.
+ * 
+ * Uses:
+ * - GSAP Timeline with ScrollTrigger + Pinning.
+ * - CSS 3D transforms (perspective, translateZ).
+ */
 export default function EventsTimeline() {
     const container = useRef(null);
     const groupsRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -58,7 +68,6 @@ export default function EventsTimeline() {
             tl.eventCallback("onUpdate", () => {
                 groups.forEach((group) => {
                     if (!group) return;
-                    // @ts-ignore
                     const z = gsap.getProperty(group, "z") as number;
 
                     // Simple logic:

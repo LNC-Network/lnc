@@ -1,0 +1,117 @@
+
+> testgsap@0.1.0 lint
+> eslint
+
+
+C:\Users\jitde\Projects\lnc\app\components\Achievements.tsx
+  70:31  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\jitde\Projects\lnc\app\components\BlogsGallery.tsx
+    5:22  warning  'ExternalLink' is defined but never used                                @typescript-eslint/no-unused-vars
+  197:55  error    Comments inside children section of tag should be placed inside braces  react/jsx-no-comment-textnodes
+
+C:\Users\jitde\Projects\lnc\app\components\CallToAction.tsx
+  3:28  warning  'useEffect' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jitde\Projects\lnc\app\components\CrystalDock.tsx
+    3:46  warning  'useCallback' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-unused-vars
+    5:10  warning  'useGSAP' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+    6:8   warning  'gsap' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+   51:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\jitde\Projects\lnc\app\components\CrystalDock.tsx:51:13
+  49 |     useEffect(() => {
+  50 |         if (!active) {
+> 51 |             setDisplay(text);
+     |             ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  52 |             if (intervalRef.current) clearInterval(intervalRef.current);
+  53 |             return;
+  54 |         }  react-hooks/set-state-in-effect
+   60:25  warning  '_' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+  226:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\jitde\Projects\lnc\app\components\CrystalDock.tsx:226:13
+  224 |         // If we are NOT on the home page, show immediately
+  225 |         if (pathname !== "/") {
+> 226 |             setIsVisible(true);
+      |             ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  227 |             return;
+  228 |         }
+  229 |                react-hooks/set-state-in-effect
+
+C:\Users\jitde\Projects\lnc\app\components\EventsTimeline.tsx
+   7:40  warning  'Circle' is defined but never used                                                                                   @typescript-eslint/no-unused-vars
+   7:48  warning  'Activity' is defined but never used                                                                                 @typescript-eslint/no-unused-vars
+  71:21  error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+
+C:\Users\jitde\Projects\lnc\app\components\Footer.tsx
+  3:10  warning  'Github' is defined but never used    @typescript-eslint/no-unused-vars
+  3:18  warning  'Twitter' is defined but never used   @typescript-eslint/no-unused-vars
+  3:27  warning  'Linkedin' is defined but never used  @typescript-eslint/no-unused-vars
+  3:37  warning  'Mail' is defined but never used      @typescript-eslint/no-unused-vars
+
+C:\Users\jitde\Projects\lnc\app\components\Navbar.tsx
+  15:11  warning  'pathname' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jitde\Projects\lnc\app\components\RealVoices.tsx
+  36:11  error  'mm' is never reassigned. Use 'const' instead  prefer-const
+
+C:\Users\jitde\Projects\lnc\app\components\Starfield.tsx
+  77:15  warning  'ticker' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jitde\Projects\lnc\app\components\TreeNavbar.tsx
+    3:28  warning  'useMemo' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+  248:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @next/next/no-img-element
+  253:26  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Users\jitde\Projects\lnc\app\components\TreeNavbar.tsx:253:26
+  251 |                             className="absolute inset-0 w-full h-full object-cover rounded-full"
+  252 |                         />
+> 253 |                         <TwistedLabel id="root-label" text={activePath.length > 0 ? "back" : (isOpen ? "close" : "nav")} />
+      |                          ^^^^^^^^^^^^ This component is created during render
+  254 |                     </button>
+  255 |
+  256 |
+
+C:\Users\jitde\Projects\lnc\app\components\TreeNavbar.tsx:159:26
+  157 |
+  158 |     // Helper for Curved Text
+> 159 |     const TwistedLabel = ({ id, text }: { id: string, text: string }) => {
+      |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 160 |         // Dynamic Path based on size
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 161 |         // Mobile (Size 60, R=30) -> Label R ~24. Path 50-24=26 to 74.
+      ΓÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 183 |         );
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 184 |     };
+      | ^^^^^^ The component is created during render here
+  185 |
+  186 |     return (
+  187 |         <>  react-hooks/static-components
+  290:37  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @next/next/no-img-element
+
+C:\Users\jitde\Projects\lnc\app\events\page.tsx
+  55:47  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jitde\Projects\lnc\app\page.tsx
+  1:8  warning  'Link' is defined but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 26 problems (8 errors, 18 warnings)
+  1 error and 0 warnings potentially fixable with the `--fix` option.
+

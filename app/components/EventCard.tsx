@@ -1,10 +1,19 @@
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import { Event } from "../data/events";
 
+/**
+ * Props for the EventCard component.
+ */
 interface EventCardProps {
     event: Event;
 }
 
+/**
+ * EventCard Component
+ * 
+ * Displays details of a single event in a card format.
+ * Includes hover effects, icon grouping, and consistent styling.
+ */
 export default function EventCard({ event }: EventCardProps) {
     return (
         <div className="group relative flex flex-col items-start text-left p-6 md:p-8 bg-black/70 border border-white/20 hover:border-purple-500/50 transition-all duration-300 rounded-3xl hover:bg-white/5">

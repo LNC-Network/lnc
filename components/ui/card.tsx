@@ -2,6 +2,12 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Card Component
+ * 
+ * A flexible container with a standardized border, rounded corners, and shadow.
+ * Composes with CardHeader, CardContent, CardFooter, etc.
+ */
 function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div

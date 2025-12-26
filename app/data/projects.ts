@@ -1,12 +1,20 @@
+/**
+ * Interface representing a project in the ecosystem.
+ */
 export interface Project {
   id: string;
   name: string;
   description: string;
   image?: string;
+  /** Markdown content for the project modal */
   readme: string;
   tags: string[];
 }
 
+/**
+ * Mock Data: Projects
+ * Used in CallToAction (Featured) and ProjectsPage (All).
+ */
 export const PROJECTS: Project[] = [
   {
     id: "1",

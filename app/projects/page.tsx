@@ -6,6 +6,15 @@ import { PROJECTS, Project } from "../data/projects";
 import ProjectCard from "../components/ProjectCard";
 import ProjectModal from "../components/ProjectModal";
 
+/**
+ * Projects Page
+ * 
+ * A catalog of all community projects.
+ * Features:
+ * - Search and Sort functionality.
+ * - Grid layout with responsive cards.
+ * - Detail view via Modal.
+ */
 export default function ProjectsPage() {
     const [search, setSearch] = useState("");
     const [sortBy, setSortBy] = useState<"name" | "newest">("newest"); // Pseudo-sort since we don't have dates

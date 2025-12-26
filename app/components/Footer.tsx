@@ -1,7 +1,13 @@
 "use client";
 
-import { Github, Twitter, Linkedin, Mail } from "lucide-react";
 
+
+/**
+ * Footer Component
+ * 
+ * Standard multi-column footer with links to resources, social media, and legal info.
+ * Designed with a transparent background to overlay on complex section backgrounds if needed.
+ */
 export default function Footer() {
   return (
     <footer className="bg-transparent text-white pt-20 pb-10 px-6 md:px-12 w-full font-pixel border-t border-white/10">

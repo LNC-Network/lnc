@@ -1,11 +1,23 @@
+/**
+ * Node structure for the radial TreeNavbar.
+ */
 export type NavNode = {
+  /** Display label for the node */
   label: string;
+  /** URL to navigate to (if leaf node) */
   goto?: string;
+  /** Whether clicking expands to show children */
   expandable?: boolean;
+  /** Child nodes */
   children?: NavNode[];
+  /** Optional icon key for the CrystalDock representation */
   icon?: string;
 };
 
+/**
+ * Main Navigation Tree Data
+ * Defines the hierarchical structure of the site's navigation.
+ */
 export const NAV_TREE: NavNode = {
   label: "Navigation",
   children: [

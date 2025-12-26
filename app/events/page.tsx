@@ -9,6 +9,9 @@ import TreeNavbar from "../components/TreeNavbar";
 import Footer from "../components/Footer";
 import { Search } from "lucide-react";
 
+/**
+ * Filter Categories for Events
+ */
 const CATEGORIES: ("All" | EventCategory)[] = [
     "All",
     "Hackathon",
@@ -17,6 +20,14 @@ const CATEGORIES: ("All" | EventCategory)[] = [
     "Conference",
 ];
 
+/**
+ * Events Page
+ * 
+ * Displays a searchable and filterable grid of community events.
+ * Features:
+ * - GSAP animations for stagger-in effects on load and filter change.
+ * - Dynamic filtering by category and search term.
+ */
 export default function EventsPage() {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedCategory, setSelectedCategory] = useState<"All" | EventCategory>("All");
@@ -41,7 +52,7 @@ export default function EventsPage() {
             });
 
             if (gridRef.current) {
-                gsap.from((gridRef.current as any).children, {
+                gsap.from((gridRef.current as unknown as HTMLDivElement).children, {
                     y: 30,
                     opacity: 0,
                     duration: 0.6,

@@ -3,6 +3,13 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 
+/**
+ * Starfield Component
+ * 
+ * Renders a high-performance 3D starfield using HTML5 Canvas.
+ * Creates a "warp speed" effect suitable for the hero or background sections.
+ * Optimized with GSAP ticker for smooth frame rates.
+ */
 export default function Starfield() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -67,7 +74,7 @@ export default function Starfield() {
         };
 
         // Use GSAP ticker for optimized rendering
-        const ticker = gsap.ticker.add(draw);
+        gsap.ticker.add(draw);
 
         // Event Handlers
         const handleResize = () => {
