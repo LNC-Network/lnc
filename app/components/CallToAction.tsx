@@ -12,81 +12,80 @@ import ProjectModal from "./ProjectModal";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function CallToAction() {
-  const container = useRef(null);
-  const titleRef = useRef(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLElement>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-  // Animation for the entry
   useGSAP(
     () => {
-      const tl = gsap.timeline({
+      const scrollContainer = sectionRef.current;
+      if (!scrollContainer) return;
+
+      // Calculate total width of all cards plus gaps
+      // We'll use a functional resizing logic if needed, but for now assuming fixed interaction
+
+      gsap.to(scrollContainer, {
+        x: () => -(scrollContainer.scrollWidth - window.innerWidth),
+        ease: "none",
         scrollTrigger: {
-          trigger: container.current,
-          start: "top bottom", // Trigger as soon as section enters viewport
+          trigger: triggerRef.current,
+          pin: true,
+          scrub: 1,
+          start: "top top",
+          end: () => "+=" + scrollContainer.scrollWidth,
+          invalidateOnRefresh: true, // Recalculate on resize
         },
       });
-
-      tl.from(titleRef.current, {
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power3.out",
-      }).from(
-        ".project-card",
-        {
-          y: 50,
-          // Removed opacity: 0 to ensure visibility if animation stalls.
-          // The cards will just slide up.
-          duration: 0.6,
-          stagger: 0.2,
-          ease: "power3.out",
-        },
-        "-=0.4"
-      );
     },
-    { scope: container }
+    { scope: triggerRef }
   );
 
   return (
-    <section
-      ref={container}
-      className="bg-transparent py-20 px-6 md:px-12 w-full font-pixel relative"
-    >
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div ref={titleRef} className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-black uppercase mb-4 tracking-widest text-white">
-            Project Showcase
-          </h2>
-          <p className="text-xs md:text-sm font-bold uppercase tracking-widest text-[#a1a1aa]">
-            Explore what we are building
-          </p>
-        </div>
+    <section ref={triggerRef} className="overflow-hidden bg-transparent font-pixel relative">
+      {/* Header - Stays Fixed or Scrolls? Let's make it part of the horizontal flow or fixed top */}
+      <div className="absolute top-10 left-6 md:left-12 z-20 pointer-events-none mix-blend-difference">
+        <h2 className="text-3xl md:text-5xl font-black uppercase tracking-widest text-white mb-2">
+          Project Showcase
+        </h2>
+        <p className="text-xs md:text-sm font-bold uppercase tracking-widest text-[#a1a1aa]">
+          Explore what we are building
+        </p>
+      </div>
 
-        {/* Project Grid */}
-        <div
-          ref={cardsRef}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {PROJECTS.map((project) => (
+      {/* Horizontal Scroll Container */}
+      <div
+        ref={sectionRef}
+        className="flex gap-8 items-center h-screen px-6 md:px-12 w-fit pt-20"
+      >
+        {/* Intro Spacer */}
+        <div className="w-[10vw] md:w-[20vw] shrink-0" />
+
+        {PROJECTS.map((project) => (
+          <div key={project.id} className="w-[85vw] md:w-[600px] shrink-0">
             <ProjectCard
-              key={project.id}
               project={project}
               onClick={setSelectedProject}
+              className="h-[60vh] md:h-[70vh]"
             />
-          ))}
-        </div>
+          </div>
+        ))}
 
-        {/* View All Button */}
-        <div className="flex justify-center mt-20">
+        {/* View All Ends the flow */}
+        <div className="w-[85vw] md:w-[400px] shrink-0 h-[60vh] md:h-[70vh] flex items-center justify-center border border-white/20 rounded-3xl bg-white/5 hover:bg-white/10 transition-colors group cursor-pointer">
           <Link
-            href="/projects"
-            className="px-8 py-4 bg-purple-500 text-white font-bold uppercase tracking-widest hover:bg-purple-400 transition-all duration-200 rounded-full hover:scale-105"
+            href="https://github.com/LNC-Network"
+            target="_blank"
+            className="flex flex-col items-center gap-4"
           >
-            View All Projects
+            <span className="text-2xl font-black text-white uppercase group-hover:scale-110 transition-transform">View All</span>
+            <div className="w-12 h-12 rounded-full border border-white flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
+              →
+            </div>
           </Link>
         </div>
+
+        {/* Outro Spacer */}
+        <div className="w-[10vw] md:w-[10vw] shrink-0" />
       </div>
 
       {/* Project Details Modal */}

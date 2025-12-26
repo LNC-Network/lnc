@@ -18,7 +18,7 @@ const BLOG_POSTS = [
         author: "Sarah Chen",
         role: "Lead Architect",
         date: "Dec 15, 2024",
-        link: "https://medium.com/", // Placeholder
+        link: "https://linktr.ee/lnc_community",
         image: "/avatar_sarah.png",
         tag: "Web3",
         readTime: "5 min read"
@@ -30,7 +30,7 @@ const BLOG_POSTS = [
         author: "Alex Thompson",
         role: "Product Design",
         date: "Dec 10, 2024",
-        link: "https://medium.com/", // Placeholder
+        link: "https://linktr.ee/lnc_community",
         image: "/avatar_alex.png", // Using avatar as blog image for this design
         tag: "Design",
         readTime: "7 min read"
@@ -42,7 +42,7 @@ const BLOG_POSTS = [
         author: "Marcus Rodriguez",
         role: "Community Lead",
         date: "Dec 05, 2024",
-        link: "https://medium.com/", // Placeholder
+        link: "https://linktr.ee/lnc_community",
         image: "/avatar_marcus.png",
         tag: "Community",
         readTime: "4 min read"
@@ -117,7 +117,7 @@ export default function BlogsGallery() {
     };
 
     return (
-        <section ref={containerRef} className="relative z-10 w-full bg-transparent py-24 font-pixel text-white border-t border-white/10">
+        <section id="community" ref={containerRef} className="relative z-10 w-full bg-transparent py-24 font-pixel text-white border-t border-white/10">
             <div className="container mx-auto px-4 md:px-12">
 
                 {/* Header & Controls */}

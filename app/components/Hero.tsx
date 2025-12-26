@@ -1,9 +1,11 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { useRef } from "react";
-import Link from "next/link";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Hero() {
   const container = useRef(null);
@@ -17,13 +19,16 @@ export default function Hero() {
         opacity: 0,
         duration: 1,
         stagger: 0.1,
-      })
-        .from(".hero-visual", {
+      }).from(
+        ".hero-visual",
+        {
           opacity: 0,
           scale: 0.95,
           duration: 1.5,
-          ease: "power3.out"
-        }, "-=0.5");
+          ease: "power3.out",
+        },
+        "-=0.5"
+      );
     },
     { scope: container }
   );
@@ -31,55 +36,69 @@ export default function Hero() {
   return (
     <section
       ref={container}
-      className="relative w-full min-h-screen flex items-center pt-20"
+      className="relative w-full min-h-screen flex items-center py-20 px-6 lg:p-20"
     >
       <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Left Column: Content */}
-        <div className="flex flex-col items-start text-left z-10">
-
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
           <h1 className="hero-text text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-[1.1]">
             Build Something <br />
             <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-purple-500">
               Real
-            </span>
-            {" "}with LNC
+            </span>{" "}
+            with LNC
           </h1>
 
           <p className="hero-text text-lg text-muted-foreground max-w-xl mb-10 leading-relaxed">
-            Join a community of developers, designers, and makers collaborating on open source projects.
-            Ship code, meaningful products, and grow alongside passionate builders.
+            Join a community of developers, designers, and makers collaborating
+            on open source projects. Ship code, meaningful products, and grow
+            alongside passionate builders.
           </p>
-
-          <div className="hero-text flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-            <Link
-              href="https://chat.whatsapp.com/Fdv9D3iIgyQ9caeM20iH5l"
-              className="px-8 py-4 bg-fuchsia-300 text-black font-bold text-sm tracking-wide hover:bg-white/90 transition-all rounded-full flex items-center justify-center gap-2 group"
+          <div className="hero-text flex flex-col sm:flex-row gap-4 w-full items-center justify-center lg:justify-start">
+            <Button
+              asChild
+              className="w-full sm:w-[280px] px-8 py-6 bg-fuchsia-400 text-black font-bold text-sm tracking-wide hover:shadow-[0_0_10px_#f0abfc] hover:bg-fuchsia-400 transition-all rounded-full flex items-center justify-center gap-2 group"
             >
-              Join WhatsApp Community
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="group-hover:translate-x-1 transition-transform"
-              >
-                <path d="M5 12h14"></path>
-                <path d="m12 5 7 7-7 7"></path>
-              </svg>
-            </Link>
+              <Link href="https://chat.whatsapp.com/KtylUkytoAYDgbzAS2EQfR" target="_blank">
+                Join WhatsApp Community
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="group-hover:translate-x-1 transition-transform"
+                >
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </Link>
+            </Button>
 
-            <Link
-              href="https://discord.gg/lnc"
-              target="_blank"
-              className="px-8 py-4 bg-transparent border border-white/20 text-white font-medium text-sm tracking-wide hover:bg-white/5 transition-all rounded-full flex items-center justify-center"
+            <Button
+              asChild
+              variant="outline"
+              className="w-full sm:w-[280px] px-8 py-6 bg-transparent border border-white/20 text-white font-medium text-sm tracking-wide  transition-all rounded-full flex items-center justify-center"
             >
-              Join Discord
-            </Link>
+              <Link href="https://linktr.ee/lnc_community" target="_blank">
+                All Links
+              </Link>
+            </Button>
           </div>
+        </div>
+
+        {/* Right Column: Logo (Hidden on small screens) */}
+        <div className="hidden lg:flex justify-end">
+          <Image
+            src="/assets/logo/logo.png"
+            alt="Hero Image"
+            width={600}
+            height={400}
+            className="w-full max-w-max"
+          />
         </div>
       </div>
     </section>

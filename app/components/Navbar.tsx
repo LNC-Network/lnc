@@ -7,7 +7,7 @@ export default function Navbar() {
     const pathname = usePathname();
 
     const navLinks = [
-        { name: "How it works", href: "#how-it-works" },
+        { name: "About", href: "https://linktr.ee/lnc_community" },
         { name: "Featured Projects", href: "#projects" },
         { name: "Community", href: "#community" },
     ];
@@ -26,6 +26,7 @@ export default function Navbar() {
                         <Link
                             key={link.name}
                             href={link.href}
+                            target={link.href.startsWith("http") ? "_blank" : undefined}
                             className="text-sm font-medium text-muted-foreground hover:text-white transition-colors"
                         >
                             {link.name}
@@ -35,7 +36,7 @@ export default function Navbar() {
 
                 <div className="flex items-center gap-4">
                     <Link
-                        href="https://github.com"
+                        href="https://github.com/LNC-Network"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="p-2 hover:bg-white/10 rounded-full transition-colors"

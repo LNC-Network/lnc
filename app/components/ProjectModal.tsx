@@ -110,7 +110,8 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
                     <div className="mt-8 pt-6 border-t border-white/10 flex justify-end">
                         <a
-                            href="#"
+                            href="https://github.com/LNC-Network"
+                            target="_blank"
                             className="px-6 py-2 bg-white text-black font-bold uppercase text-xs tracking-widest hover:bg-purple-500 hover:text-white transition-colors"
                         >
                             View on GitHub

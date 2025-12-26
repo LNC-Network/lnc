@@ -4,6 +4,7 @@ import { JetBrains_Mono } from "next/font/google";
 import Starfield from "./components/Starfield";
 import Navbar from "./components/Navbar";
 import ScrollProgress from "./components/ScrollProgress";
+import LoadingScreen from "./components/LoadingScreen";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -29,6 +30,7 @@ export default function RootLayout({
         `}
       >
         <Starfield />
+        <LoadingScreen />
         <Navbar />
         <ScrollProgress />
         {children}

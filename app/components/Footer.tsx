@@ -13,11 +13,11 @@ export default function Footer() {
             <h4 className="text-sm font-bold uppercase tracking-widest mb-2 text-white">
               COMMUNITY
             </h4>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">ABOUT US</a>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">GET INVOLVED</a>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">CODE CONDUCT</a>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">EVENTS</a>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">RESOURCES</a>
+            <a href="https://linktr.ee/lnc_community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">ABOUT US</a>
+            <a href="https://linktr.ee/lnc_community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">GET INVOLVED</a>
+            <a href="https://linktr.ee/lnc_community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">CODE CONDUCT</a>
+            <a href="https://linktr.ee/lnc_community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">EVENTS</a>
+            <a href="https://linktr.ee/lnc_community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">RESOURCES</a>
           </div>
 
           {/* Column 2 */}
@@ -25,11 +25,11 @@ export default function Footer() {
             <h4 className="text-sm font-bold uppercase tracking-widest mb-2 text-white">
               DEVELOPMENT
             </h4>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">DOCUMENTATION</a>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">API REFERENCE</a>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">CONTRIBUTE</a>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">ROADMAP</a>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">SUPPORT</a>
+            <a href="https://linktr.ee/lnc_community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">DOCUMENTATION</a>
+            <a href="https://linktr.ee/lnc_community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">API REFERENCE</a>
+            <a href="https://linktr.ee/lnc_community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">CONTRIBUTE</a>
+            <a href="https://linktr.ee/lnc_community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">ROADMAP</a>
+            <a href="https://linktr.ee/lnc_community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">SUPPORT</a>
           </div>
 
           {/* Column 3 */}
@@ -37,11 +37,11 @@ export default function Footer() {
             <h4 className="text-sm font-bold uppercase tracking-widest mb-2 text-white">
               CONNECT
             </h4>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">DISCORD SERVER</a>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">GITHUB REPOS</a>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">TWITTER</a>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">LINKEDIN</a>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">EMAIL US</a>
+            <a href="https://linktr.ee/lnc_community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">DISCORD SERVER</a>
+            <a href="https://github.com/LNC-Network" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">GITHUB REPOS</a>
+            <a href="https://x.com/LNC_Community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">TWITTER</a>
+            <a href="https://www.linkedin.com/company/lnc-community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">LINKEDIN</a>
+            <a href="mailto:latenightcoders@proton.me" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">EMAIL US</a>
           </div>
 
           {/* Column 4 */}
@@ -49,11 +49,11 @@ export default function Footer() {
             <h4 className="text-sm font-bold uppercase tracking-widest mb-2 text-white">
               LEGAL
             </h4>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">PRIVACY POLICY</a>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">TERMS OF SERVICE</a>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">COOKIE POLICY</a>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">ACCESSIBILITY</a>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">SECURITY</a>
+            <a href="https://linktr.ee/privacy" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">PRIVACY POLICY</a>
+            <a href="https://linktr.ee/lnc_community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">TERMS OF SERVICE</a>
+            <a href="https://linktr.ee/lnc_community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">COOKIE POLICY</a>
+            <a href="https://linktr.ee/lnc_community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">ACCESSIBILITY</a>
+            <a href="https://linktr.ee/lnc_community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">SECURITY</a>
           </div>
 
           {/* Column 5 */}
@@ -61,11 +61,11 @@ export default function Footer() {
             <h4 className="text-sm font-bold uppercase tracking-widest mb-2 text-white">
               MORE
             </h4>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">BRAND GUIDELINES</a>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">PRESS KIT</a>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">SPONSORSHIP</a>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">PARTNERSHIPS</a>
-            <a href="#" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">CAREERS</a>
+            <a href="https://linktr.ee/lnc_community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">BRAND GUIDELINES</a>
+            <a href="https://linktr.ee/lnc_community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">PRESS KIT</a>
+            <a href="https://linktr.ee/lnc_community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">SPONSORSHIP</a>
+            <a href="https://linktr.ee/lnc_community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">PARTNERSHIPS</a>
+            <a href="https://linktr.ee/lnc_community" target="_blank" className="text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">CAREERS</a>
           </div>
 
           {/* Column 6 - Social */}
@@ -73,19 +73,19 @@ export default function Footer() {
             <h4 className="text-sm font-bold uppercase tracking-widest mb-2 text-white">
               SOCIAL
             </h4>
-            <a href="#" className="flex items-center gap-2 text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">
+            <a href="https://github.com/LNC-Network" target="_blank" className="flex items-center gap-2 text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">
               FOLLOW ON GITHUB
             </a>
-            <a href="#" className="flex items-center gap-2 text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">
+            <a href="https://linktr.ee/lnc_community" target="_blank" className="flex items-center gap-2 text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">
               FOLLOW ON DISCORD
             </a>
-            <a href="#" className="flex items-center gap-2 text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">
+            <a href="https://x.com/LNC_Community" target="_blank" className="flex items-center gap-2 text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">
               FOLLOW ON TWITTER
             </a>
-            <a href="#" className="flex items-center gap-2 text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">
+            <a href="https://www.linkedin.com/company/lnc-community" target="_blank" className="flex items-center gap-2 text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">
               FOLLOW ON LINKEDIN
             </a>
-            <a href="#" className="flex items-center gap-2 text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">
+            <a href="mailto:latenightcoders@proton.me" className="flex items-center gap-2 text-[10px] font-bold uppercase text-[#d8b4fe] hover:text-white">
               CONTACT US
             </a>
           </div>

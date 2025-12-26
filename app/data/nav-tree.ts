@@ -40,11 +40,11 @@ export const NAV_TREE: NavNode = {
       children: [
         {
           label: "Docs",
-          goto: "/docs",
+          goto: "https://linktr.ee/lnc_community",
         },
         {
           label: "Blog",
-          goto: "/blog",
+          goto: "https://linktr.ee/lnc_community",
         },
       ],
     },
@@ -55,11 +55,11 @@ export const NAV_TREE: NavNode = {
       children: [
         {
           label: "Discord",
-          goto: "https://discord.com",
+          goto: "https://linktr.ee/lnc_community",
         },
         {
           label: "Twitter",
-          goto: "https://twitter.com",
+          goto: "https://x.com/LNC_Community",
         },
       ],
     },
