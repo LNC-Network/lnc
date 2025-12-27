@@ -40,7 +40,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8">
             {/* Backdrop with blur effect */}
             <div
-                className="absolute inset-0 bg-black/80 backdrop-blur-md"
+                className="absolute inset-0 bg-black/80 backdrop-blur-sm"
                 onClick={onClose}
                 aria-hidden="true"
             />

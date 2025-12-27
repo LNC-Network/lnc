@@ -23,16 +23,16 @@ export default function Starfield() {
         let height = (canvas.height = window.innerHeight);
 
         const stars: { x: number; y: number; z: number; color: string }[] = [];
-        const numStars = 500;
-        const speed = 2; // Slightly faster for more energy
+        const numStars = 1000;
+        const speed = 1; // Slightly faster for more energy
 
         // Initialize stars
         for (let i = 0; i < numStars; i++) {
             stars.push({
-                x: Math.random() * width - width / 2,
-                y: Math.random() * height - height / 2,
+                x: Math.random() * width - width /2,
+                y: Math.random() * height - height /2,
                 z: Math.random() * width,
-                color: `rgba(254, 254, 254, 0.2)`, // Toned down opacity
+                color: `rgba(254, 254, 254, 0.5)`, // Toned down opacity
             });
         }
 
@@ -67,7 +67,7 @@ export default function Starfield() {
                 if (px >= 0 && px <= width && py >= 0 && py <= height && size > 0) {
                     ctx.beginPath();
                     ctx.fillStyle = star.color;
-                    ctx.arc(px, py, size, 0, Math.PI * 2);
+                    ctx.arc(px, py, Math.random() * size, 0, Math.PI * 2);
                     ctx.fill();
                 }
             });

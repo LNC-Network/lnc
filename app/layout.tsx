@@ -41,7 +41,7 @@ export default function RootLayout({
       >
         <Starfield />
         <LoadingScreen />
-        <Navbar />
+        {/* <Navbar /> */}
         <ScrollProgress />
         {children}
       </body>

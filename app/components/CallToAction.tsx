@@ -27,27 +27,78 @@ export default function CallToAction() {
       const scrollContainer = sectionRef.current;
       if (!scrollContainer) return;
 
-      // Create a horizontal scroll animation linked to vertical scroll
-      gsap.to(scrollContainer, {
-        x: () => -(scrollContainer.scrollWidth - window.innerWidth),
-        ease: "none",
-        scrollTrigger: {
-          trigger: triggerRef.current,
-          pin: true,
-          scrub: 1,
-          start: "top top",
-          end: () => "+=" + scrollContainer.scrollWidth, // Scroll distance = width of content
-          invalidateOnRefresh: true, // Recalculate on window resize
-        },
+      const mm = gsap.matchMedia();
+
+      // Desktop
+      mm.add("(min-width: 768px)", () => {
+        // Hide Blogs initially for clean reveal
+        gsap.set("#community", { autoAlpha: 0 });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: triggerRef.current,
+            pin: true,
+            scrub: 1,
+            start: "top top",
+            end: () => "+=" + (scrollContainer.scrollWidth + window.innerHeight),
+            invalidateOnRefresh: true,
+            anticipatePin: 1,
+          },
+        });
+
+        tl.fromTo(scrollContainer,
+          { x: () => -(scrollContainer.scrollWidth - window.innerWidth) },
+          { x: 0, ease: "none", duration: 1 }
+        );
+
+        tl.to(triggerRef.current, {
+          xPercent: -100,
+          duration: 0.5,
+          ease: "power2.inOut"
+        });
+
+        // Reveal Blogs
+        tl.to("#community", {
+          autoAlpha: 1,
+          duration: 0.5,
+          ease: "power2.out"
+        }, "<");
       });
+
+      // Mobile
+      mm.add("(max-width: 767px)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: triggerRef.current,
+            pin: true,
+            scrub: 1,
+            start: "top top",
+            end: () => "+=" + scrollContainer.scrollWidth,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        tl.fromTo(scrollContainer,
+          { x: () => -(scrollContainer.scrollWidth - window.innerWidth) },
+          { x: 0, ease: "none", duration: 1 }
+        );
+
+        tl.to(triggerRef.current, {
+          xPercent: -100,
+          duration: 0.5,
+          ease: "power2.inOut"
+        });
+      });
+
+      return () => mm.revert();
     },
     { scope: triggerRef }
   );
 
   return (
-    <section ref={triggerRef} className="overflow-hidden bg-transparent font-pixel relative">
+    <section id="projects-section" ref={triggerRef} className="overflow-hidden bg-transparent font-pixel relative z-20 md:-mt-[100vh]">
       {/* Sticky Header: Remains visible while the user scrolls through the projects */}
-      <div className="absolute top-10 left-6 md:left-12 z-20 pointer-events-none mix-blend-difference">
+      <div className="absolute top-10 left-6 md:left-12 z-20 pointer-events-none mix-blend-difference will-[transform]">
         <h2 className="text-3xl md:text-5xl font-black uppercase tracking-widest text-white mb-2">
           Project Showcase
         </h2>
@@ -62,7 +113,7 @@ export default function CallToAction() {
       */}
       <div
         ref={sectionRef}
-        className="flex gap-8 items-center h-screen px-6 md:px-12 w-fit pt-20"
+        className="flex gap-8 items-center h-screen px-6 md:px-12 w-fit pt-20 will-[transform]"
       >
         {/* Intro Spacer to offset the first item */}
         <div className="w-[10vw] md:w-[20vw] shrink-0" />

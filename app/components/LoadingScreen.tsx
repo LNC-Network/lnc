@@ -30,7 +30,7 @@ export default function LoadingScreen() {
             scale: 100,
             duration: 2,
             ease: "power4.inOut",
-            delay: 0.5,
+            delay: 0.2,
         })
             .to(container.current, {
                 opacity: 0,
@@ -46,47 +46,23 @@ export default function LoadingScreen() {
     return (
         <div
             ref={container}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black overflow-hidden pointer-events-none"
+            className="fixed inset-0 z-100 flex items-center justify-center bg-black overflow-hidden"
         >
-            {/* 
-               SVG Mask Strategy:
-               We use an SVG mask to cut out the "LNC" text from a black rectangle.
-               This allows the underlying website to be visible *through* the text,
-               creating a "window" effect before the animation expands it.
-            */}
-            <svg className="w-full h-full absolute inset-0" preserveAspectRatio="xMidYMid slice">
-                <defs>
-                    <mask id="lnc-mask">
-                        {/* White pixels = Opaque (Mask), Black pixels = Transparent (Hole) */}
-                        {/* Wait, usually in SVG Mask: White = Visible, Black = Hidden. */}
-                        {/* We want the RECT to be black, and textual HOLE to be see-through. */}
-                        {/* So we need a White Rect (full cover) and Black Text (hole)? */
-                        /* actually, we want the "curtain" (black overlay) to be visible everywhere EXCEPT the text. */
-                        /* So mask should be White everywhere (keep the curtain), and Black at text (remove the curtain). */}
-
-                        <rect width="100%" height="100%" fill="white" />
-                        <text
-                            x="50%"
-                            y="50%"
-                            textAnchor="middle"
-                            dy=".35em"
-                            className="text-[20vw] font-black"
-                            fill="black"
-                        >
-                            LNC
-                        </text>
-                    </mask>
-                </defs>
-
-                {/* The "Curtain" Element */}
-                <rect
-                    className="loading-text origin-center"
-                    width="100%"
-                    height="100%"
-                    fill="black"
-                    mask="url(#lnc-mask)"
-                />
-            </svg>
+            <div className="relative z-10 flex items-center justify-center">
+                <h1
+                    className="loading-text font-black mix-blend-difference"
+                    style={{
+                        fontSize: "20vw",
+                        lineHeight: 1,
+                        backgroundImage: "linear-gradient(white, white)",
+                        WebkitBackgroundClip: "text",
+                        backgroundClip: "text",
+                        color: "transparent",
+                    }}
+                >
+                    LNC
+                </h1>
+            </div>
         </div>
     );
 }

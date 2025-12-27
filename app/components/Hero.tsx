@@ -25,14 +25,26 @@ export default function Hero() {
     () => {
       const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
 
-      // Animate text elements stagger
-      tl.from(".hero-text", {
-        y: 30,
+      // 1. Animate Hero Title Characters (Staggered)
+      tl.from(".hero-char", {
+        y: 40,
         opacity: 0,
-        duration: 1,
-        stagger: 0.1,
+        duration: 0.8,
+        stagger: 0.03,
+        ease: "back.out(1.7)",
       })
-        // Animate visual element after text starts
+        // 2. Animate Description & Buttons (Block stagger)
+        .from(
+          ".hero-text-content", // Renamed class from hero-text to distinguish
+          {
+            y: 20,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.1,
+          },
+          "-=0.5"
+        )
+        // 3. Animate Visual
         .from(
           ".hero-visual",
           {
@@ -56,21 +68,41 @@ export default function Hero() {
 
         {/* Left Column: Hero Content */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
-          <h1 className="hero-text text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-[1.1]">
-            Build Something <br />
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-purple-500">
-              Real
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-[1.1] overflow-hidden">
+            {/* "Build Something" */}
+            <span className="inline-block">
+              {"Build Something".split("").map((char, i) => (
+                <span key={`l1-${i}`} className="hero-char inline-block">
+                  {char === " " ? "\u00A0" : char}
+                </span>
+              ))}
+            </span>
+            <br />
+            {/* "Real" (Gradient) */}
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-purple-500 inline-block">
+              {"Real".split("").map((char, i) => (
+                <span key={`l2-${i}`} className="hero-char inline-block text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-purple-500">
+                  {char}
+                </span>
+              ))}
             </span>{" "}
-            with LNC
+            {/* "with LNC" */}
+            <span className="inline-block">
+              {"with LNC".split("").map((char, i) => (
+                <span key={`l3-${i}`} className="hero-char inline-block">
+                  {char === " " ? "\u00A0" : char}
+                </span>
+              ))}
+            </span>
           </h1>
 
-          <p className="hero-text text-lg text-muted-foreground max-w-xl mb-10 leading-relaxed">
+          <p className="hero-text-content text-lg text-muted-foreground max-w-xl mb-10 leading-relaxed">
             Join a community of developers, designers, and makers collaborating
             on open source projects. Ship code, meaningful products, and grow
             alongside passionate builders.
           </p>
 
-          <div className="hero-text flex flex-col sm:flex-row gap-4 w-full items-center justify-center lg:justify-start">
+          <div className="hero-text-content flex flex-col sm:flex-row gap-4 w-full items-center justify-center lg:justify-start">
             {/* Primary Call to Action */}
             <Button
               asChild

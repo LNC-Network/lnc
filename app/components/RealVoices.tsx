@@ -44,11 +44,15 @@ export default function RealVoices() {
         gsap.set(headerRef.current, { left: "50%", top: "50%", xPercent: -50, yPercent: -50, opacity: 1 });
         gsap.set(cardsRef.current, { x: windowWidth + 100, autoAlpha: 0, top: "50%", bottom: "auto", yPercent: -50 });
 
+        // Hide the next section initially so it doesn't bleed through
+        // We will reveal it when we slide away
+        gsap.set("#projects-section", { autoAlpha: 0 });
+
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: triggerRef.current,
             start: "top top",
-            end: "+=3000",
+            end: "+=4000",
             scrub: 1,
             pin: true,
             invalidateOnRefresh: true,
@@ -81,6 +85,22 @@ export default function RealVoices() {
           duration: 3,
           ease: "none",
         });
+
+
+        // 4. Exit Animation (PPT Style)
+        // Slide everything (Header + Cards) to left
+        tl.to(containerRef.current, {
+          xPercent: -100,
+          duration: 1.5,
+          ease: "power2.inOut"
+        });
+
+        // Reveal the Projects section sitting behind
+        tl.to("#projects-section", {
+          autoAlpha: 1,
+          duration: 1.5,
+          ease: "power2.out"
+        }, "<");
       });
 
       // --- MOBILE ANIMATION ( < 767px ) ---
@@ -131,16 +151,16 @@ export default function RealVoices() {
       <div ref={triggerRef} className="relative h-screen w-full overflow-hidden">
 
         {/* Background */}
-        <div ref={containerRef} className="relative h-full w-full">
+        <div ref={containerRef} className="relative h-full w-full z-30 bg-transparent">
 
           {/* Header - Z-30 to stay on top */}
           <div
             ref={headerRef}
             className="absolute z-30 flex w-full max-w-2xl flex-col justify-center px-6 py-36 text-center md:text-left"
           >
-            {/* Animated Background Layer */}
+            {/* Animated Background Layer - Optimized: Removed blur, increased opacity */}
             <div
-              className="header-bg absolute inset-0 -z-10 bg-linear-to-r from-black/90 via-black/80 to-transparent opacity-0 backdrop-blur-sm transition-opacity"
+              className="header-bg absolute inset-0 -z-10 bg-linear-to-r from-black/95 via-black/90 to-transparent opacity-0 transition-opacity"
             />
 
             <p className="mb-3 text-xs font-bold uppercase tracking-widest text-white/40">
@@ -161,7 +181,7 @@ export default function RealVoices() {
           >
             <div
               ref={cardsRef}
-              className="absolute flex flex-row gap-6 opacity-0 pointer-events-auto pl-6 md:pl-0"
+              className="absolute flex flex-row gap-6 opacity-0 pointer-events-auto pl-6 md:pl-0 will-[transform]"
             >
               {LEADS.map((lead, i) => (
                 <Card

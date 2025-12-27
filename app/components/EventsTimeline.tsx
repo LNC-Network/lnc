@@ -33,7 +33,7 @@ export default function EventsTimeline() {
             if (!groups.length) return;
 
             // Distance between cards in Z space
-            const Z_SPACING = 800;
+            const Z_SPACING = 1000;
             const totalDepth = groups.length * Z_SPACING;
 
             // Initial Setup: Position groups deep in Z space
@@ -57,7 +57,7 @@ export default function EventsTimeline() {
 
             // Animate groups towards the camera
             tl.to(groups, {
-                z: (i) => totalDepth - i * Z_SPACING + 800, // Move forward past camera
+                z: (i) => totalDepth - i * Z_SPACING - 200, // Move forward past camera
                 ease: "none",
                 stagger: {
                     each: 0,
@@ -143,9 +143,9 @@ export default function EventsTimeline() {
                             >
                                 {/* Card Body */}
                                 <div className={`
-                                    relative p-6 bg-black/40 border border-white/10 
-                                    backdrop-blur-md rounded-xl overflow-hidden
-                                    transition-all duration-500 hover:border-purple-500/50 hover:bg-black/60
+                                    relative p-6 bg-black/80 border border-white/10 
+                                    overflow-hidden will-[transform]
+                                    transition-all duration-500 hover:border-purple-500/50 hover:bg-black/90
                                     group-hover:shadow-[0_0_30px_-10px_rgba(168,85,247,0.3)]
                                 `}>
                                     {/* Glass Shine Effect */}
@@ -191,12 +191,6 @@ export default function EventsTimeline() {
                 })}
             </div>
 
-            {/* Bottom cta (optional) */}
-            <div className="absolute bottom-10 z-20">
-                <Link href="https://linktr.ee/lnc_community" target="_blank" className="px-8 py-3 bg-white text-black font-bold text-xs uppercase tracking-widest border border-white hover:bg-black hover:text-white transition-all duration-300 rounded-full hover:scale-105">
-                    View All Events
-                </Link>
-            </div>
         </section>
     );
 }

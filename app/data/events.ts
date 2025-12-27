@@ -68,4 +68,12 @@ export const EVENTS: Event[] = [
     description: "Chill vibes, multiplayer games, and networking with the community.",
     category: "Social",
   },
+  {
+    id: 7,
+    title: "View All Events",
+    date: "",
+    location: "",
+    description: "",
+    category: "Social",
+  },
 ];
