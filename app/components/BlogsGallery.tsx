@@ -71,7 +71,7 @@ export default function BlogsGallery() {
     };
 
     return (
-        <section id="community" ref={containerRef} className="relative z-10 md:-mt-[100vh] w-full bg-transparent py-24 font-pixel text-white border-t border-white/10">
+        <section id="community" ref={containerRef} className="relative z-10 w-full bg-transparent py-24 font-pixel text-white border-t border-white/10">
             <div className="container mx-auto px-4 md:px-12">
 
                 {/* Header & Controls */}
@@ -185,7 +185,7 @@ export default function BlogsGallery() {
                                         </div>
                                     </div>
 
-                                    <div className="p-8 md:p-10">
+                                    <div className="p-6 md:p-10">
                                         <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-6 text-xs text-white/40 font-mono uppercase tracking-wider">
                                             <div className="flex items-center gap-4">
                                                 <div className="flex items-center gap-2">
@@ -220,7 +220,7 @@ export default function BlogsGallery() {
                     {/* IMAGES VIEW */}
                     {activeSection === 'images' && (
                         <div className="flex flex-col items-center gap-12">
-                            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 w-full">
+                            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 w-full">
                                 {GALLERY_IMAGES.slice(0, visibleImages).map((img, i) => (
                                     <div
                                         key={i}

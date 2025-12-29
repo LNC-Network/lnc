@@ -24,7 +24,7 @@ export default function Starfield() {
 
         const stars: { x: number; y: number; z: number; color: string }[] = [];
         const numStars = 1000;
-        const speed = 1; // Slightly faster for more energy
+        const speed = 2; // Slightly faster for more energy
 
         // Initialize stars
         for (let i = 0; i < numStars; i++) {

@@ -68,7 +68,7 @@ export default function Hero() {
 
         {/* Left Column: Hero Content */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-[1.1] overflow-hidden">
+          <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight text-white mb-6 leading-[1.1] overflow-hidden">
             {/* "Build Something" */}
             <span className="inline-block">
               {"Build Something".split("").map((char, i) => (

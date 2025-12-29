@@ -1,15 +1,10 @@
 "use client";
 
-import { useRef, useState } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useState } from "react";
 import Link from "next/link";
 import { PROJECTS, Project } from "../data/projects";
 import ProjectCard from "./ProjectCard";
 import ProjectModal from "./ProjectModal";
-
-gsap.registerPlugin(ScrollTrigger);
 
 /**
  * CallToAction (CTA) / Projects Showcase Section
@@ -18,87 +13,12 @@ gsap.registerPlugin(ScrollTrigger);
  * It uses GSAP ScrollTrigger to pin the section while scrolling horizontally through the content.
  */
 export default function CallToAction() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLElement>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-  useGSAP(
-    () => {
-      const scrollContainer = sectionRef.current;
-      if (!scrollContainer) return;
-
-      const mm = gsap.matchMedia();
-
-      // Desktop
-      mm.add("(min-width: 768px)", () => {
-        // Hide Blogs initially for clean reveal
-        gsap.set("#community", { autoAlpha: 0 });
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: triggerRef.current,
-            pin: true,
-            scrub: 1,
-            start: "top top",
-            end: () => "+=" + (scrollContainer.scrollWidth + window.innerHeight),
-            invalidateOnRefresh: true,
-            anticipatePin: 1,
-          },
-        });
-
-        tl.fromTo(scrollContainer,
-          { x: () => -(scrollContainer.scrollWidth - window.innerWidth) },
-          { x: 0, ease: "none", duration: 1 }
-        );
-
-        tl.to(triggerRef.current, {
-          xPercent: -100,
-          duration: 0.5,
-          ease: "power2.inOut"
-        });
-
-        // Reveal Blogs
-        tl.to("#community", {
-          autoAlpha: 1,
-          duration: 0.5,
-          ease: "power2.out"
-        }, "<");
-      });
-
-      // Mobile
-      mm.add("(max-width: 767px)", () => {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: triggerRef.current,
-            pin: true,
-            scrub: 1,
-            start: "top top",
-            end: () => "+=" + scrollContainer.scrollWidth,
-            invalidateOnRefresh: true,
-          },
-        });
-
-        tl.fromTo(scrollContainer,
-          { x: () => -(scrollContainer.scrollWidth - window.innerWidth) },
-          { x: 0, ease: "none", duration: 1 }
-        );
-
-        tl.to(triggerRef.current, {
-          xPercent: -100,
-          duration: 0.5,
-          ease: "power2.inOut"
-        });
-      });
-
-      return () => mm.revert();
-    },
-    { scope: triggerRef }
-  );
-
   return (
-    <section id="projects-section" ref={triggerRef} className="overflow-hidden bg-transparent font-pixel relative z-20 md:-mt-[100vh]">
-      {/* Sticky Header: Remains visible while the user scrolls through the projects */}
-      <div className="absolute top-10 left-6 md:left-12 z-20 pointer-events-none mix-blend-difference will-[transform]">
+    <section id="projects-section" className="relative z-20 py-24 px-6 md:px-12 bg-transparent font-pixel">
+      {/* Header */}
+      <div className="mb-12">
         <h2 className="text-3xl md:text-5xl font-black uppercase tracking-widest text-white mb-2">
           Project Showcase
         </h2>
@@ -109,27 +29,21 @@ export default function CallToAction() {
 
       {/* 
         Horizontal Scroll Container 
-        Moves left as the user scrolls down.
+        Native scrolling, no pinning.
       */}
-      <div
-        ref={sectionRef}
-        className="flex gap-8 items-center h-screen px-6 md:px-12 w-fit pt-20 will-[transform]"
-      >
-        {/* Intro Spacer to offset the first item */}
-        <div className="w-[10vw] md:w-[20vw] shrink-0" />
-
+      <div className="flex gap-8 overflow-x-auto pb-12 snap-x snap-mandatory hide-scrollbar">
         {PROJECTS.map((project) => (
-          <div key={project.id} className="w-[85vw] md:w-[600px] shrink-0">
+          <div key={project.id} className="min-w-[85vw] md:min-w-[500px] snap-center">
             <ProjectCard
               project={project}
               onClick={setSelectedProject}
-              className="h-[60vh] md:h-[70vh]"
+              className="h-[50vh] md:h-[60vh] w-full"
             />
           </div>
         ))}
 
-        {/* "View All" Card at the end of the list */}
-        <div className="w-[85vw] md:w-[400px] shrink-0 h-[60vh] md:h-[70vh] flex items-center justify-center border border-white/20 rounded-3xl bg-white/5 hover:bg-white/10 transition-colors group cursor-pointer">
+        {/* "View All" Card */}
+        <div className="min-w-[85vw] md:min-w-[400px] snap-center h-[50vh] md:h-[60vh] flex items-center justify-center border border-white/20 rounded-3xl bg-white/5 hover:bg-white/10 transition-colors group cursor-pointer">
           <Link
             href="https://github.com/LNC-Network"
             target="_blank"
@@ -141,9 +55,6 @@ export default function CallToAction() {
             </div>
           </Link>
         </div>
-
-        {/* Outro Spacer to allow scrolling past the last item */}
-        <div className="w-[10vw] md:w-[10vw] shrink-0" />
       </div>
 
       {/* Project Details Modal */}

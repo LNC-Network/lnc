@@ -1,14 +1,19 @@
-import BlogsGallery from "./components/BlogsGallery";
-import CallToAction from "./components/CallToAction";
-import EventsTimeline from "./components/EventsTimeline";
-import Footer from "./components/Footer";
+import dynamic from "next/dynamic";
 import Hero from "./components/Hero";
+import CallToAction from "./components/CallToAction";
+import Footer from "./components/Footer";
 import Newsletter from "./components/Newsletter";
-import RealVoices from "./components/RealVoices";
 import Stats from "./components/Stats";
 
-import Achievements from "./components/Achievements";
-import Partners from "./components/Partners";
+import EventsTimeline from "./components/EventsTimeline";
+import RealVoices from "./components/RealVoices";
+
+// Dynamic Imports for below-the-fold content optimization
+const BlogsGallery = dynamic(() => import("./components/BlogsGallery"), {
+  loading: () => <div className="h-[600px] w-full bg-transparent" />,
+});
+const Achievements = dynamic(() => import("./components/Achievements"));
+const Partners = dynamic(() => import("./components/Partners"));
 
 /**
  * Home Page
