@@ -34,6 +34,9 @@ export default function Partners() {
                     duration: 0.8,
                     ease: "power3.out",
                 });
+                gsap.to(headerRef.current, {
+                    opacity: 1,
+                });
             }
 
             // Animate Grid Items: Staggered reveal
@@ -49,6 +52,9 @@ export default function Partners() {
                     duration: 0.5,
                     stagger: 0.05,
                     ease: "power2.out",
+                });
+                gsap.to(items, {
+                    opacity: 1,
                 });
             }
         },
@@ -77,15 +83,15 @@ export default function Partners() {
                     {PARTNERS.map((partner, index) => (
                         <div
                             key={index}
-                            className="group relative w-full aspect-video flex items-center justify-center border border-white/5 bg-white/5 hover:bg-white/10 transition-all duration-300 cursor-crosshair"
+                            className="group relative w-full aspect-video flex items-center justify-center border  bg-card hover:bg-secondary transition-all duration-300 cursor-pointer rounded-sm"
                         >
                             <span className="text-sm md:text-base font-bold text-white/50 group-hover:text-white transition-colors duration-300 tracking-widest">
                                 {partner}
                             </span>
 
                             {/* Decorative Corner Markers */}
-                            <div className="absolute top-0 left-0 w-1 h-1 bg-white/20 group-hover:bg-purple-500 transition-colors" />
-                            <div className="absolute bottom-0 right-0 w-1 h-1 bg-white/20 group-hover:bg-purple-500 transition-colors" />
+                            <div className="absolute top-0 left-0 w-1 h-1 bg-white group-hover:bg-purple-500 transition-colors" />
+                            <div className="absolute bottom-0 right-0 w-1 h-1 bg-white group-hover:bg-purple-500 transition-colors" />
                         </div>
                     ))}
                 </div>

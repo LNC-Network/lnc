@@ -13,7 +13,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LNC - Build Something Real",
+  title: "LNC Community",
   description: "A community of developers building open source projects.",
 };
 

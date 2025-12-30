@@ -114,7 +114,7 @@ export default function EventsPage() {
                 </div>
 
                 {/* Events Grid */}
-                <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[400px]">
+                <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-100">
                     {filteredEvents.length > 0 ? (
                         filteredEvents.map((event) => (
                             <EventCard key={event.id} event={event} />

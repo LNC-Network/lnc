@@ -8,7 +8,7 @@ import Link from "next/link";
  */
 export default function NotFound() {
   return (
-    <div className="h-screen w-full flex flex-col items-center justify-center bg-background text-foreground font-pixel px-4 text-center text-black">
+    <div className="h-screen w-full flex flex-col items-center justify-center bg-background font-pixel px-4 text-center text-black">
       <h1 className="text-9xl md:text-[12rem] text-white/10 select-none">
         404
       </h1>
@@ -24,7 +24,7 @@ export default function NotFound() {
         </p>
 
         <Link href="/">
-          <button className="px-8 py-4 mt-4 bg-yellow-400 text-black font-bold uppercase hover:bg-yellow-300 transition-all duration-200 shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
+          <button className="px-8 py-4 mt-4 bg-yellow-400 text-black font-bold uppercase hover:bg-yellow-300 transition-all duration-200 shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5">
             Return Home
           </button>
         </Link>

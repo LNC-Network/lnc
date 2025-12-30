@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import Hero from "./components/Hero";
-import CallToAction from "./components/CallToAction";
+import CallToAction from "./components/projects";
 import Footer from "./components/Footer";
 import Newsletter from "./components/Newsletter";
 import Stats from "./components/Stats";
@@ -10,7 +10,7 @@ import RealVoices from "./components/RealVoices";
 
 // Dynamic Imports for below-the-fold content optimization
 const BlogsGallery = dynamic(() => import("./components/BlogsGallery"), {
-  loading: () => <div className="h-[600px] w-full bg-transparent" />,
+  loading: () => <div className="h-150 w-full bg-transparent" />,
 });
 const Achievements = dynamic(() => import("./components/Achievements"));
 const Partners = dynamic(() => import("./components/Partners"));
