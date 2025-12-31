@@ -33,9 +33,9 @@ export default function Achievements() {
           duration: 0.8,
           ease: "power3.out",
         });
-          gsap.to(headerRef.current, {
-            opacity: 1,
-          });
+        gsap.to(headerRef.current, {
+          opacity: 1,
+        });
       }
 
       // Animate Cards: Staggered entry
@@ -83,9 +83,9 @@ export default function Achievements() {
           ref={cardsRef}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
         >
-          {ACHIEVEMENTS.map((item, index) => (
+          {ACHIEVEMENTS.map((item) => (
             <div
-              key={index}
+              key={item.title}
               className="group p-8 border border-white/10 bg-card hover:secondary transition-all duration-300 hover:-translate-y-2 relative overflow-hidden"
             >
               {/* Floating background icon */}

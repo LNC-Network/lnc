@@ -80,9 +80,9 @@ export default function Partners() {
                     ref={gridRef}
                     className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center"
                 >
-                    {PARTNERS.map((partner, index) => (
+                    {PARTNERS.map((partner) => (
                         <div
-                            key={index}
+                            key={partner}
                             className="group relative w-full aspect-video flex items-center justify-center border  bg-card hover:bg-secondary transition-all duration-300 cursor-pointer rounded-sm"
                         >
                             <span className="text-sm md:text-base font-bold text-white/50 group-hover:text-white transition-colors duration-300 tracking-widest">

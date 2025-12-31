@@ -2,9 +2,8 @@
 
 import { useState, useMemo } from "react";
 import { Search, ArrowUpDown } from "lucide-react";
-import { PROJECTS, Project } from "../data/projects";
+import { PROJECTS } from "../data/projects";
 import ProjectCard from "../components/ProjectCard";
-import ProjectModal from "../components/ProjectModal";
 
 /**
  * Projects Page
@@ -13,12 +12,11 @@ import ProjectModal from "../components/ProjectModal";
  * Features:
  * - Search and Sort functionality.
  * - Grid layout with responsive cards.
- * - Detail view via Modal.
+ * - Direct links to GitHub repositories (via ProjectCard).
  */
 export default function ProjectsPage() {
     const [search, setSearch] = useState("");
     const [sortBy, setSortBy] = useState<"name" | "newest">("newest"); // Pseudo-sort since we don't have dates
-    const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
     // Filter and Sort Logic
     const filteredProjects = useMemo(() => {
@@ -40,7 +38,6 @@ export default function ProjectsPage() {
             result.sort((a, b) => a.name.localeCompare(b.name));
         }
         // "newest" is just default order aka "featured" for this mock data
-        // In a real app, we'd sort by date.
 
         return result;
     }, [search, sortBy]);
@@ -96,7 +93,7 @@ export default function ProjectsPage() {
                             <ProjectCard
                                 key={project.id}
                                 project={project}
-                                onClick={setSelectedProject}
+                                className="w-full"
                             />
                         ))}
                     </div>
@@ -106,12 +103,6 @@ export default function ProjectsPage() {
                     </div>
                 )}
             </div>
-
-            {/* Modal */}
-            <ProjectModal
-                project={selectedProject}
-                onClose={() => setSelectedProject(null)}
-            />
         </main>
     );
 }

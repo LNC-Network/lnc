@@ -69,16 +69,16 @@ export const BLOG_POSTS: BlogPost[] = [
  * Mock Data: Gallery Images
  */
 export const GALLERY_IMAGES: GalleryImage[] = [
-    { src: "/cta_builder.png", alt: "Community Building", tag: "Events" },
-    { src: "/newsletter_feature.png", alt: "Latest Updates", tag: "News" },
-    { src: "/avatar_sarah.png", alt: "Team Culture", tag: "Team" },
-    { src: "/avatar_marcus.png", alt: "Collaboration", tag: "Work" },
-    { src: "/avatar_alex.png", alt: "Design Systems", tag: "Design" },
-    { src: "/cta_builder.png", alt: "Hackathon 2024", tag: "Hackathon" },
-    { src: "/avatar_marcus.png", alt: "Workshop", tag: "Learning" },
-    { src: "/avatar_alex.png", alt: "Awards", tag: "Wins" },
-    { src: "/cta_builder.png", alt: "Global Meetup", tag: "Events" },
-    { src: "/newsletter_feature.png", alt: "Tech Talk", tag: "Research" },
-    { src: "/avatar_sarah.png", alt: "Retreat", tag: "Social" },
-    { src: "/cta_builder.png", alt: "Launch Day", tag: "Product" },
+    { src: "/assets/images/avatar_alex.png", alt: "Community Building", tag: "Events" },
+    { src: "/assets/images/avatar_marcus.png", alt: "Latest Updates", tag: "News" },
+    { src: "/assets/images/avatar_sarah.png", alt: "Team Culture", tag: "Team" },
+    { src: "/assets/images/avatar_marcus.png", alt: "Collaboration", tag: "Work" },
+    { src: "/assets/images/avatar_alex.png", alt: "Design Systems", tag: "Design" },
+    { src: "/assets/images/cta_builder.png", alt: "Hackathon 2024", tag: "Hackathon" },
+    { src: "/assets/images/avatar_marcus.png", alt: "Workshop", tag: "Learning" },
+    { src: "/assets/images/avatar_alex.png", alt: "Awards", tag: "Wins" },
+    { src: "/assets/images/cta_builder.png", alt: "Global Meetup", tag: "Events" },
+    { src: "/assets/images/newsletter_feature.png", alt: "Tech Talk", tag: "Research" },
+    { src: "/assets/images/avatar_sarah.png", alt: "Retreat", tag: "Social" },
+    { src: "/assets/images/cta_builder.png", alt: "Launch Day", tag: "Product" },
 ];

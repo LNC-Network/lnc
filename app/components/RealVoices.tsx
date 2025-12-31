@@ -40,8 +40,8 @@ export default function RealVoices() {
 
       // --- DESKTOP ANIMATION ( > 768px ) ---
       mm.add("(min-width: 768px)", () => {
-        // Reset to Desktop Center Layout
-        gsap.set(headerRef.current, { left: "50%", top: "50%", xPercent: -50, yPercent: -50, opacity: 1 });
+        // Reset to Desktop Center Layout - Start with header hidden
+        gsap.set(headerRef.current, { left: "50%", top: "50%", xPercent: -50, yPercent: -50, opacity: 0 });
         gsap.set(cardsRef.current, { x: windowWidth + 100, autoAlpha: 0, top: "50%", bottom: "auto", yPercent: -50 });
 
         // Hide the next section initially so it doesn't bleed through
@@ -56,7 +56,15 @@ export default function RealVoices() {
             scrub: 1,
             pin: true,
             invalidateOnRefresh: true,
+            anticipatePin: 1,
           },
+        });
+
+        // 0. Header fades in from center
+        tl.to(headerRef.current, {
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out"
         });
 
         // 1. Header moves Left
@@ -105,8 +113,8 @@ export default function RealVoices() {
 
       // --- MOBILE ANIMATION ( < 767px ) ---
       mm.add("(max-width: 767px)", () => {
-        // Initial States: Header at Top, Cards explicitly below it using Top %
-        gsap.set(headerRef.current, { left: "50%", top: "15%", xPercent: -50, yPercent: 0, opacity: 1 });
+        // Initial States: Header at Top, Cards explicitly below it using Top % - Start with header hidden
+        gsap.set(headerRef.current, { left: "50%", top: "15%", xPercent: -50, yPercent: 0, opacity: 0 });
         // Set cards to 55% from top to guarantee they are below the header
         gsap.set(cardsRef.current, { x: windowWidth, autoAlpha: 0, top: "55%", bottom: "auto", yPercent: 0 });
 
@@ -118,13 +126,15 @@ export default function RealVoices() {
             scrub: 1,
             pin: true,
             invalidateOnRefresh: true,
+            anticipatePin: 1,
           },
         });
 
-        // Header BG fade in (Immediate)
-        tl.to(".header-bg", { opacity: 1, duration: 0.5 });
+        // Header fade in and BG fade in together
+        tl.to(headerRef.current, { opacity: 1, duration: 0.5, ease: "power2.out" });
+        tl.to(".header-bg", { opacity: 1, duration: 0.5 }, "<");
 
-        // Cards enter from right
+        // Cards enter from right (sync with header fade)
         tl.to(cardsRef.current, {
           x: 0, // Center/Start
           autoAlpha: 1,

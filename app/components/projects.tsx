@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { PROJECTS, Project } from "../data/projects";
+import { PROJECTS } from "../data/projects";
 import ProjectCard from "./ProjectCard";
-import ProjectModal from "./ProjectModal";
 
 // Register GSAP plugins
 if (typeof window !== "undefined") {
@@ -19,20 +19,59 @@ if (typeof window !== "undefined") {
  * A horizontal scrolling section with GSAP animations for project cards
  */
 export default function CallToAction() {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  useGSAP(() => {
+    const container = cardsContainerRef.current;
+    const section = sectionRef.current;
+    const header = headerRef.current;
+
+    if (!container || !section || !header) return;
+
+    const getScrollAmount = () => {
+      const cardsWidth = container.scrollWidth;
+      return -(cardsWidth - window.innerWidth);
+    };
+
+    // Start with both header and cards hidden
+    gsap.set([header, container], { opacity: 0 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        pin: true,
+        scrub: 1,
+        start: "top top",
+        end: () => `+=${Math.abs(getScrollAmount())}`,
+        invalidateOnRefresh: true,
+        anticipatePin: 1,
+      },
+    });
+
+    // Fade in header and cards together at the start
+    tl.to([header, container], {
+      opacity: 1,
+      duration: 0.3,
+      ease: "power2.out",
+    }, 0);
+
+    // Horizontal scroll animation for cards
+    tl.to(container, {
+      x: getScrollAmount,
+      ease: "none",
+    }, 0.3);
+  }, { scope: sectionRef });
 
   return (
     <section
       ref={sectionRef}
       id="projects-section"
-      className="relative z-20 py-24 px-6 md:px-12 bg-transparent font-pixel overflow-hidden"
+      className="relative z-20 h-screen flex flex-col justify-center bg-transparent font-pixel overflow-hidden"
     >
       {/* Header */}
-      <div ref={headerRef} className="mb-12">
+      <div ref={headerRef} className="px-6 md:px-12 mb-12">
         <h2 className="text-3xl md:text-5xl font-black uppercase tracking-widest text-white mb-2">
           Project Showcase
         </h2>
@@ -44,50 +83,31 @@ export default function CallToAction() {
       {/* Horizontal Scroll Container */}
       <div
         ref={cardsContainerRef}
-        className="flex gap-8 overflow-x-auto pb-12 snap-x snap-mandatory hide-scrollbar"
+        className="flex gap-8 px-6 md:px-12 w-max will-change-transform"
       >
-        {PROJECTS.map((project, index) => (
-          <ProjectCard project={project} onClick={setSelectedProject} key={index} />
+        {PROJECTS.map((project) => (
+          <div key={project.id} className="w-[85vw] md:w-[22rem] shrink-0">
+            <ProjectCard project={project} />
+          </div>
         ))}
 
         {/* "View All" Card */}
         <div
-          ref={(el) => {
-            cardsRef.current[PROJECTS.length] = el;
-          }}
-          className="min-w-[85vw] md:min-w-100 snap-center h-[50vh] md:h-[60vh] flex items-center justify-center border border-white/20 rounded-3xl bg-white/5 hover:bg-white/10 transition-colors group cursor-pointer"
+          className="w-[85vw] md:w-[22rem] shrink-0 h-44 flex items-center justify-center border border-white/20 rounded-md bg-[#0d1117] hover:bg-white/5 transition-colors group cursor-pointer"
         >
           <Link
-            href="https://github.com/LNC-Network"
-            target="_blank"
-            className="flex flex-col items-center gap-4"
+            href="/projects"
+            className="flex flex-col items-center gap-2 w-full h-full justify-center"
           >
-            <span className="text-2xl font-black text-white uppercase group-hover:scale-110 transition-transform">
-              View All
+            <span className="text-xl font-bold text-[#58a6ff] group-hover:underline">
+              View All Projects
             </span>
-            <div className="w-12 h-12 rounded-full border border-white flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
-              →
-            </div>
+            <span className="text-sm text-[#8b949e]">
+              Explore more →
+            </span>
           </Link>
         </div>
       </div>
-
-      {/* Project Details Modal */}
-      <ProjectModal
-        project={selectedProject}
-        onClose={() => setSelectedProject(null)}
-      />
-
-      {/* Add custom scrollbar hiding */}
-      <style jsx>{`
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
     </section>
   );
 }

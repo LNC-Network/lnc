@@ -22,6 +22,7 @@ gsap.registerPlugin(ScrollTrigger);
  */
 export default function EventsTimeline() {
     const container = useRef(null);
+    const headerRef = useRef<HTMLDivElement>(null);
     const groupsRef = useRef<(HTMLDivElement | null)[]>([]);
 
     // Memoize the events to prevent re-renders (though static import is fine)
@@ -30,19 +31,21 @@ export default function EventsTimeline() {
     useGSAP(
         () => {
             const groups = groupsRef.current.filter(Boolean);
-            if (!groups.length) return;
+            const header = headerRef.current;
+            if (!groups.length || !header) return;
 
             // Distance between cards in Z space
             const Z_SPACING = 1000;
             const totalDepth = groups.length * Z_SPACING;
 
-            // Initial Setup: Position groups deep in Z space
+            // Initial Setup: Position groups deep in Z space AND hide header
             gsap.set(groups, {
                 z: (i) => -i * Z_SPACING,
                 opacity: 0,
                 // We don't touch X/Y here, as we want the group centered. 
                 // X offsets are handled by the children (card vs node).
             });
+            gsap.set(header, { opacity: 0 });
 
             const tl = gsap.timeline({
                 scrollTrigger: {
@@ -55,6 +58,9 @@ export default function EventsTimeline() {
                 },
             });
 
+            // Fade in header at the start
+            tl.to(header, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0);
+
             // Animate groups towards the camera
             tl.to(groups, {
                 z: (i) => totalDepth - i * Z_SPACING - 200, // Move forward past camera
@@ -62,7 +68,7 @@ export default function EventsTimeline() {
                 stagger: {
                     each: 0,
                 },
-            });
+            }, 0);
 
             // Opacity & Scale Effects based on Z position
             tl.eventCallback("onUpdate", () => {
@@ -96,13 +102,12 @@ export default function EventsTimeline() {
         <section
             ref={container}
             className="relative h-screen w-full bg-transparent overflow-hidden flex flex-col items-center justify-center font-pixel"
-            style={{ perspective: "1000px" }}
         >
             {/* Speed Lines / Grid */}
             <div className="absolute inset-0 z-0 opacity-20 pointer-events-none bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-size-[40px_40px] mask-[radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]"></div>
 
             {/* Header */}
-            <div className="absolute top-10 z-20 text-center">
+            <div ref={headerRef} className="absolute top-10 z-20 text-center">
                 <h3 className="text-sm font-bold uppercase tracking-widest text-[#71717a] mb-2">
                     Timeline
                 </h3>
@@ -115,7 +120,7 @@ export default function EventsTimeline() {
             {/* 3D Container */}
             <div
                 className="relative w-full h-full flex items-center justify-center pointer-events-none"
-                style={{ transformStyle: "preserve-3d" }}
+                style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
             >
                 {EVENTS.map((event, i) => {
                     const isEven = i % 2 === 0;

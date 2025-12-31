@@ -22,17 +22,18 @@ export default function Starfield() {
         let width = (canvas.width = window.innerWidth);
         let height = (canvas.height = window.innerHeight);
 
-        const stars: { x: number; y: number; z: number; color: string }[] = [];
-        const numStars = 700;
+        const stars: { x: number; y: number; z: number }[] = [];
+        // Reduce star count on mobile for performance
+        const numStars = width < 768 ? 300 : 800;
+        const starColor = "rgba(254, 254, 254, 0.2)";
         const speed = 2; // Slightly faster for more energy
 
         // Initialize stars
         for (let i = 0; i < numStars; i++) {
             stars.push({
-                x: Math.random() * width - width /2,
-                y: Math.random() * height - height /2,
+                x: Math.random() * width - width / 2,
+                y: Math.random() * height - height / 2,
                 z: Math.random() * width,
-                color: `rgba(254, 254, 254, 0.2)`, // Toned down opacity
             });
         }
 
@@ -43,6 +44,10 @@ export default function Starfield() {
 
             const cx = width / 2;
             const cy = height / 2;
+
+            // Batch rendering: Set color once
+            ctx.fillStyle = starColor;
+            ctx.beginPath();
 
             stars.forEach((star) => {
                 // Move star closer
@@ -65,12 +70,14 @@ export default function Starfield() {
 
                 // Initial check if on screen
                 if (px >= 0 && px <= width && py >= 0 && py <= height && size > 0) {
-                    ctx.beginPath();
-                    ctx.fillStyle = star.color;
+                    // Draw rect is faster than arc in some browsers, but arc is nicer.
+                    // However, we can use moveTo/arc in one path batch.
+                    ctx.moveTo(px + size, py);
                     ctx.arc(px, py, size, 0, Math.PI * 2);
-                    ctx.fill();
                 }
             });
+
+            ctx.fill();
         };
 
         // Use GSAP ticker for optimized rendering

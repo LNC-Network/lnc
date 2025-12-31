@@ -1,61 +1,102 @@
 "use client";
 
+import Link from "next/link";
+import { Book, Star, GitFork, Circle } from "lucide-react";
 import { Project } from "../data/projects";
 
 interface ProjectCardProps {
   project: Project;
-  onClick: (project: Project) => void;
   className?: string;
 }
+
+const LANGUAGE_COLORS: Record<string, string> = {
+  Rust: "#dea584",
+  TypeScript: "#3178c6",
+  JavaScript: "#f1e05a",
+  Python: "#3572A5",
+  "C++": "#f34b7d",
+  Go: "#00ADD8",
+  Java: "#b07219",
+  default: "#ccc",
+};
 
 /**
  * ProjectCard
  *
- * Minimal, solid card.
- * All details are intentionally deferred to the modal.
+ * Designed to look like a GitHub repository card
+ * with the site's dark/pixel theme.
  */
 export default function ProjectCard({
   project,
-  onClick,
   className = "",
 }: ProjectCardProps) {
+  const langColor = LANGUAGE_COLORS[project.language || "default"] || LANGUAGE_COLORS.default;
+
   return (
-    <div
-      onClick={() => onClick(project)}
+    <Link
+      href={project.link || "#"}
+      target="_blank"
       className={`
-        h-65
-        rounded-2xl
-        bg-zinc-900
-        border border-white/10
-        p-6
         flex flex-col justify-between
-        cursor-pointer
-        transition
+        h-44 w-full
+        rounded-md
+        bg-[#0d1117] /* GitHub Dark Dim bg */
+        border border-white/10
+        p-4
+        transition-all duration-200
         hover:border-white/30
-        hover:scale-[1.02]
+        group
         ${className}
       `}
     >
-      {/* Header */}
-      <div className="flex items-center gap-4">
-        <div className="w-12 h-12 rounded-lg bg-white/10 flex items-center justify-center text-xl">
-          {project.icon || "📦"}
-        </div>
-
-        <div>
-          <h3 className="text-lg font-black uppercase text-white tracking-wide">
+      {/* Top: Icon + Name + Public Badge */}
+      <div className="flex items-start justify-between">
+        <div className="flex items-center gap-2">
+          <Book size={16} className="text-[#8b949e]" />
+          <span
+            className="text-[#58a6ff] font-semibold text-sm group-hover:underline truncate max-w-[180px]"
+          >
             {project.name}
-          </h3>
-          <p className="text-xs uppercase tracking-widest text-white/40">
-            {project.category || "Project"}
-          </p>
+          </span>
         </div>
+        <span className="text-[10px] border border-white/20 text-[#8b949e] px-2 py-0.5 rounded-full font-medium">
+          Public
+        </span>
       </div>
 
-      {/* Footer hint */}
-      <span className="text-xs uppercase tracking-widest text-white/30">
-        Click to view
-      </span>
-    </div>
+      {/* Middle: Description */}
+      <div className="flex-grow mt-3">
+        <p className="text-xs text-[#8b949e] leading-relaxed line-clamp-3">
+          {project.description}
+        </p>
+      </div>
+
+      {/* Bottom: Stats & Language */}
+      <div className="flex items-center gap-4 mt-4 text-xs text-[#8b949e]">
+        {project.language && (
+          <div className="flex items-center gap-1">
+            <span
+              className="w-3 h-3 rounded-full border border-white/10"
+              style={{ backgroundColor: langColor }}
+            />
+            <span>{project.language}</span>
+          </div>
+        )}
+
+        {project.stars !== undefined && (
+          <div className="flex items-center gap-1 hover:text-[#58a6ff] transition-colors">
+            <Star size={14} />
+            <span>{project.stars.toLocaleString()}</span>
+          </div>
+        )}
+
+        {project.forks !== undefined && (
+          <div className="flex items-center gap-1 hover:text-[#58a6ff] transition-colors">
+            <GitFork size={14} />
+            <span>{project.forks.toLocaleString()}</span>
+          </div>
+        )}
+      </div>
+    </Link>
   );
 }
