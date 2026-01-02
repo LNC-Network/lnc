@@ -35,7 +35,7 @@ export const BLOG_POSTS: BlogPost[] = [
         role: "Lead Architect",
         date: "Dec 15, 2024",
         link: "https://linktr.ee/lnc_community",
-        image: "/avatar_sarah.png",
+        image: "/assets/images/avatar_sarah.png",
         tag: "Web3",
         readTime: "5 min read"
     },
