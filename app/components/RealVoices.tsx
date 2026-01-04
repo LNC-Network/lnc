@@ -174,10 +174,10 @@ export default function RealVoices() {
             />
 
             <p className="mb-3 text-xs font-bold uppercase tracking-widest text-white/40">
-              Leadership
+              visions
             </p>
             <h2 className="text-4xl font-black uppercase tracking-wide text-white md:text-6xl">
-              Meet the Leads
+              Meet the Minds
             </h2>
             <p className="mt-4 text-sm text-white/60">
               The minds behind the machine. clear vision, execution, and

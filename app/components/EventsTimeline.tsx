@@ -112,7 +112,7 @@ export default function EventsTimeline() {
                     Timeline
                 </h3>
                 <h2 className="text-3xl md:text-5xl font-black uppercase tracking-wide text-white">
-                    Upcoming Events
+                    Events Highlights
                 </h2>
                 <p className="text-white/50 text-xs mt-2 font-mono animate-pulse">Scroll to Travel Time</p>
             </div>
