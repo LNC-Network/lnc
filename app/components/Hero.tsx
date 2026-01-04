@@ -20,10 +20,13 @@ const Hero = () => {
   
   const textRef = useRef(null);
   const maskRef = useRef<SVGSVGElement>(null);
+  const typewriterTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const [isLoading, setIsLoading] = useState(true);
   const [showContent, setShowContent] = useState(false);
   const [typewriterText, setTypewriterText] = useState("");
+  const [showFirstButton, setShowFirstButton] = useState(false);
+  const [showSecondButton, setShowSecondButton] = useState(false);
 
   const fullText = "Join a community that builds Developers, designers, and makers building open-source projects together. A builders-first open community focused on shipping real projects and learning by doing. Join us in building the future, one commit at a time.Debugging the past in quiet hours.Deploying a year of innovation next.";
 
@@ -32,7 +35,10 @@ const Hero = () => {
     if (!isLoading) return;
 
     const tl = gsap.timeline({
-      onComplete: () => setIsLoading(false)
+      onComplete: () => {
+        console.log("Loading animation complete");
+        setIsLoading(false);
+      }
     });
 
     gsap.set(".hero-content-element", { opacity: 0, y: 30 });
@@ -71,17 +77,40 @@ const Hero = () => {
   useEffect(() => {
     if (!showContent) return;
 
+    console.log("Starting typewriter effect");
     let index = 0;
-    const timer = setInterval(() => {
+    
+    typewriterTimerRef.current = setInterval(() => {
       if (index <= fullText.length) {
         setTypewriterText(fullText.slice(0, index));
         index++;
       } else {
-        clearInterval(timer);
+        console.log("Typewriter complete!");
+        if (typewriterTimerRef.current) {
+          clearInterval(typewriterTimerRef.current);
+          typewriterTimerRef.current = null;
+        }
+        
+        // Show buttons after typewriter completes
+        console.log("Scheduling button animations");
+        setTimeout(() => {
+          console.log("Showing first button");
+          setShowFirstButton(true);
+        }, 300);
+        
+        setTimeout(() => {
+          console.log("Showing second button");
+          setShowSecondButton(true);
+        }, 600);
       }
     }, 30);
 
-    return () => clearInterval(timer);
+    return () => {
+      if (typewriterTimerRef.current) {
+        clearInterval(typewriterTimerRef.current);
+        typewriterTimerRef.current = null;
+      }
+    };
   }, [showContent, fullText]);
 
   // Logo animation
@@ -284,7 +313,10 @@ const Hero = () => {
       rafRef.current = requestAnimationFrame(logoParallaxLoop);
     }
 
-    setTimeout(() => setShowContent(true), 100);
+    setTimeout(() => {
+      console.log("Setting showContent to true");
+      setShowContent(true);
+    }, 100);
 
     return () => {
       cancelAnimationFrame(frameId);
@@ -298,6 +330,18 @@ const Hero = () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, [isLoading]);
+
+  // Debug logging
+  useEffect(() => {
+    console.log("State update:", {
+      isLoading,
+      showContent,
+      typewriterLength: typewriterText.length,
+      fullTextLength: fullText.length,
+      showFirstButton,
+      showSecondButton
+    });
+  }, [isLoading, showContent, typewriterText, showFirstButton, showSecondButton, fullText.length]);
 
   return (
     <div className="relative w-full min-h-screen overflow-hidden" ref={container}>
@@ -371,29 +415,33 @@ const Hero = () => {
                 </p>
               </div>
 
-              {/* Buttons - Pushed even lower */}
+              {/* Buttons - Sequential reveal after typewriter completes */}
               <div className="flex flex-col sm:flex-row gap-4 pt-10">
-                <a 
-                  href="https://chat.whatsapp.com/BsuIBMdpsRxCc8bi9IFYIq"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative px-10 py-5 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-lg font-bold uppercase rounded-xl overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] hover:scale-[1.02] active:scale-95 pointer-events-auto"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <span className="relative flex items-center justify-center gap-2">
-                    join the community
-                    <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-                  </span>
-                </a>
+                {showFirstButton && (
+                  <a 
+                    href="https://chat.whatsapp.com/BsuIBMdpsRxCc8bi9IFYIq"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="button-appear group relative px-10 py-5 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-lg font-bold uppercase rounded-xl overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] hover:scale-[1.02] active:scale-95 pointer-events-auto"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <span className="relative flex items-center justify-center gap-2">
+                      join the community
+                      <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  </a>
+                )}
 
-                <a 
-                  href="https://linktr.ee/lnc_community"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative px-10 py-5 bg-white/5 backdrop-blur-sm text-white text-lg border-2 border-white/30 font-bold uppercase rounded-xl overflow-hidden transition-all duration-300 hover:bg-white/10 hover:border-white/50 hover:scale-[1.02] active:scale-95 pointer-events-auto"
-                >
-                  <span className="relative flex items-center justify-center gap-2">follow us</span>
-                </a>
+                {showSecondButton && (
+                  <a 
+                    href="https://linktr.ee/lnc_community"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="button-appear group relative px-10 py-5 bg-white/5 backdrop-blur-sm text-white text-lg border-2 border-white/30 font-bold uppercase rounded-xl overflow-hidden transition-all duration-300 hover:bg-white/10 hover:border-white/50 hover:scale-[1.02] active:scale-95 pointer-events-auto"
+                  >
+                    <span className="relative flex items-center justify-center gap-2">follow us</span>
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -416,6 +464,21 @@ const Hero = () => {
       </div>
 
       <style jsx>{`
+        @keyframes buttonSlideUp {
+          from {
+            opacity: 0;
+            transform: translateY(16px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .button-appear {
+          animation: buttonSlideUp 0.6s ease-out forwards;
+        }
+
         /* NIGHT - Hollow glass architecture: stroke-only text revealing starfield through transparency */
         .night-glass {
           position: relative;
