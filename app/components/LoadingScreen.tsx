@@ -88,7 +88,7 @@ export default function LoadingScreen() {
                                 fill="black"
                                 className="font-pixel text-[15vw] font-bold"
                             >
-                                LNC
+                                L N C
                             </text>
                         </g>
                     </mask>
