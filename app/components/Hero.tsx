@@ -373,11 +373,11 @@ const Hero = () => {
         <rect width="100%" height="100%" fill="#110023ff" mask="url(#hero-mask)" />
       </svg>
 
-      <div className="absolute inset-0 bg-gradient-to-b from-purple-900/10 via-transparent to-black/70 pointer-events-none z-[1]" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40 pointer-events-none z-[1]" />
+      <div className="absolute inset-0 bg-linear-to-b from-purple-900/10 via-transparent to-black/70 pointer-events-none z-1" />
+      <div className="absolute inset-0 bg-linear-to-r from-black/40 via-transparent to-black/40 pointer-events-none z-1" />
 
       <div className="absolute inset-0 z-10 flex flex-col justify-start pt-16 md:pt-20 lg:pt-24 px-6 md:px-12 lg:px-20 pb-12 pointer-events-none">
-        <div className="w-full max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+        <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
           
           {/* Left Content - Text Section */}
           <div className="hero-content-element lg:col-span-7 flex flex-col pointer-events-auto">
@@ -395,7 +395,7 @@ const Hero = () => {
 
                 {/* Innovate by Light - "Light" radiating warm luminosity */}
                 <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black leading-[1.1] tracking-tight">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-300">
+                  <span className="text-transparent bg-clip-text bg-linear-to-r from-white to-cyan-300">
                     Innovate by{" "}
                   </span>
 
@@ -422,9 +422,9 @@ const Hero = () => {
                     href="https://chat.whatsapp.com/BsuIBMdpsRxCc8bi9IFYIq"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="button-appear group relative px-10 py-5 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-lg font-bold uppercase rounded-xl overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] hover:scale-[1.02] active:scale-95 pointer-events-auto"
+                    className="button-appear group relative px-10 py-5 bg-linear-to-r from-purple-600 to-pink-600 text-white text-lg font-bold uppercase rounded-xl overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] hover:scale-[1.02] active:scale-95 pointer-events-auto"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-linear-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <span className="relative flex items-center justify-center gap-2">
                       join the community
                       <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
