@@ -1,54 +1,25 @@
-/**
- * Interface representing a project in the ecosystem.
- */
 export interface Project {
   id: string;
   name: string;
   description: string;
   image?: string;
-  /** Markdown content for the project modal */
   readme: string;
   tags: string[];
-  /** Project icon/emoji displayed in card header */
   icon?: string;
-  /** Project category label */
   category?: string;
-  /** Technologies/frameworks used */
   technologies?: string[];
-  /** Primary programming language */
   language?: string;
-  /** GitHub stars count */
   stars?: number;
-  /** GitHub forks count */
   forks?: number;
-  /** GitHub repository or project link */
   link?: string;
 }
-
-/**
- * Mock Data: Projects
- * Used in CallToAction (Featured) and ProjectsPage (All).
- */
 export const PROJECTS: Project[] = [
   {
     id: "1",
     name: "LNC Network",
     description:
       "A decentralized infrastructure for the next generation of web applications.",
-    readme: `# LNC Network
-
-The LNC Network is a groundbreaking protocol designed to decentralize web infrastructure.
-
-## Features
-- Decentralized storage
-- Edge computing
-- High availability
-
-## Getting Started
-\`\`\`bash
-npm install @lnc/core
-\`\`\`
-`,
+    readme: `# LNC Network\n\nThe LNC Network is a groundbreaking protocol designed to decentralize web infrastructure.\n\n## Features\n- Decentralized storage\n- Edge computing\n- High availability\n\n## Getting Started\n\`\`\`bash\nnpm install @lnc/core\n\`\`\`\n`,
     tags: ["Blockchain", "Infrastructure"],
     image: "/assets/images/cta_builder.png",
     icon: "🌐",
@@ -63,22 +34,7 @@ npm install @lnc/core
     id: "2",
     name: "Pixel UI",
     description: "A retro-futuristic component library for modern builds.",
-    readme: `# Pixel UI
-
-A component library that brings the nostalgia of 8-bit era to the modern web.
-
-## Components
-- Buttons
-- Cards
-- Modals
-
-## Usage
-\`\`\`tsx
-import { PixelButton } from 'pixel-ui';
-
-<PixelButton>Click Me</PixelButton>
-\`\`\`
-`,
+    readme: `# Pixel UI\n\nA component library that brings the nostalgia of 8-bit era to the modern web.\n\n## Components\n- Buttons\n- Cards\n- Modals\n\n## Usage\n\`\`\`tsx\nimport { PixelButton } from 'pixel-ui';\n\n<PixelButton>Click Me</PixelButton>\n\`\`\`\n`,
     tags: ["UI Library", "React", "Tailwind"],
     icon: "🎨",
     category: "UI Library",
@@ -92,17 +48,7 @@ import { PixelButton } from 'pixel-ui';
     id: "3",
     name: "Quant OS",
     description: "Operating system layer for quantum processors.",
-    readme: `# Quant OS
-
-The first general-purpose OS for quantum computers.
-
-## Architecture
-- Qubit scheduling
-- Error correction
-
-## Status
-Experimental
-`,
+    readme: `# Quant OS\n\nThe first general-purpose OS for quantum computers.\n\n## Architecture\n- Qubit scheduling\n- Error correction\n\n## Status\nExperimental\n`,
     tags: ["OS", "Quantum", "Systems"],
     icon: "⚛️",
     category: "Operating System",

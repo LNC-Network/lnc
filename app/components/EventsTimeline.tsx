@@ -1,208 +1,137 @@
 "use client";
-
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import { EVENTS } from "../data/events";
-
 gsap.registerPlugin(ScrollTrigger);
-
-/**
- * EventsTimeline Component
- * 
- * A 3D scrolling timeline that animates event cards towards the user's view (Z-axis movement).
- * As the user scrolls, the events move from the background to the foreground.
- * 
- * Uses:
- * - GSAP Timeline with ScrollTrigger + Pinning.
- * - CSS 3D transforms (perspective, translateZ).
- */
 export default function EventsTimeline() {
-    const container = useRef(null);
-    const headerRef = useRef<HTMLDivElement>(null);
-    const groupsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-    // Memoize the events to prevent re-renders (though static import is fine)
-    // We can also calculate derived positions here if needed.
-
-    useGSAP(
-        () => {
-            const groups = groupsRef.current.filter(Boolean);
-            const header = headerRef.current;
-            if (!groups.length || !header) return;
-
-            // Distance between cards in Z space
-            const Z_SPACING = 1000;
-            const totalDepth = groups.length * Z_SPACING;
-
-            // Initial Setup: Position groups deep in Z space AND hide header
-            gsap.set(groups, {
-                z: (i) => -i * Z_SPACING,
-                opacity: 0,
-                // We don't touch X/Y here, as we want the group centered. 
-                // X offsets are handled by the children (card vs node).
-            });
-            gsap.set(header, { opacity: .5 });
-
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: container.current,
-                    start: "top top",
-                    end: `+=${totalDepth}`,
-                    scrub: true,
-                    pin: true,
-                    pinSpacing: true,
-                    anticipatePin: 1,
-                    fastScrollEnd: true,
-                    preventOverlaps: true,
-
-                    onEnter: () => gsap.set(container.current, { autoAlpha: 1 }),
-                    onEnterBack: () => gsap.set(container.current, { autoAlpha: 1 }),
-
-                    onLeave: () => gsap.set(container.current, { autoAlpha: 0 }),
-                    onLeaveBack: () => gsap.set(container.current, { autoAlpha: 0 }),
-                },
-            });
-
-
-            // Fade in header at the start
-            tl.to(header, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0);
-
-            // Animate groups towards the camera
-            tl.to(groups, {
-                z: (i) => totalDepth - i * Z_SPACING - 200, // Move forward past camera
-                ease: "none",
-                stagger: {
-                    each: 0,
-                },
-            }, 0);
-
-            // Opacity & Scale Effects based on Z position
-            tl.eventCallback("onUpdate", () => {
-                groups.forEach((group) => {
-                    if (!group) return;
-                    const z = gsap.getProperty(group, "z") as number;
-
-                    // Simple logic:
-                    // Far away (< -3000): 0 opacity
-                    // Approaching (-3000 to -500): fade in
-                    // Active Zone (-500 to 200): full opacity
-                    // Passed Camera (> 200): fade out rapidly
-
-                    let opacity = 0;
-                    if (z < -4000) opacity = 0;
-                    else if (z < -500) opacity = gsap.utils.mapRange(-4000, -500, 0, 1, z);
-                    else if (z < 300) opacity = 1;
-                    else opacity = gsap.utils.mapRange(300, 800, 1, 0, z);
-
-                    // Optional: Scale effect to enhance depth perception
-                    // const scale = gsap.utils.mapRange(-4000, 500, 0.5, 1.2, z);
-
-                    gsap.set(group, { opacity });
-                });
-            });
+  const container = useRef(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const groupsRef = useRef<(HTMLDivElement | null)[]>([]);
+  useGSAP(
+    () => {
+      const groups = groupsRef.current.filter(Boolean);
+      const header = headerRef.current;
+      if (!groups.length || !header) return;
+      const Z_SPACING = 1000;
+      const totalDepth = groups.length * Z_SPACING;
+      gsap.set(groups, { z: (i) => -i * Z_SPACING, opacity: 0 });
+      gsap.set(header, { opacity: 0.5 });
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: container.current,
+          start: "top top",
+          end: `+=${totalDepth}`,
+          scrub: true,
+          pin: true,
+          pinSpacing: true,
+          anticipatePin: 1,
+          fastScrollEnd: true,
+          preventOverlaps: true,
+          onEnter: () => gsap.set(container.current, { autoAlpha: 1 }),
+          onEnterBack: () => gsap.set(container.current, { autoAlpha: 1 }),
+          onLeave: () => gsap.set(container.current, { autoAlpha: 0 }),
+          onLeaveBack: () => gsap.set(container.current, { autoAlpha: 0 }),
         },
-        { scope: container }
-    );
-
-    return (
-        <section
-            ref={container}
-            className="relative h-screen w-full bg-transparent overflow-hidden flex flex-col items-center justify-center font-pixel "
-        >
-
-            {/* Header */}
-            <div ref={headerRef} className="absolute top-10 z-20 text-center">
-                <h3 className="text-sm font-bold uppercase tracking-widest text-[#71717a] mb-2">
-                    Timeline
-                </h3>
-                <h2 className="text-3xl md:text-5xl font-black uppercase tracking-wide text-white">
-                    Events Highlights
-                </h2>
-                <p className="text-white/50 text-xs mt-2 font-mono animate-pulse">Scroll to Travel Time</p>
-            </div>
-
-            {/* 3D Container */}
+      });
+      tl.to(header, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0);
+      tl.to(
+        groups,
+        {
+          z: (i) => totalDepth - i * Z_SPACING - 200,
+          ease: "none",
+          stagger: { each: 0 },
+        },
+        0
+      );
+      tl.eventCallback("onUpdate", () => {
+        groups.forEach((group) => {
+          if (!group) return;
+          const z = gsap.getProperty(group, "z") as number;
+          let opacity = 0;
+          if (z < -4000) opacity = 0;
+          else if (z < -500)
+            opacity = gsap.utils.mapRange(-4000, -500, 0, 1, z);
+          else if (z < 300) opacity = 1;
+          else opacity = gsap.utils.mapRange(300, 800, 1, 0, z);
+          gsap.set(group, { opacity });
+        });
+      });
+    },
+    { scope: container }
+  );
+  return (
+    <section
+      ref={container}
+      className="relative h-screen w-full bg-transparent overflow-hidden flex flex-col items-center justify-center font-pixel "
+    >
+      <div ref={headerRef} className="absolute top-10 z-20 text-center">
+        <h3 className="text-sm font-bold uppercase tracking-widest text-[#71717a] mb-2">
+          Timeline
+        </h3>
+        <h2 className="text-3xl md:text-5xl font-black uppercase tracking-wide text-white">
+          Events Highlights
+        </h2>
+        <p className="text-white/50 text-xs mt-2 font-mono animate-pulse">
+          Scroll to Travel Time
+        </p>
+      </div>
+      <div
+        className="relative w-full h-full flex items-center justify-center pointer-events-none"
+        style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
+      >
+        {EVENTS.map((event, i) => {
+          const isEven = i % 2 === 0;
+          return (
             <div
-                className="relative w-full h-full flex items-center justify-center pointer-events-none"
-                style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
+              key={event.id}
+              ref={(el) => {
+                if (el) groupsRef.current[i] = el;
+              }}
+              className="absolute top-1/2 left-1/2 w-0 h-0 flex items-center justify-center"
+              style={{ transformStyle: "preserve-3d" }}
             >
-                {EVENTS.map((event, i) => {
-                    const isEven = i % 2 === 0;
-
-                    return (
-                        <div
-                            key={event.id}
-                            ref={(el) => { if (el) groupsRef.current[i] = el; }}
-                            className="absolute top-1/2 left-1/2 w-0 h-0 flex items-center justify-center"
-                            style={{
-                                transformStyle: "preserve-3d",
-                            }}
-                        >
-
-                            {/* Group Content: Central Node + Connector + Card */}
-
-
-                            {/* 3. The Event Card */}
-                            <div
-                                className={`
-                                    absolute top-1/2 -translate-y-1/2 w-[320px] md:w-[420px] 
-                                    ${isEven ? "right-[20px] pr-8" : "left-[20px] pl-8"}
-                                    pointer-events-auto group
-                                `}
-                            >
-                                {/* Card Body */}
-                                <div className={`
-                                    relative p-6 bg-black/80 border border-white/10 
-                                    overflow-hidden will-[transform]
-                                    transition-all duration-500 hover:border-purple-500/50 hover:bg-black/90
-                                    group-hover:shadow-[0_0_30px_-10px_rgba(168,85,247,0.3)]
-                                `}>
-                                    {/* Glass Shine Effect */}
-                                    <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                                    {/* Date Header */}
-                                    <div className="flex items-center justify-between mb-4 border-b border-white/5 pb-3">
-                                        <div className="flex items-center gap-2 text-purple-400 text-xs font-bold uppercase tracking-wider">
-                                            <Calendar className="w-3 h-3" />
-                                            <span>{event.date}</span>
-                                        </div>
-                                        <span className="text-[10px] uppercase tracking-widest text-white/30 border border-white/10 px-2 py-0.5 rounded-full">
-                                            {event.category}
-                                        </span>
-                                    </div>
-
-                                    {/* Title */}
-                                    <h3 className="text-xl md:text-2xl font-bold uppercase mb-2 tracking-wide text-white group-hover:text-purple-100 transition-colors">
-                                        {event.title}
-                                    </h3>
-
-                                    {/* Body Text */}
-                                    <p className="text-white/60 text-xs md:text-sm font-sans leading-relaxed mb-4 line-clamp-3">
-                                        {event.description}
-                                    </p>
-
-                                    {/* Footer */}
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center gap-2 text-[#71717a] text-xs font-mono">
-                                            <MapPin className="w-3 h-3" />
-                                            <span>{event.location}</span>
-                                        </div>
-
-                                        <div className="opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
-                                            <ArrowRight className="w-4 h-4 text-purple-400" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    );
-                })}
+              <div
+                className={`absolute top-1/2 -translate-y-1/2 w-[320px] md:w-[420px] ${
+                  isEven ? "right-[20px] pr-8" : "left-[20px] pl-8"
+                } pointer-events-auto group`}
+              >
+                <div
+                  className={`relative p-6 bg-black/80 border border-white/10 overflow-hidden will-[transform] transition-all duration-500 hover:border-purple-500/50 hover:bg-black/90 group-hover:shadow-[0_0_30px_-10px_rgba(168,85,247,0.3)]`}
+                >
+                  <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="flex items-center justify-between mb-4 border-b border-white/5 pb-3">
+                    <div className="flex items-center gap-2 text-purple-400 text-xs font-bold uppercase tracking-wider">
+                      <Calendar className="w-3 h-3" />
+                      <span>{event.date}</span>
+                    </div>
+                    <span className="text-[10px] uppercase tracking-widest text-white/30 border border-white/10 px-2 py-0.5 rounded-full">
+                      {event.category}
+                    </span>
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-bold uppercase mb-2 tracking-wide text-white group-hover:text-purple-100 transition-colors">
+                    {event.title}
+                  </h3>
+                  <p className="text-white/60 text-xs md:text-sm font-sans leading-relaxed mb-4 line-clamp-3">
+                    {event.description}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-[#71717a] text-xs font-mono">
+                      <MapPin className="w-3 h-3" />
+                      <span>{event.location}</span>
+                    </div>
+                    <div className="opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
+                      <ArrowRight className="w-4 h-4 text-purple-400" />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-
-        </section>
-    );
+          );
+        })}
+      </div>
+    </section>
+  );
 }

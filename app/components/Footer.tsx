@@ -1,64 +1,71 @@
 "use client";
-
 import { useRef } from "react";
 import Link from "next/link";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Github, Twitter, Linkedin, Mail, Disc, Hash, ArrowRight } from "lucide-react";
-
+import {
+  Github,
+  Twitter,
+  Linkedin,
+  Mail,
+  Disc,
+  Hash,
+  ArrowRight,
+} from "lucide-react";
 gsap.registerPlugin(ScrollTrigger);
-
-/**
- * Footer Component (Fused)
- * 
- * Combines the Newsletter signup and key footer links into a compact, unified section.
- * Features:
- * - Integrated Newsletter signup.
- * - Dynamic list of simplified links.
- * - Social media icons.
- */
 export default function Footer() {
   const container = useRef(null);
-
-  useGSAP(() => {
-    gsap.from(".footer-reveal", {
-      scrollTrigger: {
-        trigger: container.current,
-        start: "top 90%",
-      },
-      y: 30,
-      duration: 0.8,
-      stagger: 0.1,
-      ease: "power2.out",
-    });
-  }, { scope: container });
-
+  useGSAP(
+    () => {
+      gsap.from(".footer-reveal", {
+        scrollTrigger: { trigger: container.current, start: "top 90%" },
+        y: 30,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power2.out",
+      });
+    },
+    { scope: container }
+  );
   return (
-    <footer ref={container} className="relative z-10 w-full bg-transparent border-t border-white/10 pt-16 pb-8 font-pixel text-white">
+    <footer
+      ref={container}
+      className="relative z-10 w-full bg-transparent border-t border-white/10 pt-16 pb-8 font-pixel text-white"
+    >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-
-        {/* Top Section: Newsletter & Brand */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16 items-start">
-
-          {/* Brand & Socials */}
           <div className="footer-reveal flex flex-col gap-6">
             <h2 className="text-3xl font-black uppercase tracking-tight text-white">
               LNC <span className="text-white/40">Community</span>
             </h2>
             <p className="max-w-md text-sm text-white/60 leading-relaxed font-mono">
-              Building the future of decentralized collaboration. Join us in shaping the next generation of open source tools.
+              Building the future of decentralized collaboration. Join us in
+              shaping the next generation of open source tools.
             </p>
             <div className="flex items-center gap-4">
-              <SocialLink href="https://github.com/LNC-Network" icon={<Github className="w-4 h-4" />} />
-              <SocialLink href="https://linktr.ee/lnc_community" icon={<Disc className="w-4 h-4" />} />{/* Discord placeholder icon */}
-              <SocialLink href="https://x.com/LNC_Community" icon={<Twitter className="w-4 h-4" />} />
-              <SocialLink href="https://www.linkedin.com/company/lnc-community" icon={<Linkedin className="w-4 h-4" />} />
-              <SocialLink href="mailto:latenightcoders@proton.me" icon={<Mail className="w-4 h-4" />} />
+              <SocialLink
+                href="https://github.com/LNC-Network"
+                icon={<Github className="w-4 h-4" />}
+              />
+              <SocialLink
+                href="https://linktr.ee/lnc_community"
+                icon={<Disc className="w-4 h-4" />}
+              />
+              <SocialLink
+                href="https://x.com/LNC_Community"
+                icon={<Twitter className="w-4 h-4" />}
+              />
+              <SocialLink
+                href="https://www.linkedin.com/company/lnc-community"
+                icon={<Linkedin className="w-4 h-4" />}
+              />
+              <SocialLink
+                href="mailto:latenightcoders@proton.me"
+                icon={<Mail className="w-4 h-4" />}
+              />
             </div>
           </div>
-
-          {/* Newsletter Input - Compact */}
           <div className="footer-reveal w-full max-w-md lg:ml-auto bg-white/5 border border-white/10 rounded-3xl p-6">
             <h3 className="text-sm font-bold uppercase tracking-widest mb-2 text-white/80">
               Stay in the loop
@@ -78,11 +85,7 @@ export default function Footer() {
             </form>
           </div>
         </div>
-
-        {/* Divider */}
         <div className="footer-reveal w-full h-px bg-white/10 mb-12" />
-
-        {/* Links Grid */}
         <div className="footer-reveal grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           <FooterColumn title="Platform">
             <FooterLink href="#">About Us</FooterLink>
@@ -90,21 +93,18 @@ export default function Footer() {
             <FooterLink href="#">Events</FooterLink>
             <FooterLink href="#">Blog</FooterLink>
           </FooterColumn>
-
           <FooterColumn title="Resources">
             <FooterLink href="#">Documentation</FooterLink>
             <FooterLink href="#">API Reference</FooterLink>
             <FooterLink href="#">Brand Kit</FooterLink>
             <FooterLink href="#">Partners</FooterLink>
           </FooterColumn>
-
           <FooterColumn title="Community">
             <FooterLink href="#">Code of Conduct</FooterLink>
             <FooterLink href="#">Contributing</FooterLink>
             <FooterLink href="#">Support</FooterLink>
             <FooterLink href="#">Sponsorship</FooterLink>
           </FooterColumn>
-
           <FooterColumn title="Legal">
             <FooterLink href="#">Privacy Policy</FooterLink>
             <FooterLink href="#">Terms of Service</FooterLink>
@@ -112,19 +112,14 @@ export default function Footer() {
             <FooterLink href="#">Security</FooterLink>
           </FooterColumn>
         </div>
-
-        {/* Bottom Bar */}
         <div className="footer-reveal flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-bold uppercase text-white/30 tracking-wider font-mono">
           <p>© 2025 LNC Community. All rights reserved.</p>
           <p>Designed by LNC Core Team</p>
         </div>
-
       </div>
     </footer>
   );
 }
-
-// Sub-components for cleaner code
 function SocialLink({ href, icon }: { href: string; icon: React.ReactNode }) {
   return (
     <a
@@ -137,21 +132,29 @@ function SocialLink({ href, icon }: { href: string; icon: React.ReactNode }) {
     </a>
   );
 }
-
-function FooterColumn({ title, children }: { title: string; children: React.ReactNode }) {
+function FooterColumn({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="flex flex-col gap-4">
       <h4 className="text-xs font-bold uppercase tracking-widest text-white/40 mb-2">
         {title}
       </h4>
-      <div className="flex flex-col gap-2">
-        {children}
-      </div>
+      <div className="flex flex-col gap-2">{children}</div>
     </div>
   );
 }
-
-function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
+function FooterLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
   return (
     <a
       href={href}

@@ -1,52 +1,29 @@
 "use client";
-
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
-
-/**
- * Stats Component
- * 
- * Displays key metrics with a "scramble" text effect.
- * As the user scrolls into view, numbers count up while characters randomly flip,
- * creating a cyberpunk decoding aesthetic.
- */
 import { STATS } from "@/app/data/stats";
-
-// ... imports remain the same
-
+gsap.registerPlugin(ScrollTrigger);
 export default function Stats() {
   const container = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
-
   useGSAP(
     () => {
-      // Animate Header
       if (headerRef.current) {
         gsap.from(headerRef.current, {
-          scrollTrigger: {
-            trigger: headerRef.current,
-            start: "top 80%",
-          },
+          scrollTrigger: { trigger: headerRef.current, start: "top 80%" },
           y: 20,
           opacity: 0,
           duration: 0.8,
           ease: "power3.out",
         });
       }
-
-      // Animate Stats Items
       if (statsRef.current) {
         const items = statsRef.current.children;
         gsap.from(items, {
-          scrollTrigger: {
-            trigger: statsRef.current,
-            start: "top 80%",
-          },
+          scrollTrigger: { trigger: statsRef.current, start: "top 80%" },
           y: 30,
           opacity: 0,
           duration: 0.6,
@@ -57,14 +34,12 @@ export default function Stats() {
     },
     { scope: container }
   );
-
   return (
     <section
       ref={container}
       className="bg-transparent py-20 px-6 md:px-12 w-full font-pixel border-t-2 border-dashed border-white/10"
     >
       <div className="max-w-6xl mx-auto">
-        {/* Header Grid */}
         <div
           ref={headerRef}
           className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20"
@@ -77,8 +52,6 @@ export default function Stats() {
             reflect what happens when a community commits to something real.
           </p>
         </div>
-
-        {/* Stats Grid */}
         <div
           ref={statsRef}
           className="grid grid-cols-1 md:grid-cols-3 gap-8 border-l border-white/10"
@@ -86,8 +59,9 @@ export default function Stats() {
           {STATS.map((stat, index) => (
             <div
               key={index}
-              className={`pl-8 border-l border-white/10 md:border-l-0 ${index < STATS.length - 1 ? "md:border-r" : ""
-                }`}
+              className={`pl-8 border-l border-white/10 md:border-l-0 ${
+                index < STATS.length - 1 ? "md:border-r" : ""
+              }`}
             >
               <h3 className="text-4xl md:text-6xl font-black text-white mb-2">
                 {stat.value}

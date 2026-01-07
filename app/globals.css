@@ -1,11 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Zinc 100 - Softer White */
-  /* Zinc 800 - Softer Black */
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -83,10 +80,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    /* Rich Black - blending deep space with softness */
-    /* Almost White - High readability */
-  }
+  :root {}
 }
 
 html {
@@ -103,12 +97,9 @@ body {
   position: relative;
 }
 
-/* Hide scrollbar for everywhere */
 * {
   -ms-overflow-style: none;
-  /* IE and Edge */
   scrollbar-width: none;
-  /* Firefox */
 }
 
 *::-webkit-scrollbar {
@@ -153,6 +144,7 @@ body {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
