@@ -10,11 +10,11 @@ export default function LoadingScreen() {
   useGSAP(
     () => {
       const tl = gsap.timeline({ onComplete: () => setIsComplete(true) });
-      gsap.set(".hero-element", { opacity: 0, y: 30 });
+      gsap.set(".hero-element", { opacity: 0 });
       tl.to(textRef.current, {
         scale: 60,
         duration: 3,
-        transformOrigin: "50% 50%",
+        transformOrigin: "50% 60%",
         ease: "power3.inOut",
       })
         .to(
@@ -31,7 +31,7 @@ export default function LoadingScreen() {
         )
         .to(
           ".hero-element",
-          { opacity: 1, y: 0, duration: 1, stagger: 0.1 },
+          { opacity: 1, duration: 0.1, stagger: 0.1 },
           "<70%"
         );
     },

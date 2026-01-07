@@ -14,17 +14,22 @@ export default function ProjectsShowcase() {
   useGSAP(
     () => {
       gsap.registerPlugin(ScrollTrigger);
-      if (!triggerRef.current || !containerRef.current || !cardsRef.current)
+      if (
+        !triggerRef.current ||
+        !containerRef.current ||
+        !cardsRef.current ||
+        !headerRef.current
+      )
         return;
       const scrollWidth = cardsRef.current.scrollWidth;
       const windowWidth = window.innerWidth;
-      const amountToScroll = scrollWidth - windowWidth + 1500;
+      const amountToScroll = scrollWidth - windowWidth;
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: triggerRef.current,
           start: "top top",
-          end: `+=${amountToScroll + 1000}`, // Add some padding
+          end: `+=${amountToScroll + window.innerHeight * 3}`, // Adjust total scroll length
           scrub: 1,
           pin: true,
           invalidateOnRefresh: true,
@@ -33,14 +38,44 @@ export default function ProjectsShowcase() {
         },
       });
 
-      // Start at 0 (or slightly offset if needed) and move LEFT
-      gsap.set(cardsRef.current, { x: 0 });
-
-      tl.to(cardsRef.current, {
-        x: -amountToScroll,
-        duration: 1,
-        ease: "none",
+      // Initial States
+      gsap.set(headerRef.current, {
+        top: "50%",
+        right: "50%",
+        xPercent: 50,
+        yPercent: -50,
       });
+
+      gsap.set(cardsRef.current, {
+        autoAlpha: 0,
+        y: 100,
+        x: 0,
+      });
+
+      // Animation Sequence
+      tl.to(headerRef.current, {
+        top: 0,
+        right: 0,
+        xPercent: 0,
+        yPercent: 0,
+        duration: 2,
+        ease: "power2.inOut",
+      })
+        .to(
+          cardsRef.current,
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 1,
+            ease: "power2.out",
+          },
+          "+=0.2"
+        )
+        .to(cardsRef.current, {
+          x: -amountToScroll,
+          duration: 6,
+          ease: "none",
+        });
     },
     { scope: triggerRef }
   );
