@@ -2,110 +2,114 @@
 
 import { useRef } from "react";
 import Link from "next/link";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import { PROJECTS } from "../data/projects";
 import ProjectCard from "./ProjectCard";
 
-// Register GSAP plugins
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
-/**
- * CallToAction (CTA) / Projects Showcase Section
- *
- * A horizontal scrolling section with GSAP animations for project cards
- */
-export default function CallToAction() {
-  const sectionRef = useRef<HTMLElement>(null);
+export default function ProjectsShowcase() {
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
-  const cardsContainerRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    const container = cardsContainerRef.current;
-    const section = sectionRef.current;
-    const header = headerRef.current;
+    gsap.registerPlugin(ScrollTrigger);
 
-    if (!container || !section || !header) return;
+    if (!triggerRef.current || !containerRef.current || !cardsRef.current) return;
 
-    const getScrollAmount = () => {
-      const cardsWidth = container.scrollWidth;
-      return -(cardsWidth - window.innerWidth);
-    };
-
-    // Start with both header and cards hidden
-    gsap.set([header, container], { opacity: 0 });
+    const scrollWidth = cardsRef.current.scrollWidth;
+    const windowWidth = window.innerWidth;
 
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: section,
-        pin: true,
-        scrub: 1,
+        trigger: triggerRef.current,
         start: "top top",
-        end: () => `+=${Math.abs(getScrollAmount())}`,
+        end: "+=3500",
+        scrub: 1,
+        pin: true,
         invalidateOnRefresh: true,
         anticipatePin: 1,
       },
     });
 
-    // Fade in header and cards together at the start
-    tl.to([header, container], {
-      opacity: 1,
-      duration: 0.3,
-      ease: "power2.out",
-    }, 0);
+    // 0. Initial state — cards start offscreen LEFT
+    gsap.set(cardsRef.current, {
+      x: -(scrollWidth + 200),
+    });
 
-    // Horizontal scroll animation for cards
-    tl.to(container, {
-      x: getScrollAmount,
+    // 1. Cards enter toward center from LEFT
+    tl.to(cardsRef.current, {
+      x: -windowWidth * 0.2,
+      duration: 1,
+      ease: "power2.out",
+    });
+
+    // 2. Horizontal scroll — move RIGHT (opposite)
+    tl.to(cardsRef.current, {
+      x: 0,
+      duration: 3,
       ease: "none",
-    }, 0.3);
-  }, { scope: sectionRef });
+    });
+
+    // 3. Exit — slide pinned container to RIGHT
+    tl.to(containerRef.current, {
+      xPercent: 100,
+      duration: 1.5,
+      ease: "power2.inOut",
+    });
+  }, { scope: triggerRef });
+
 
   return (
-    <section
-      ref={sectionRef}
-      id="projects-section"
-      className="relative z-20 h-screen flex flex-col justify-center bg-transparent font-pixel overflow-hidden border border-white"
-    >
-      {/* Header */}
-      <div ref={headerRef} className="px-6 md:px-12 mb-12">
-        <h2 className="text-3xl md:text-5xl font-black uppercase tracking-widest text-white mb-2">
-          Project Showcase
-        </h2>
-        <p className="text-xs md:text-sm font-bold uppercase tracking-widest text-[#a1a1aa]">
-          Explore what we are building
-        </p>
-      </div>
+    <section id="projects-section" className="font-pixel">
+      {/* Pin Trigger */}
+      <div ref={triggerRef} className="relative h-screen w-full overflow-hidden">
 
-      {/* Horizontal Scroll Container */}
-      <div
-        ref={cardsContainerRef}
-        className="flex gap-8 px-6 md:px-12 w-max will-change-transform"
-      >
-        {PROJECTS.map((project) => (
-          <div key={project.id} className="w-[85vw] md:w-88 shrink-0">
-            <ProjectCard project={project} />
-          </div>
-        ))}
-
-        {/* "View All" Card */}
+        {/* Pinned Container */}
         <div
-          className="w-[85vw] md:w-88 shrink-0 h-44 flex items-center justify-center border border-white/20 rounded-md bg-[#0d1117] hover:bg-white/5 transition-colors group cursor-pointer"
+          ref={containerRef}
+          className="relative h-full w-full bg-black"
         >
-          <Link
-            href="/projects"
-            className="flex flex-col items-center gap-2 w-full h-full justify-center"
+          {/* Header */}
+          <div
+            ref={headerRef}
+            className="absolute top-0 right-0 z-30 px-6 md:px-12 py-20"
           >
-            <span className="text-xl font-bold text-[#58a6ff] group-hover:underline">
-              View All Projects
-            </span>
-            <span className="text-sm text-[#8b949e]">
-              Explore more →
-            </span>
-          </Link>
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-widest text-white">
+              Project Showcase
+            </h2>
+            <p className="mt-2 text-xs md:text-sm font-bold uppercase tracking-widest text-white/40">
+              Explore what we are building
+            </p>
+          </div>
+
+          {/* Cards */}
+          <div className="absolute inset-0 flex items-center">
+            <div
+              ref={cardsRef}
+              className="flex gap-8 px-6 md:px-12 w-max will-change-transform"
+            >
+              {PROJECTS.map((project) => (
+                <div
+                  key={project.id}
+                  className="w-[85vw] md:w-88 shrink-0"
+                >
+                  <ProjectCard project={project} />
+                </div>
+              ))}
+
+              <div className="w-[85vw] md:w-88 shrink-0 flex items-center justify-center border border-white/20 rounded-md bg-[#0d1117]">
+                <Link href="/projects">
+                  <span className="text-xl font-bold text-[#58a6ff]">
+                    View All Projects →
+                  </span>
+                </Link>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>

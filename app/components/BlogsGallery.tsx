@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ArrowRight, Grid, LayoutTemplate } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
 
@@ -18,18 +18,24 @@ import { BLOG_POSTS, GALLERY_IMAGES } from "@/app/data/blogs";
  * Features:
  * - GSAP animations for tab switching and content reveal.
  * - Dynamic filtering between "Blogs" and "Images" views.
+ * - Scroll-based card switching when component is fully visible.
+ * - Responsive split layout for blogs.
  * - Integrated pixel-art styling suitable for the broader theme.
  */
 export default function BlogsGallery() {
     const containerRef = useRef<HTMLDivElement>(null);
+    const sectionRef = useRef<HTMLDivElement>(null);
     const [activeSection, setActiveSection] = useState<'blogs' | 'images'>('blogs');
     const [activeTab, setActiveTab] = useState(0); // For Blogs inner tabs
     const [visibleImages, setVisibleImages] = useState(6); // Pagination state
 
+    // Register GSAP plugins
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+    }, []);
+
     useGSAP(
         () => {
-            gsap.registerPlugin(ScrollTrigger);
-
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: containerRef.current,
@@ -48,6 +54,40 @@ export default function BlogsGallery() {
         { scope: containerRef }
     );
 
+    // Scroll-based tab switching when component is fully in view (only for blogs)
+    useGSAP(
+        () => {
+            if (activeSection !== 'blogs') return;
+
+            const totalPosts = BLOG_POSTS.length;
+
+            ScrollTrigger.create({
+                trigger: sectionRef.current,
+                start: "top top",
+                end: `+=${totalPosts * 50}%`,
+                pin: true,
+                scrub: 0.5,
+                onUpdate: (self) => {
+                    const progress = self.progress;
+                    const newActiveTab = Math.min(
+                        Math.floor(progress * totalPosts),
+                        totalPosts - 1
+                    );
+                    setActiveTab(newActiveTab);
+                },
+            });
+
+            return () => {
+                ScrollTrigger.getAll().forEach(trigger => {
+                    if (trigger.trigger === sectionRef.current) {
+                        trigger.kill();
+                    }
+                });
+            };
+        },
+        { scope: containerRef, dependencies: [activeSection] }
+    );
+
     // Animation when section changes
     useGSAP(() => {
         gsap.fromTo(".section-content",
@@ -56,30 +96,17 @@ export default function BlogsGallery() {
         );
     }, { scope: containerRef, dependencies: [activeSection] });
 
-    // Animation when blog tab changes
-    useGSAP(() => {
-        if (activeSection === 'blogs') {
-            gsap.fromTo(".active-content-anim",
-                { opacity: 0, y: 10 },
-                { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
-            );
-        }
-    }, { scope: containerRef, dependencies: [activeTab, activeSection] });
-
     const handleLoadMore = () => {
         setVisibleImages(prev => prev + 6);
     };
 
     return (
-        <section id="community" ref={containerRef} className="relative z-10 w-full bg-transparent py-24 font-pixel text-white border-t border-white/10">
-            <div className="container mx-auto px-4 md:px-12">
+        <section id="community" ref={sectionRef} className="relative z-10 w-full h-screen bg-transparent font-pixel text-white border-t border-white/10 flex flex-col overflow-hidden">
+            <div ref={containerRef} className="container mx-auto px-4 md:px-12 py-12 flex-1 flex flex-col">
 
                 {/* Header & Controls */}
-                <div className="mb-16 flex flex-col items-start justify-between gap-8 border-b border-white/10 pb-8 md:flex-row md:items-end">
+                <div className="mb-10 flex flex-col items-start justify-between gap-8 border-b border-white/10 pb-8 md:flex-row md:items-end shrink-0">
                     <div className="header-reveal">
-                        <p className="mb-4 text-xs font-bold uppercase tracking-widest text-purple-400">
-                            Community Hub
-                        </p>
                         <h2 className="text-3xl font-black uppercase tracking-tight md:text-5xl">
                             The <span className="text-white/50">Chronicles</span>
                         </h2>
@@ -115,37 +142,35 @@ export default function BlogsGallery() {
                 </div>
 
                 {/* Content Area */}
-                <div className="min-h-[600px] section-content">
+                <div className="flex-1 section-content overflow-hidden relative">
 
                     {/* BLOGS VIEW */}
                     {activeSection === 'blogs' && (
-                        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
-                            {/* Left: Blog Tabs */}
-                            <div className="flex gap-4 overflow-x-auto pb-4 lg:col-span-4 lg:flex-col lg:overflow-visible lg:pb-0">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full pb-2">
+                            {/* Left: Blog List Navigation */}
+                            <div className="hidden lg:flex lg:col-span-4 flex-col gap-4 overflow-y-auto pr-2 custom-scrollbar">
                                 {BLOG_POSTS.map((post, index) => (
                                     <button
                                         key={post.id}
                                         onClick={() => setActiveTab(index)}
                                         className={cn(
-                                            "group relative flex min-w-[280px] cursor-pointer items-start gap-4 border p-4 text-left transition-all lg:min-w-0 w-full hover:bg-white/5 rounded-2xl",
+                                            "group relative flex w-full cursor-pointer items-center gap-4 border p-4 text-left transition-all rounded-2xl",
                                             activeTab === index
-                                                ? "border-purple-500 bg-white/5"
-                                                : "border-white/10 bg-black/40 hover:border-purple-500/50"
+                                                ? "border-purple-500 bg-white/10 shadow-[0_0_15px_rgba(168,85,247,0.15)]"
+                                                : "border-white/10 bg-black/40 hover:bg-white/5 hover:border-purple-500/50"
                                         )}
                                     >
-                                        <div className="relative h-16 w-16 shrink-0 overflow-hidden bg-black/50 border border-white/10 rounded-xl">
+                                        <div className="relative h-12 w-12 shrink-0 overflow-hidden bg-black/50 border border-white/10 rounded-lg">
                                             <Image
                                                 src={post.image}
                                                 alt={post.title}
                                                 fill
-                                                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                                className="object-cover transition-transform group-hover:scale-110"
                                             />
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <div className="mb-2 flex items-center gap-2 text-[10px] uppercase text-white/40 font-mono">
+                                            <div className="mb-1 flex items-center gap-2 text-[10px] uppercase text-white/40 font-mono">
                                                 <span className={cn(activeTab === index ? "text-purple-400" : "")}>{post.tag}</span>
-                                                <span>/</span>
-                                                <span>{post.date}</span>
                                             </div>
                                             <h4 className={cn(
                                                 "truncate text-sm font-bold transition-colors uppercase",
@@ -154,64 +179,97 @@ export default function BlogsGallery() {
                                                 {post.title}
                                             </h4>
                                         </div>
+                                        {activeTab === index && (
+                                            <div className="absolute right-4 w-2 h-2 rounded-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.8)] animate-pulse" />
+                                        )}
                                     </button>
                                 ))}
                             </div>
 
-                            {/* Right: Active Blog Content */}
-                            <div className="relative lg:col-span-8">
-                                <div className="active-content-anim group relative h-full overflow-hidden border border-white/10 bg-black/60 rounded-3xl">
-                                    {/* Corner Brackets removed for rounded look */}
+                            {/* Right: Active Blog Content (Stacked for Transitions) */}
+                            <div className="col-span-1 lg:col-span-8 relative h-full">
+                                {BLOG_POSTS.map((post, index) => (
+                                    <div
+                                        key={post.id}
+                                        className={cn(
+                                            "absolute inset-0 transition-opacity duration-500 ease-in-out flex flex-col",
+                                            activeTab === index ? "opacity-100 pointer-events-auto z-10" : "opacity-0 pointer-events-none z-0"
+                                        )}
+                                    >
+                                        <div className="flex-1 w-full group relative overflow-hidden border border-white/10 bg-black/60 backdrop-blur-sm rounded-3xl shadow-2xl shadow-purple-500/10">
+                                            <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
+                                                {/* Image Section */}
+                                                <div className="relative h-1/2 lg:h-full overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10">
+                                                    <Image
+                                                        src={post.image}
+                                                        alt={post.title}
+                                                        fill
+                                                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                                        priority={index === 0}
+                                                    />
+                                                    <div className="absolute inset-0 bg-linear-to-t lg:bg-linear-to-r from-black/80 via-black/20 to-transparent" />
 
-                                    <div className="relative aspect-video w-full overflow-hidden border-b border-white/10">
-                                        <Image
-                                            src={BLOG_POSTS[activeTab].image}
-                                            alt={BLOG_POSTS[activeTab].title}
-                                            fill
-                                            className="object-cover opacity-80"
-                                            priority
-                                        />
-                                        {/* Pixel Pattern Overlay */}
-                                        <div className="absolute inset-0 bg-[url('/pixel-pattern.png')] opacity-20 pointer-events-none" />
-                                        <div className="absolute inset-0 bg-linear-to-t from-black via-transparent to-transparent" />
-
-                                        <div className="absolute bottom-6 left-6 right-6">
-                                            <div className="mb-4 inline-flex items-center gap-2 border border-purple-500 bg-black/80 px-4 py-1 text-xs font-bold uppercase text-purple-400 rounded-full">
-                                                {BLOG_POSTS[activeTab].tag}
-                                            </div>
-                                            <h3 className="text-2xl font-black leading-tight md:text-4xl text-white uppercase tracking-wide drop-shadow-lg">
-                                                {BLOG_POSTS[activeTab].title}
-                                            </h3>
-                                        </div>
-                                    </div>
-
-                                    <div className="p-6 md:p-10">
-                                        <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-6 text-xs text-white/40 font-mono uppercase tracking-wider">
-                                            <div className="flex items-center gap-4">
-                                                <div className="flex items-center gap-2">
-                                                    <div className="h-8 w-8 rounded-full border border-white/20 overflow-hidden relative">
-                                                        <Image src={BLOG_POSTS[activeTab].image} alt="author" fill className="object-cover grayscale" />
+                                                    <div className="absolute top-4 left-4 inline-flex items-center gap-2 border border-purple-500/50 bg-black/60 backdrop-blur-sm px-3 py-1.5 text-[10px] font-bold uppercase text-purple-400 rounded-full">
+                                                        {post.tag}
                                                     </div>
-                                                    <span className="text-white">{BLOG_POSTS[activeTab].author}</span>
                                                 </div>
-                                                <span>{'//'}</span>
-                                                <span className="text-purple-400">{BLOG_POSTS[activeTab].role}</span>
+
+                                                {/* Content Section */}
+                                                <div className="relative h-1/2 lg:h-full p-6 lg:p-10 flex flex-col justify-center">
+                                                    {/* Pixel decorative corners */}
+                                                    <div className="absolute top-4 left-4 w-2 h-2 border-t-2 border-l-2 border-white/20" />
+                                                    <div className="absolute top-4 right-4 w-2 h-2 border-t-2 border-r-2 border-white/20" />
+                                                    <div className="absolute bottom-4 left-4 w-2 h-2 border-b-2 border-l-2 border-white/20" />
+                                                    <div className="absolute bottom-4 right-4 w-2 h-2 border-b-2 border-r-2 border-white/20" />
+
+                                                    <h3 className="text-2xl lg:text-4xl font-black leading-tight text-white uppercase tracking-wide mb-6 drop-shadow-lg">
+                                                        {post.title}
+                                                    </h3>
+
+                                                    <div className="flex items-center gap-3 mb-6 text-xs text-white/50 font-mono uppercase">
+                                                        <div className="relative h-8 w-8 rounded-full border border-white/20 overflow-hidden">
+                                                            <Image src={post.image} alt="author" fill className="object-cover" />
+                                                        </div>
+                                                        <div className="flex flex-col">
+                                                            <span className="text-white font-medium">{post.author}</span>
+                                                            <span className="text-purple-400">{post.role}</span>
+                                                        </div>
+                                                        <span className="ml-auto text-white/40">{post.date}</span>
+                                                    </div>
+
+                                                    <p className="text-sm lg:text-lg font-mono leading-relaxed text-white/70 mb-8 line-clamp-4 lg:line-clamp-none">
+                                                        {post.excerpt}
+                                                    </p>
+
+                                                    <div className="flex items-center gap-4 mt-auto">
+                                                        <Link
+                                                            href={post.link}
+                                                            className="flex-1 group/btn inline-flex items-center justify-center gap-2 bg-purple-500 hover:bg-purple-600 px-6 py-4 text-sm font-bold uppercase text-white transition-all rounded-xl hover:scale-105 shadow-lg shadow-purple-500/20"
+                                                        >
+                                                            Read Story
+                                                            <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                                                        </Link>
+                                                        <span className="px-4 text-xs text-white/40 font-mono uppercase">
+                                                            {post.readTime}
+                                                        </span>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <span>{BLOG_POSTS[activeTab].readTime}</span>
                                         </div>
-
-                                        <p className="mb-10 text-lg font-mono leading-relaxed text-white/70">
-                                            {BLOG_POSTS[activeTab].excerpt}
-                                        </p>
-
-                                        <Link
-                                            href={BLOG_POSTS[activeTab].link}
-                                            className="group/btn relative inline-flex items-center gap-3 border border-white bg-white px-8 py-4 text-sm font-bold uppercase text-black transition-all hover:bg-black hover:text-white hover:border-white rounded-full hover:scale-105"
-                                        >
-                                            Read Full Story
-                                            <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                                        </Link>
                                     </div>
+                                ))}
+
+                                {/* Mobile Navigation Dots (visible only on small screens) */}
+                                <div className="lg:hidden absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
+                                    {BLOG_POSTS.map((_, i) => (
+                                        <div
+                                            key={i}
+                                            className={cn(
+                                                "h-1.5 rounded-full transition-all duration-300",
+                                                activeTab === i ? "w-6 bg-purple-500" : "w-1.5 bg-white/30"
+                                            )}
+                                        />
+                                    ))}
                                 </div>
                             </div>
                         </div>
@@ -219,12 +277,12 @@ export default function BlogsGallery() {
 
                     {/* IMAGES VIEW */}
                     {activeSection === 'images' && (
-                        <div className="flex flex-col items-center gap-12">
+                        <div className="flex flex-col items-center gap-12 h-full overflow-y-auto pb-20 custom-scrollbar">
                             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 w-full">
                                 {GALLERY_IMAGES.slice(0, visibleImages).map((img, i) => (
                                     <div
                                         key={i}
-                                        className="group relative aspect-square overflow-hidden border border-white/10 bg-[#111] transition-all hover:border-purple-500 rounded-2xl"
+                                        className="group relative aspect-square overflow-hidden border border-white/10 bg-[#111] transition-all hover:border-purple-500 rounded-2xl cursor-pointer"
                                     >
                                         <Image
                                             src={img.src}
@@ -256,7 +314,7 @@ export default function BlogsGallery() {
                             {visibleImages < GALLERY_IMAGES.length && (
                                 <button
                                     onClick={handleLoadMore}
-                                    className="px-8 py-3 border border-white/20 bg-transparent text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black hover:border-white transition-all duration-300 rounded-full"
+                                    className="px-8 py-3 border border-white/20 bg-transparent text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black hover:border-white transition-all duration-300 rounded-full mb-12"
                                 >
                                     Load More
                                 </button>
