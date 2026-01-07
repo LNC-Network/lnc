@@ -68,7 +68,7 @@ export default function CallToAction() {
     <section
       ref={sectionRef}
       id="projects-section"
-      className="relative z-20 h-screen flex flex-col justify-center bg-transparent font-pixel overflow-hidden"
+      className="relative z-20 h-screen flex flex-col justify-center bg-transparent font-pixel overflow-hidden border border-white"
     >
       {/* Header */}
       <div ref={headerRef} className="px-6 md:px-12 mb-12">
@@ -86,14 +86,14 @@ export default function CallToAction() {
         className="flex gap-8 px-6 md:px-12 w-max will-change-transform"
       >
         {PROJECTS.map((project) => (
-          <div key={project.id} className="w-[85vw] md:w-[22rem] shrink-0">
+          <div key={project.id} className="w-[85vw] md:w-88 shrink-0">
             <ProjectCard project={project} />
           </div>
         ))}
 
         {/* "View All" Card */}
         <div
-          className="w-[85vw] md:w-[22rem] shrink-0 h-44 flex items-center justify-center border border-white/20 rounded-md bg-[#0d1117] hover:bg-white/5 transition-colors group cursor-pointer"
+          className="w-[85vw] md:w-88 shrink-0 h-44 flex items-center justify-center border border-white/20 rounded-md bg-[#0d1117] hover:bg-white/5 transition-colors group cursor-pointer"
         >
           <Link
             href="/projects"

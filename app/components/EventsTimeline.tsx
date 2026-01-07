@@ -6,7 +6,6 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import { EVENTS } from "../data/events";
-import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -45,18 +44,28 @@ export default function EventsTimeline() {
                 // We don't touch X/Y here, as we want the group centered. 
                 // X offsets are handled by the children (card vs node).
             });
-            gsap.set(header, { opacity: 0 });
+            gsap.set(header, { opacity: .5 });
 
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: container.current,
                     start: "top top",
-                    end: `+=${totalDepth}`, // Reduced scroll distance to prevent empty space
-                    scrub: 1.5, // Smoother scrub
+                    end: `+=${totalDepth}`,
+                    scrub: true,
                     pin: true,
+                    pinSpacing: true,
                     anticipatePin: 1,
+                    fastScrollEnd: true,
+                    preventOverlaps: true,
+
+                    onEnter: () => gsap.set(container.current, { autoAlpha: 1 }),
+                    onEnterBack: () => gsap.set(container.current, { autoAlpha: 1 }),
+
+                    onLeave: () => gsap.set(container.current, { autoAlpha: 0 }),
+                    onLeaveBack: () => gsap.set(container.current, { autoAlpha: 0 }),
                 },
             });
+
 
             // Fade in header at the start
             tl.to(header, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0);
@@ -101,10 +110,8 @@ export default function EventsTimeline() {
     return (
         <section
             ref={container}
-            className="relative h-screen w-full bg-transparent overflow-hidden flex flex-col items-center justify-center font-pixel"
+            className="relative h-screen w-full bg-transparent overflow-hidden flex flex-col items-center justify-center font-pixel "
         >
-            {/* Speed Lines / Grid */}
-            <div className="absolute inset-0 z-0 opacity-20 pointer-events-none bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-size-[40px_40px] mask-[radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]"></div>
 
             {/* Header */}
             <div ref={headerRef} className="absolute top-10 z-20 text-center">

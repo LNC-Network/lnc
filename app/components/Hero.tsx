@@ -17,7 +17,7 @@ const Hero = () => {
   const rafRef = useRef<number | null>(null);
   const starsRef = useRef<Array<{ x: number; y: number; z: number; color: string }>>([]);
   const currentSpeedRef = useRef(2);
-  
+
   const textRef = useRef(null);
   const maskRef = useRef<SVGSVGElement>(null);
   const typewriterTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -79,7 +79,7 @@ const Hero = () => {
 
     console.log("Starting typewriter effect");
     let index = 0;
-    
+
     typewriterTimerRef.current = setInterval(() => {
       if (index <= fullText.length) {
         setTypewriterText(fullText.slice(0, index));
@@ -90,14 +90,14 @@ const Hero = () => {
           clearInterval(typewriterTimerRef.current);
           typewriterTimerRef.current = null;
         }
-        
+
         // Show buttons after typewriter completes
         console.log("Scheduling button animations");
         setTimeout(() => {
           console.log("Showing first button");
           setShowFirstButton(true);
         }, 300);
-        
+
         setTimeout(() => {
           console.log("Showing second button");
           setShowSecondButton(true);
@@ -344,7 +344,7 @@ const Hero = () => {
   }, [isLoading, showContent, typewriterText, showFirstButton, showSecondButton, fullText.length]);
 
   return (
-    <div className="relative w-full min-h-screen overflow-hidden" ref={container}>
+    <div className="relative w-full min-h-screen overflow-hidden hero-element" ref={container}>
       <canvas ref={canvasRef} className="fixed inset-0 w-full h-full block z-0" />
 
       {/* Loading Mask */}
@@ -378,7 +378,7 @@ const Hero = () => {
 
       <div className="absolute inset-0 z-10 flex flex-col justify-start pt-16 md:pt-20 lg:pt-24 px-6 md:px-12 lg:px-20 pb-12 pointer-events-none">
         <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
-          
+
           {/* Left Content - Text Section */}
           <div className="hero-content-element lg:col-span-7 flex flex-col pointer-events-auto">
             {/* Inner wrapper to avoid GSAP conflict */}
@@ -418,7 +418,7 @@ const Hero = () => {
               {/* Buttons - Sequential reveal after typewriter completes */}
               <div className="flex flex-col sm:flex-row gap-4 pt-10">
                 {showFirstButton && (
-                  <a 
+                  <a
                     href="https://chat.whatsapp.com/BsuIBMdpsRxCc8bi9IFYIq"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -433,7 +433,7 @@ const Hero = () => {
                 )}
 
                 {showSecondButton && (
-                  <a 
+                  <a
                     href="https://linktr.ee/lnc_community"
                     target="_blank"
                     rel="noopener noreferrer"

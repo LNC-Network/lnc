@@ -156,7 +156,7 @@ export default function RealVoices() {
   }, { scope: triggerRef });
 
   return (
-    <section id="real-voices" className="font-pixel">
+    <section id="real-voices" className="font-pixel border border-white">
       {/* The Trigger / Pin Wrapper */}
       <div ref={triggerRef} className="relative h-screen w-full overflow-hidden">
 
