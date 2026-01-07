@@ -11,127 +11,130 @@ export default function RealVoices() {
   const triggerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
-  useGSAP(
-    () => {
-      gsap.registerPlugin(ScrollTrigger);
-      if (
-        containerRef.current &&
-        triggerRef.current &&
-        headerRef.current &&
-        cardsRef.current
-      ) {
-        const mm = gsap.matchMedia();
-        const scrollWidth = cardsRef.current.scrollWidth;
-        const windowWidth = window.innerWidth;
-        mm.add("(min-width: 768px)", () => {
-          gsap.set(headerRef.current, {
-            left: "50%",
-            top: "50%",
-            xPercent: -50,
-            yPercent: -50,
-            opacity: 0,
-          });
-          gsap.set(cardsRef.current, {
-            x: windowWidth + 100,
-            autoAlpha: 0,
-            top: "50%",
-            bottom: "auto",
-            yPercent: -50,
-          });
-          gsap.set("#projects-section", { autoAlpha: 0 });
-          const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: triggerRef.current,
-              start: "top top",
-              end: "+=4000",
-              scrub: 1,
-              pin: true,
-              invalidateOnRefresh: true,
-              anticipatePin: 1,
-            },
-          });
-          tl.to(headerRef.current, {
-            opacity: 1,
-            duration: 0.5,
-            ease: "power2.out",
-          });
-          tl.to(headerRef.current, {
-            left: "4rem",
-            xPercent: 0,
+  useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    if (
+      containerRef.current &&
+      triggerRef.current &&
+      headerRef.current &&
+      cardsRef.current
+    ) {
+      const mm = gsap.matchMedia();
+      const scrollWidth = cardsRef.current.scrollWidth;
+      const windowWidth = window.innerWidth;
+      mm.add("(min-width: 768px)", () => {
+        gsap.set(headerRef.current, {
+          left: "50%",
+          top: "50%",
+          xPercent: -50,
+          yPercent: -50,
+          opacity: 0,
+        });
+        gsap.set(cardsRef.current, {
+          x: windowWidth + 100,
+          autoAlpha: 0,
+          top: "50%",
+          bottom: "auto",
+          yPercent: -50,
+        });
+        const projectSection = document.getElementById("projects-section");
+        if (projectSection) {
+          gsap.set(projectSection, { autoAlpha: 0 });
+        }
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: triggerRef.current,
+            start: "top top",
+            end: "+=4000",
+            scrub: 1,
+            pin: true,
+            invalidateOnRefresh: true,
+            anticipatePin: 1,
+            fastScrollEnd: true,
+          },
+        });
+        tl.to(headerRef.current, {
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+        tl.to(headerRef.current, {
+          left: "4rem",
+          xPercent: 0,
+          duration: 1,
+          ease: "power2.inOut",
+        });
+        tl.to(".header-bg", { opacity: 1, duration: 0.5 }, "<0.5");
+        tl.to(
+          cardsRef.current,
+          {
+            x: windowWidth * 0.35,
+            autoAlpha: 1,
             duration: 1,
-            ease: "power2.inOut",
-          });
-          tl.to(".header-bg", { opacity: 1, duration: 0.5 }, "<0.5");
+            ease: "power2.out",
+          },
+          "<0.2"
+        );
+        const finalX = -(scrollWidth - windowWidth + 100);
+        tl.to(cardsRef.current, { x: finalX, duration: 3, ease: "none" });
+        tl.to(containerRef.current, {
+          xPercent: -100,
+          duration: 1.5,
+          ease: "power2.inOut",
+        });
+        if (projectSection) {
           tl.to(
-            cardsRef.current,
-            {
-              x: windowWidth * 0.35,
-              autoAlpha: 1,
-              duration: 1,
-              ease: "power2.out",
-            },
-            "<0.2"
-          );
-          const finalX = -(scrollWidth - windowWidth + 100);
-          tl.to(cardsRef.current, { x: finalX, duration: 3, ease: "none" });
-          tl.to(containerRef.current, {
-            xPercent: -100,
-            duration: 1.5,
-            ease: "power2.inOut",
-          });
-          tl.to(
-            "#projects-section",
+            projectSection,
             { autoAlpha: 1, duration: 1.5, ease: "power2.out" },
             "<"
           );
+        }
+      });
+      mm.add("(max-width: 767px)", () => {
+        gsap.set(headerRef.current, {
+          left: "50%",
+          top: "15%",
+          xPercent: -50,
+          yPercent: 0,
+          opacity: 0,
         });
-        mm.add("(max-width: 767px)", () => {
-          gsap.set(headerRef.current, {
-            left: "50%",
-            top: "15%",
-            xPercent: -50,
-            yPercent: 0,
-            opacity: 0,
-          });
-          gsap.set(cardsRef.current, {
-            x: windowWidth,
-            autoAlpha: 0,
-            top: "55%",
-            bottom: "auto",
-            yPercent: 0,
-          });
-          const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: triggerRef.current,
-              start: "top top",
-              end: "+=2000",
-              scrub: 1,
-              pin: true,
-              invalidateOnRefresh: true,
-              anticipatePin: 1,
-            },
-          });
-          tl.to(headerRef.current, {
-            opacity: 1,
-            duration: 0.5,
-            ease: "power2.out",
-          });
-          tl.to(".header-bg", { opacity: 1, duration: 0.5 }, "<");
-          tl.to(
-            cardsRef.current,
-            { x: 0, autoAlpha: 1, duration: 0.8, ease: "power2.out" },
-            "<"
-          );
-          const finalX = -(scrollWidth - windowWidth + 40);
-          tl.to(cardsRef.current, { x: finalX, duration: 3, ease: "none" });
+        gsap.set(cardsRef.current, {
+          x: windowWidth,
+          autoAlpha: 0,
+          top: "55%",
+          bottom: "auto",
+          yPercent: 0,
         });
-        return () => mm.revert();
-      }
-    },
-    { scope: triggerRef }
-  );
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: triggerRef.current,
+            start: "top top",
+            end: "+=2000",
+            scrub: 1,
+            pin: true,
+            invalidateOnRefresh: true,
+            anticipatePin: 1,
+          },
+        });
+        tl.to(headerRef.current, {
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+        tl.to(".header-bg", { opacity: 1, duration: 0.5 }, "<");
+        tl.to(
+          cardsRef.current,
+          { x: 0, autoAlpha: 1, duration: 0.8, ease: "power2.out" },
+          "<"
+        );
+        const finalX = -(scrollWidth - windowWidth + 40);
+        tl.to(cardsRef.current, { x: finalX, duration: 3, ease: "none" });
+      });
+      return () => mm.revert();
+    }
+  });
   return (
-    <section id="real-voices" className="font-pixel border border-white">
+    <section id="real-voices" className="font-pixel">
       <div
         ref={triggerRef}
         className="relative h-screen w-full overflow-hidden"

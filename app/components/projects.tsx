@@ -18,28 +18,28 @@ export default function ProjectsShowcase() {
         return;
       const scrollWidth = cardsRef.current.scrollWidth;
       const windowWidth = window.innerWidth;
+      const amountToScroll = scrollWidth - windowWidth + 1500;
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: triggerRef.current,
           start: "top top",
-          end: "+=3500",
+          end: `+=${amountToScroll + 1000}`, // Add some padding
           scrub: 1,
           pin: true,
           invalidateOnRefresh: true,
           anticipatePin: 1,
+          fastScrollEnd: true,
         },
       });
-      gsap.set(cardsRef.current, { x: -(scrollWidth + 200) });
+
+      // Start at 0 (or slightly offset if needed) and move LEFT
+      gsap.set(cardsRef.current, { x: 0 });
+
       tl.to(cardsRef.current, {
-        x: -windowWidth * 0.2,
+        x: -amountToScroll,
         duration: 1,
-        ease: "power2.out",
-      });
-      tl.to(cardsRef.current, { x: 0, duration: 3, ease: "none" });
-      tl.to(containerRef.current, {
-        xPercent: 100,
-        duration: 1.5,
-        ease: "power2.inOut",
+        ease: "none",
       });
     },
     { scope: triggerRef }
@@ -50,7 +50,10 @@ export default function ProjectsShowcase() {
         ref={triggerRef}
         className="relative h-screen w-full overflow-hidden"
       >
-        <div ref={containerRef} className="relative h-full w-full bg-black">
+        <div
+          ref={containerRef}
+          className="relative h-full w-full bg-transparent"
+        >
           <div
             ref={headerRef}
             className="absolute top-0 right-0 z-30 px-6 md:px-12 py-20"
