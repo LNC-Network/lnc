@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { cn } from "@/lib/utils";
 import { BLOG_POSTS, GALLERY_IMAGES } from "@/app/data/blogs";
 export default function BlogsGallery() {
@@ -16,9 +17,14 @@ export default function BlogsGallery() {
   );
   const [activeTab, setActiveTab] = useState(0);
   const [visibleImages, setVisibleImages] = useState(6);
+
+  // We keep a reference to the timeline/scrollTrigger to control it manually if needed
+  const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
+
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
   }, []);
+
   useGSAP(
     () => {
       const tl = gsap.timeline({
@@ -34,30 +40,59 @@ export default function BlogsGallery() {
     },
     { scope: containerRef }
   );
+
   useGSAP(
     () => {
       if (activeSection !== "blogs") return;
       const totalPosts = BLOG_POSTS.length;
-      ScrollTrigger.create({
+
+      const st = ScrollTrigger.create({
         trigger: sectionRef.current,
         start: "top top",
         end: `+=${totalPosts * 50}%`,
         pin: true,
         scrub: 0.5,
         onUpdate: (self) => {
-          setActiveTab(
-            Math.min(Math.floor(self.progress * totalPosts), totalPosts - 1)
+          // Calculate the exact index based on progress
+          const index = Math.min(
+            Math.floor(self.progress * totalPosts),
+            totalPosts - 1
           );
+          if (index !== activeTab) {
+            setActiveTab(index);
+          }
         },
       });
+
+      scrollTriggerRef.current = st;
+
       return () => {
-        ScrollTrigger.getAll().forEach((trigger) => {
-          if (trigger.trigger === sectionRef.current) trigger.kill();
-        });
+        if (scrollTriggerRef.current) scrollTriggerRef.current.kill();
       };
     },
-    { scope: containerRef, dependencies: [activeSection] }
+    { scope: containerRef, dependencies: [activeSection] } // Removed activeTab dependency to prevent re-creation
   );
+
+  // Handle manual tab click - Syncs scroll position
+  const handleTabClick = (index: number) => {
+    const st = scrollTriggerRef.current;
+    if (st && activeSection === "blogs") {
+      const totalPosts = BLOG_POSTS.length;
+      // Calculate the target progress for the start of this slide's segment
+      // Adding a small buffer (0.5 / totalPosts) centers it nicely in the segment
+      const progress = (index + 0.1) / totalPosts;
+      const scrollPos = st.start + (st.end - st.start) * progress;
+
+      gsap.to(window, {
+        scrollTo: scrollPos,
+        duration: 0.8,
+        ease: "power2.out",
+      });
+    } else {
+      setActiveTab(index);
+    }
+  };
+
   useGSAP(
     () => {
       gsap.fromTo(
@@ -68,9 +103,11 @@ export default function BlogsGallery() {
     },
     { scope: containerRef, dependencies: [activeSection] }
   );
+
   const handleLoadMore = () => {
     setVisibleImages((prev) => prev + 6);
   };
+
   return (
     <section
       id="community"
@@ -121,7 +158,7 @@ export default function BlogsGallery() {
                 {BLOG_POSTS.map((post, index) => (
                   <button
                     key={post.id}
-                    onClick={() => setActiveTab(index)}
+                    onClick={() => handleTabClick(index)}
                     className={cn(
                       "group relative flex w-full cursor-pointer items-center gap-4 border p-4 text-left transition-all rounded-2xl",
                       activeTab === index
@@ -169,10 +206,10 @@ export default function BlogsGallery() {
                   <div
                     key={post.id}
                     className={cn(
-                      "absolute inset-0 transition-opacity duration-500 ease-in-out flex flex-col",
+                      "absolute inset-0 transition-opacity duration-300 ease-out flex flex-col",
                       activeTab === index
                         ? "opacity-100 pointer-events-auto z-10"
-                        : "opacity-0 pointer-events-none z-0"
+                        : "opacity-0 pointer-events-none z-0 delay-0"
                     )}
                   >
                     <div className="flex-1 w-full group relative overflow-hidden border border-white/10 bg-black/60 backdrop-blur-sm rounded-3xl shadow-2xl shadow-purple-500/10">
