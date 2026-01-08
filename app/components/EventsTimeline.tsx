@@ -5,78 +5,106 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import { EVENTS } from "../data/events";
+
 gsap.registerPlugin(ScrollTrigger);
 export default function EventsTimeline() {
   const container = useRef(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const groupsRef = useRef<(HTMLDivElement | null)[]>([]);
+
   useGSAP(
     () => {
-      const groups = groupsRef.current.filter(Boolean);
+      const groups = groupsRef.current.filter(Boolean) as HTMLDivElement[];
       const header = headerRef.current;
-      if (!groups.length || !header) return;
-      const Z_SPACING = 1000;
+      const containerEl = container.current;
+
+      if (!groups.length || !header || !containerEl) return;
+
+      const Z_SPACING = 1500;
       const totalDepth = groups.length * Z_SPACING;
-      gsap.set(groups, { z: (i) => -i * Z_SPACING, opacity: 0 });
-      gsap.set(header, { opacity: 0.5 });
+      const HEADER_DURATION = 0.1;
+
+      gsap.set(header, {
+        opacity: 0,
+        top: "50%",
+        yPercent: -50,
+      });
+
+      gsap.set(groups, {
+        z: (i) => -i * Z_SPACING - 1000,
+        opacity: 0,
+        visibility: "hidden",
+      });
+
+      const opacitySetters = groups.map((el) =>
+        gsap.quickSetter(el, "opacity")
+      );
+
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: container.current,
+          trigger: containerEl,
           start: "top top",
-          end: `+=${totalDepth}`,
+          end: `+=${groups.length * 800 + 400}`, // REAL budget
           scrub: true,
           pin: true,
-          pinSpacing: true,
           anticipatePin: 1,
-          fastScrollEnd: true,
-          preventOverlaps: true,
-          onEnter: () => gsap.set(container.current, { autoAlpha: 1 }),
-          onEnterBack: () => gsap.set(container.current, { autoAlpha: 1 }),
-          onLeave: () => gsap.set(container.current, { autoAlpha: 0 }),
-          onLeaveBack: () => gsap.set(container.current, { autoAlpha: 0 }),
         },
       });
-      tl.to(header, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0);
-      tl.to(
-        groups,
-        {
-          z: (i) => totalDepth - i * Z_SPACING - 200,
-          ease: "none",
-          stagger: { each: 0 },
-        },
-        0
-      );
-      tl.eventCallback("onUpdate", () => {
-        groups.forEach((group) => {
-          if (!group) return;
-          const z = gsap.getProperty(group, "z") as number;
-          let opacity = 0;
-          if (z < -4000) opacity = 0;
-          else if (z < -500)
-            opacity = gsap.utils.mapRange(-4000, -500, 0, 1, z);
-          else if (z < 300) opacity = 1;
-          else opacity = gsap.utils.mapRange(300, 800, 1, 0, z);
-          gsap.set(group, { opacity });
+
+      /* ---------------- HEADER (FAST) ---------------- */
+
+      tl.to(header, {
+        opacity: 1,
+        duration: HEADER_DURATION,
+        ease: "power1.out",
+      })
+        .to(header, {
+          top: "1em",
+          yPercent: 0,
+          duration: HEADER_DURATION,
+          ease: "power1.out",
+        })
+        .addLabel("cards");
+
+      /* ---------------- CARDS ---------------- */
+
+      tl.set(groups, { visibility: "visible" }, "cards")
+        .to(
+          groups,
+          {
+            z: (i) => totalDepth - i * Z_SPACING - 200,
+            ease: "none",
+          },
+          "cards"
+        )
+        .eventCallback("onUpdate", () => {
+          groups.forEach((group, i) => {
+            const z = gsap.getProperty(group, "z") as number;
+
+            let opacity = 0;
+            if (z < -4000) opacity = 0;
+            else if (z < -500)
+              opacity = gsap.utils.mapRange(-4000, -500, 0, 1, z);
+            else if (z < 300) opacity = 1;
+            else opacity = gsap.utils.mapRange(300, 800, 1, 0, z);
+
+            opacitySetters[i](opacity);
+          });
         });
-      });
+        
     },
     { scope: container }
   );
+
   return (
     <section
       ref={container}
-      className="relative h-screen w-full bg-transparent overflow-hidden flex flex-col items-center justify-center font-pixel "
+      className="relative min-h-screen w-full bg-transparent overflow-hidden flex flex-col items-center justify-center font-pixel "
     >
       <div ref={headerRef} className="absolute top-10 z-20 text-center">
-        <h3 className="text-sm font-bold uppercase tracking-widest text-[#71717a] mb-2">
-          Timeline
-        </h3>
-        <h2 className="text-3xl md:text-5xl font-black uppercase tracking-wide text-white">
+        <h2 className="text-3xl md:text-6xl font-black uppercase tracking-wide text-white">
           Events Highlights
         </h2>
-        <p className="text-white/50 text-xs mt-2 font-mono animate-pulse">
-          Scroll to Travel Time
-        </p>
       </div>
       <div
         className="relative w-full h-full flex items-center justify-center pointer-events-none"
