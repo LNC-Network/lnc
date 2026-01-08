@@ -6,23 +6,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+
 import { cn } from "@/lib/utils";
 import { BLOG_POSTS, GALLERY_IMAGES } from "@/app/data/blogs";
 export default function BlogsGallery() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const sectionRef = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState<"blogs" | "images">(
     "blogs"
   );
   const [activeTab, setActiveTab] = useState(0);
   const [visibleImages, setVisibleImages] = useState(6);
 
-  // We keep a reference to the timeline/scrollTrigger to control it manually if needed
-  const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
-
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+    gsap.registerPlugin(ScrollTrigger);
   }, []);
 
   useGSAP(
@@ -41,56 +37,9 @@ export default function BlogsGallery() {
     { scope: containerRef }
   );
 
-  useGSAP(
-    () => {
-      if (activeSection !== "blogs") return;
-      const totalPosts = BLOG_POSTS.length;
-
-      const st = ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: "top top",
-        end: `+=${totalPosts * 50}%`,
-        pin: true,
-        scrub: 0.5,
-        onUpdate: (self) => {
-          // Calculate the exact index based on progress
-          const index = Math.min(
-            Math.floor(self.progress * totalPosts),
-            totalPosts - 1
-          );
-          if (index !== activeTab) {
-            setActiveTab(index);
-          }
-        },
-      });
-
-      scrollTriggerRef.current = st;
-
-      return () => {
-        if (scrollTriggerRef.current) scrollTriggerRef.current.kill();
-      };
-    },
-    { scope: containerRef, dependencies: [activeSection] } // Removed activeTab dependency to prevent re-creation
-  );
-
-  // Handle manual tab click - Syncs scroll position
+  // Handle manual tab click
   const handleTabClick = (index: number) => {
-    const st = scrollTriggerRef.current;
-    if (st && activeSection === "blogs") {
-      const totalPosts = BLOG_POSTS.length;
-      // Calculate the target progress for the start of this slide's segment
-      // Adding a small buffer (0.5 / totalPosts) centers it nicely in the segment
-      const progress = (index + 0.1) / totalPosts;
-      const scrollPos = st.start + (st.end - st.start) * progress;
-
-      gsap.to(window, {
-        scrollTo: scrollPos,
-        duration: 0.8,
-        ease: "power2.out",
-      });
-    } else {
-      setActiveTab(index);
-    }
+    setActiveTab(index);
   };
 
   useGSAP(
@@ -111,7 +60,6 @@ export default function BlogsGallery() {
   return (
     <section
       id="community"
-      ref={sectionRef}
       className="relative z-10 w-full h-screen bg-transparent font-pixel text-white border-t border-white/10 flex flex-col overflow-hidden"
     >
       <div

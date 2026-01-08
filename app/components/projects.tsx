@@ -8,18 +8,12 @@ import { PROJECTS } from "../data/projects";
 import ProjectCard from "./ProjectCard";
 export default function ProjectsShowcase() {
   const triggerRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
   useGSAP(
     () => {
       gsap.registerPlugin(ScrollTrigger);
-      if (
-        !triggerRef.current ||
-        !containerRef.current ||
-        !cardsRef.current ||
-        !headerRef.current
-      )
+      if (!triggerRef.current || !cardsRef.current || !headerRef.current)
         return;
       const scrollWidth = cardsRef.current.scrollWidth;
       const windowWidth = window.innerWidth;
@@ -29,12 +23,11 @@ export default function ProjectsShowcase() {
         scrollTrigger: {
           trigger: triggerRef.current,
           start: "top top",
-          end: `+=${amountToScroll + window.innerHeight * 3}`, // Adjust total scroll length
+          end: `+=${amountToScroll + window.innerHeight * 3 + 2000}`, // Adjust total scroll length
           scrub: 1,
           pin: true,
           invalidateOnRefresh: true,
           anticipatePin: 1,
-          fastScrollEnd: true,
         },
       });
 
@@ -80,15 +73,12 @@ export default function ProjectsShowcase() {
     { scope: triggerRef }
   );
   return (
-    <section id="projects-section" className="font-pixel">
+    <section id="projects-section">
       <div
         ref={triggerRef}
         className="relative h-screen w-full overflow-hidden"
       >
-        <div
-          ref={containerRef}
-          className="relative h-full w-full bg-transparent"
-        >
+        <div className="relative h-full w-full bg-transparent">
           <div
             ref={headerRef}
             className="absolute top-0 right-0 z-30 px-6 md:px-12 py-20"
