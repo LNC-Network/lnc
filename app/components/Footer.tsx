@@ -113,8 +113,8 @@ export default function Footer() {
           </FooterColumn>
         </div>
         <div className="footer-reveal flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-bold uppercase text-white/30 tracking-wider font-mono">
-          <p>© 2025 LNC Community. All rights reserved.</p>
-          <p>Designed by LNC Core Team</p>
+          <p>©2026 LNC Community. All rights reserved.</p>
+          <p>Designed by LNC Dev Lead</p>
         </div>
       </div>
     </footer>

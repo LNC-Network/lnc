@@ -37,7 +37,7 @@ export default function Stats() {
   return (
     <section
       ref={container}
-      className="bg-black py-20 px-6 md:px-12 w-full font-pixel border-t-2 border-dashed border-white/10"
+      className="bg-transparent py-20 px-6 md:px-12 w-full font-pixel border-t-2 border-dashed border-white/10"
     >
       <div className="max-w-6xl mx-auto">
         <div

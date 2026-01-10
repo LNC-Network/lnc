@@ -39,8 +39,8 @@ export default function Starfield() {
           y: Math.random() * height - height / 2,
           z: Math.random() * width,
           color: isPurple
-            ? `rgba(188, 19, 254, ${Math.random() * 0.5})`
-            : `rgba(254, 254, 254, ${Math.random() * 0.5})`,
+            ? `rgba(188, 19, 254, ${Math.random() *1})`
+            : `rgba(254, 254, 254, ${Math.random() * 0.3})`,
         });
       }
     }
@@ -78,14 +78,14 @@ export default function Starfield() {
       const mx = mouseRef.current.x;
       const my = mouseRef.current.y;
 
-      const dxCenter = mx - cx;
-      const dyCenter = my - cy;
-      const distCenter = Math.sqrt(dxCenter * dxCenter + dyCenter * dyCenter);
-      const maxDist = Math.sqrt(cx * cx + cy * cy);
-      const t = Math.min(distCenter / maxDist, 1);
+      // const dxCenter = mx - cx;
+      // const dyCenter = my - cy;
+      // const distCenter = Math.sqrt(dxCenter * dxCenter + dyCenter * dyCenter);
+      // const maxDist = Math.sqrt(cx * cx + cy * cy);
+      // const t = Math.min(distCenter / maxDist, 1);
 
-      const repulsionStrength = t * 20;
-      const repulsionRadius = 0.2 + t * 400;
+      const repulsionStrength = 3;
+      const repulsionRadius = 200;
 
       const moving = Math.abs(currentSpeedRef.current) > 0.001;
 

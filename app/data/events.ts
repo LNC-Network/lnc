@@ -6,6 +6,7 @@ export interface Event {
   location: string;
   description: string;
   category: EventCategory;
+  link: string;
 }
 export const EVENTS: Event[] = [
   {
@@ -16,6 +17,7 @@ export const EVENTS: Event[] = [
     description:
       "A 48-hour global hackathon focused on building decentralized solutions for the future of the web.",
     category: "Hackathon",
+    link: "https://hacking.lnc.network",
   },
   {
     id: 2,
@@ -25,6 +27,7 @@ export const EVENTS: Event[] = [
     description:
       "Learn the fundamentals of pixel art design from industry experts and community masters.",
     category: "Workshop",
+    link: "https://discord.com/invite/lnc",
   },
   {
     id: 3,
@@ -34,6 +37,7 @@ export const EVENTS: Event[] = [
     description:
       "Open floor discussion on the roadmap, governance proposals, and community grants.",
     category: "Social",
+    link: "https://twitter.com/lnc_network",
   },
   {
     id: 4,
@@ -43,6 +47,7 @@ export const EVENTS: Event[] = [
     description:
       "The biggest gathering of Web3 developers, featuring keynotes from industry leaders.",
     category: "Conference",
+    link: "https://lnc.network",
   },
   {
     id: 5,
@@ -52,6 +57,7 @@ export const EVENTS: Event[] = [
     description:
       "A comprehensive intro to Rust programming language for smart contract development.",
     category: "Workshop",
+    link: "https://discord.com/invite/lnc",
   },
   {
     id: 6,
@@ -61,6 +67,7 @@ export const EVENTS: Event[] = [
     description:
       "Chill vibes, multiplayer games, and networking with the community.",
     category: "Social",
+    link: "https://discord.com/invite/lnc",
   },
   {
     id: 7,
@@ -69,5 +76,6 @@ export const EVENTS: Event[] = [
     location: "",
     description: "",
     category: "Social",
+    link: "/events",
   },
 ];

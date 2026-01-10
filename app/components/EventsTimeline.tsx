@@ -5,9 +5,11 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import { EVENTS } from "../data/events";
+import { useRouter } from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 export default function EventsTimeline() {
+  const router = useRouter();
   const container = useRef(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const groupsRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -91,7 +93,6 @@ export default function EventsTimeline() {
             opacitySetters[i](opacity);
           });
         });
-        
     },
     { scope: container }
   );
@@ -118,6 +119,7 @@ export default function EventsTimeline() {
               ref={(el) => {
                 if (el) groupsRef.current[i] = el;
               }}
+              onClick={() => router.push(event.link)}
               className="absolute top-1/2 left-1/2 w-0 h-0 flex items-center justify-center"
               style={{ transformStyle: "preserve-3d" }}
             >
