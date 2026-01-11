@@ -59,7 +59,7 @@ export default function RealVoices() {
           ease: "power2.out",
         });
         tl.to(headerRef.current, {
-          left: "4rem",
+          left: "0",
           xPercent: 0,
           duration: 1,
           ease: "power2.inOut",
@@ -147,7 +147,7 @@ export default function RealVoices() {
             ref={headerRef}
             className="absolute z-30 flex w-full max-w-2xl flex-col justify-center px-6 py-36 text-center md:text-left"
           >
-            <div className="header-bg absolute inset-0 -z-10 bg-linear-to-r from-black/95 via-black/90 to-transparent opacity-0 transition-opacity" />
+            <div className="header-bg absolute inset-0 -z-10 bg-linear-to-r from-black via-black/90 to-transparent opacity-0 transition-opacity" />
             <p className="mb-3 text-xs font-bold uppercase tracking-widest text-white/40">
               visions
             </p>
