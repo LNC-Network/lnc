@@ -23,7 +23,7 @@ export default function ProjectsShowcase() {
       if (!trigger || !header || !cards) return;
 
       const horizontalScroll = cards.scrollWidth;
-      const scrollEnd = horizontalScroll + window.innerHeight * 6;
+      // const scrollEnd = horizontalScroll + window.innerHeight * 6;
 
       /* -------------------- Initial State -------------------- */
 

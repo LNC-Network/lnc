@@ -1,6 +1,5 @@
 "use client";
 import { useRef } from "react";
-import Link from "next/link";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -10,7 +9,6 @@ import {
   Linkedin,
   Mail,
   Disc,
-  Hash,
   ArrowRight,
 } from "lucide-react";
 gsap.registerPlugin(ScrollTrigger);

@@ -1,85 +1,91 @@
 "use client";
-import { useRef } from "react";
+
+import { useRef, useState } from "react";
 import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ACHIEVEMENTS } from "@/app/data/achievements";
-gsap.registerPlugin(ScrollTrigger);
-export default function Achievements() {
-  const container = useRef<HTMLElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
-  useGSAP(
-    () => {
-      if (headerRef.current) {
-        gsap.from(headerRef.current, {
-          scrollTrigger: { trigger: headerRef.current, start: "top 80%" },
-          y: 30,
-          opacity: 0,
-          duration: 0.8,
-          ease: "power3.out",
-        });
-        gsap.to(headerRef.current, { opacity: 1 });
-      }
-      if (cardsRef.current) {
-        const cards = cardsRef.current.children;
-        gsap.from(cards, {
-          scrollTrigger: {
-            trigger: cardsRef.current,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          },
-          y: 30,
-          opacity: 0,
-          duration: 0.6,
-          stagger: 0.1,
-          ease: "back.out(1.7)",
-        });
-        gsap.to(cards, { opacity: 1 });
-      }
-    },
-    { scope: container }
-  );
+import { Card } from "@/components/ui/card";
+import Image from "next/image";
+
+const CARD_WIDTH = 300;
+const GAP = 32;
+const VISIBLE = 3;
+
+export default function ObjectivesCarousel() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [index, setIndex] = useState(0);
+
+  const maxIndex = ACHIEVEMENTS.length - VISIBLE;
+
+  const moveTo = (next: number) => {
+    const i = Math.max(0, Math.min(next, maxIndex));
+    setIndex(i);
+
+    gsap.to(trackRef.current, {
+      x: -(CARD_WIDTH + GAP) * i,
+      duration: 0.55,
+      ease: "power2.out",
+    });
+  };
+
   return (
-    <section
-      ref={container}
-      className="bg-transparent py-20 px-6 md:px-12 w-full font-pixel border-t-2 border-dashed border-white/10"
-    >
-      <div className="max-w-6xl mx-auto">
-        <div ref={headerRef} className="mb-16 text-center md:text-left">
-          <h2 className="text-3xl md:text-5xl font-black uppercase tracking-wide text-white leading-tight mb-6">
-            BUILT TO WIN
-          </h2>
-          <p className="text-sm md:text-base font-mono uppercase text-[#71717a] leading-relaxed max-w-2xl">
-            We don&apos;t just participate; we dominate. Our track record in the
-            hackathon arena speaks for itself.
-          </p>
-        </div>
-        <div
-          ref={cardsRef}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
-          {ACHIEVEMENTS.map((item) => (
-            <div
-              key={item.title}
-              className="group p-8 border border-white/10 bg-card hover:secondary transition-all duration-300 hover:-translate-y-2 relative overflow-hidden"
+    <section className="py-24 px-6">
+      <div className="mx-auto bg-transparent rounded-xl p-10 ">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-12">
+          <h2 className="text-6xl font-black uppercase">Our Archivements</h2>
+
+          <div className="flex gap-3">
+            <button
+              onClick={() => moveTo(index - 1)}
+              className="w-10 h-10 rounded-full border  disabled:opacity-40"
+              disabled={index === 0}
             >
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-110 duration-500">
-                {item.icon}
-              </div>
-              <div className="mb-6 p-3 bg-white/5 w-fit rounded-lg border border-white/10 group-hover:border-white/20 transition-colors">
-                {item.icon}
-              </div>
-              <h3 className="text-xl font-bold text-white mb-3 tracking-wide">
-                {item.title}
-              </h3>
-              <p className="text-sm text-[#71717a] font-mono leading-relaxed">
-                {item.description}
-              </p>
-              <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-white/20" />
-              <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-white/20" />
-            </div>
-          ))}
+              ←
+            </button>
+            <button
+              onClick={() => moveTo(index + 1)}
+              className="w-10 h-10 rounded-full border  disabled:opacity-40"
+              disabled={index === maxIndex}
+            >
+              →
+            </button>
+          </div>
+        </div>
+        {/* Viewport */}
+
+        <div className="overflow-hidden">
+          {/* Track */}
+          <div ref={trackRef} className="flex gap-6 will-change-transform">
+            {ACHIEVEMENTS.map((item) => (
+              <Card
+                key={item.title}
+                className="relative w-[300px] h-[380px] shrink-0 overflow-hidden rounded-xl border shadow-[0_6px_0_#000] hover:border-[#9810fa]"
+              >
+                {/* Background image */}
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  sizes="300px"
+                  className="object-cover"
+                />
+
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-black/55" />
+
+                {/* Content */}
+                <div className="relative z-10 flex h-full flex-col justify-end p-6 text-white">
+                  <h3 className="text-sm font-bold uppercase tracking-wide">
+                    {item.title}
+                  </h3>
+
+                  <p className="mt-2 text-sm leading-relaxed text-white/90">
+                    {item.description}
+                  </p>
+                </div>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     </section>

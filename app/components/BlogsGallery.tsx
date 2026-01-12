@@ -60,7 +60,10 @@ export default function BlogsGallery() {
   return (
     <section
       id="community"
-      className="relative z-10 w-full h-screen bg-transparent font-pixel text-white border-t border-white/10 flex flex-col overflow-hidden"
+      className={cn(
+        "relative z-10 w-full bg-transparent font-pixel text-white border-t border-white/10 flex flex-col",
+        activeSection === "blogs" ? "h-screen overflow-hidden" : "min-h-screen"
+      )}
     >
       <div
         ref={containerRef}
@@ -99,9 +102,14 @@ export default function BlogsGallery() {
             </button>
           </div>
         </div>
-        <div className="flex-1 section-content overflow-hidden relative">
+        <div
+          className={cn(
+            "flex-1 section-content relative",
+            activeSection === "blogs" ? "overflow-hidden" : ""
+          )}
+        >
           {activeSection === "blogs" && (
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full pb-2">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full pb-12">
               <div className="hidden lg:flex lg:col-span-4 flex-col gap-4 overflow-y-auto pr-2 custom-scrollbar">
                 {BLOG_POSTS.map((post, index) => (
                   <button
@@ -241,7 +249,7 @@ export default function BlogsGallery() {
             </div>
           )}
           {activeSection === "images" && (
-            <div className="flex flex-col items-center gap-12 h-full overflow-y-auto pb-20 custom-scrollbar">
+            <div className="flex flex-col items-center gap-12 pb-32 w-full">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 w-full">
                 {GALLERY_IMAGES.slice(0, visibleImages).map((img, i) => (
                   <div
@@ -252,13 +260,11 @@ export default function BlogsGallery() {
                       src={img.src}
                       alt={img.alt}
                       fill
+                      sizes="(max-width: 640px) 100vw,
+         (max-width: 1024px) 50vw,
+         33vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0"
                     />
-                    <div className="absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                    <div className="absolute top-2 left-2 w-3 h-3 border-l-2 border-t-2 border-white opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <div className="absolute top-2 right-2 w-3 h-3 border-r-2 border-t-2 border-white opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <div className="absolute bottom-2 left-2 w-3 h-3 border-l-2 border-b-2 border-white opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <div className="absolute bottom-2 right-2 w-3 h-3 border-r-2 border-b-2 border-white opacity-0 group-hover:opacity-100 transition-opacity" />
                     <div className="absolute bottom-6 left-6 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                       <p className="font-mono text-xs font-bold uppercase text-purple-400 mb-1">
                         {img.tag}

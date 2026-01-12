@@ -19,8 +19,8 @@ export default function ScrollProgress() {
   }, []);
   return (
     <div className="fixed bottom-6 right-6 z-40 pointer-events-none mix-blend-difference">
-      <div className="flex items-end gap-1 font-pixel text-[#d8b4fe] opacity-80">
-        <span className="text-2xl font-bold tracking-tighter">{progress}</span>
+      <div className="flex items-end gap-1 font-pixel text-[#9810fa]">
+        <span className="text-4xl font-bold tracking-tighter">{progress}</span>
         <span className="text-sm mb-1">%</span>
       </div>
     </div>

@@ -14,7 +14,7 @@ const LANGUAGE_COLORS: Record<string, string> = {
   "C++": "#f34b7d",
   Go: "#00ADD8",
   Java: "#b07219",
-  default: "#ccc",
+  default: "#9810fa",
 };
 export default function ProjectCard({
   project,
@@ -26,20 +26,20 @@ export default function ProjectCard({
     <Link
       href={project.link || "#"}
       target="_blank"
-      className={`flex flex-col justify-between h-44 w-full rounded-md bg-[#0d1117] border border-white/10 p-4 transition-all duration-200 hover:border-white/30 group ${className}`}
+      className={`flex flex-col justify-between h-72 w-full rounded-md bg-[#0d1117] border border-white/10 p-4 transition-all duration-200 hover:border-white/30 group ${className}`}
     >
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-2">
           <Book size={16} className="text-[#8b949e]" />
-          <span className="text-[#58a6ff] font-semibold text-sm group-hover:underline truncate max-w-[180px]">
+          <span className="text-[#9810fa] font-semibold text-sm group-hover:underline truncate max-w-[180px]">
             {project.name}
           </span>
         </div>
-        <span className="text-[10px] border border-white/20 text-[#8b949e] px-2 py-0.5 rounded-full font-medium">
+        <span className="text-[10px] border border-[#9810fa] text-[#8b949e] px-2 py-0.5 rounded-full font-medium">
           Public
         </span>
       </div>
-      <div className="flex-grow mt-3">
+      <div className="grow mt-3">
         <p className="text-xs text-[#8b949e] leading-relaxed line-clamp-3">
           {project.description}
         </p>
